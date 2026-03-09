@@ -1,0 +1,42 @@
+[versions]
+agp = "8.13.2"
+kotlin = "2.0.21"
+coreKtx = "1.17.0"
+junit = "4.13.2"
+junitVersion = "1.3.0"
+espressoCore = "3.7.0"
+appcompat = "1.7.1"
+material = "1.13.0"
+activity = "1.12.2"
+constraintlayout = "2.2.1"
+googleServicesversion="4.4.3"
+firebaseAuthV = "24.0.1"
+firebaseDatabaseV = "22.0.1"
+loginGoogleV="21.4.0"
+multiavatarV = "1.0.1"
+okhttpV = "4.12.0"
+coilV = "3.0.4"
+firebaseFirestoreKtx = "25.1.1"
+
+[libraries]
+androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+junit = { group = "junit", name = "junit", version.ref = "junit" }
+androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
+androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
+androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
+material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+androidx-activity = { group = "androidx.activity", name = "activity", version.ref = "activity" }
+androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
+firebaseAuth = {group = "com.google.firebase", name = "firebase-auth", version.ref="firebaseAuthV"}
+firebaseDatabase = {group = "com.google.firebase", name = "firebase-database", version.ref="firebaseDatabaseV"}
+loginGoogle = {group = "com.google.android.gms", name = "play-services-auth", version.ref = "loginGoogleV"}
+multiavatar = { group = "io.github.mew22", name = "multiavatar", version.ref = "multiavatarV" }
+okhttp = { group = "com.squareup.okhttp3", name = "okhttp", version.ref = "okhttpV" }
+coil-android = { group = "io.coil-kt.coil3", name = "coil-android", version.ref = "coilV" }
+coil-svg = { group = "io.coil-kt.coil3", name = "coil-svg", version.ref = "coilV" }
+firebase-firestore-ktx = { group = "com.google.firebase", name = "firebase-firestore-ktx", version.ref = "firebaseFirestoreKtx" }
+
+[plugins]
+android-application = { id = "com.android.application", version.ref = "agp" }
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+googleService = { id = "com.google.gms.google-services", version.ref = "googleServicesversion" }

@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "80990464608",
+    "firebase_url": "https://app-la-casa-del-bordadito-default-rtdb.firebaseio.com",
+    "project_id": "app-la-casa-del-bordadito",
+    "storage_bucket": "app-la-casa-del-bordadito.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:80990464608:android:e8f36a74f8ef70688b3105",
+        "android_client_info": {
+          "package_name": "com.example.applacasadelbordadito"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "80990464608-vmcb3er8f1mn6ju4bvc17bq80s86am6v.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.applacasadelbordadito",
+            "certificate_hash": "72582a4716f536340ab1cd67b040674d8c3482c9"
+          }
+        },
+        {
+          "client_id": "80990464608-k5oo9unoqrtee4sjnorqdokc950jfm8l.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAoKyH-GbfjeGJESy4hpxQn0J1v3Vda5EI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "80990464608-k5oo9unoqrtee4sjnorqdokc950jfm8l.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

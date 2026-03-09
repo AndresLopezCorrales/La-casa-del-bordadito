@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/Item_Inicio"
+        android:title="@string/Item_Inicio"
+        android:icon="@drawable/ic_inicio"/>
+
+    <item android:id="@+id/Item_Cafe"
+        android:title="@string/Item_Cafe"
+        android:icon="@drawable/ic_cafe"/>
+
+    <item android:id="@+id/Item_Taller"
+        android:title="@string/Item_Taller"
+        android:enabled="false"/>
+
+    <item android:id="@+id/Item_Bordado"
+        android:title="@string/Item_Bordado"
+        android:icon="@drawable/ic_bordado"/>
+
+    <item android:id="@+id/Item_Cuenta"
+        android:title="@string/Item_Cuenta"
+        android:icon="@drawable/ic_cuenta"/>
+
+</menu>
+
