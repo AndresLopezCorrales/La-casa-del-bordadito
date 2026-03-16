@@ -27,6 +27,13 @@ class MainActivity : AppCompatActivity() {
 
         verFragmentInicio()
 
+        val fragment = intent.getStringExtra("fragment")
+
+        if (fragment == "cafe") {
+            binding.BottomNV.selectedItemId = R.id.Item_Cafe
+            verFragmentCafe()
+        }
+
         binding.BottomNV.setOnItemSelectedListener { item ->
             when(item.itemId) {
                 R.id.Item_Inicio->{

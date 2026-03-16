@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "80990464608-stil3hul6isp7p6dagaqremo6dtlbafo.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.applacasadelbordadito",
+            "certificate_hash": "11685b46fa14e5e6097674c939275fa757ac0ed3"
+          }
+        },
+        {
           "client_id": "80990464608-vmcb3er8f1mn6ju4bvc17bq80s86am6v.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

@@ -6,5 +6,5 @@ data class Cafe(
     var descripcion: String = "",
     var imagenUrl: String = "",
     var categoria: String = "",
-    var tamaños: Map<String, Double> = mapOf()
+    var tamano: Map<String, Double> = mapOf()
 )

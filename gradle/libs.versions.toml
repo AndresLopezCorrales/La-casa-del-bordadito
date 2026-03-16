@@ -15,7 +15,7 @@ firebaseDatabaseV = "22.0.1"
 loginGoogleV="21.4.0"
 multiavatarV = "1.0.1"
 okhttpV = "4.12.0"
-coilV = "3.0.4"
+coilV = "2.6.0"
 firebaseFirestoreKtx = "25.1.1"
 
 [libraries]
@@ -32,9 +32,10 @@ firebaseDatabase = {group = "com.google.firebase", name = "firebase-database", v
 loginGoogle = {group = "com.google.android.gms", name = "play-services-auth", version.ref = "loginGoogleV"}
 multiavatar = { group = "io.github.mew22", name = "multiavatar", version.ref = "multiavatarV" }
 okhttp = { group = "com.squareup.okhttp3", name = "okhttp", version.ref = "okhttpV" }
-coil-android = { group = "io.coil-kt.coil3", name = "coil-android", version.ref = "coilV" }
-coil-svg = { group = "io.coil-kt.coil3", name = "coil-svg", version.ref = "coilV" }
+coil-android = { module = "io.coil-kt:coil", version.ref = "coilV" }
+coil-svg = { module = "io.coil-kt:coil-svg", version.ref = "coilV" }
 firebase-firestore-ktx = { group = "com.google.firebase", name = "firebase-firestore-ktx", version.ref = "firebaseFirestoreKtx" }
+
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

@@ -27,36 +27,6 @@
 
     <string name="cafe_catalog_title">Catálogo de Cafés</string>
 
-    <!-- Café 1 -->
-    <string name="coffee1_name">Cappuccino</string>
-    <string name="coffee1_description">Espresso con espuma cremosa y suave.</string>
-    <string name="coffee1_price">$70 MXN</string>
-
-    <!-- Café 2 -->
-    <string name="coffee2_name">Latte Vainilla</string>
-    <string name="coffee2_description">Leche caliente con un toque dulce de vainilla.</string>
-    <string name="coffee2_price">$75 MXN</string>
-
-    <!-- Café 3 -->
-    <string name="coffee3_name">Mocha</string>
-    <string name="coffee3_description">Café con chocolate y leche espumosa.</string>
-    <string name="coffee3_price">$80 MXN</string>
-
-    <!-- Café 4 -->
-    <string name="coffee4_name">Americano</string>
-    <string name="coffee4_description">Café negro clásico, fuerte y ligero.</string>
-    <string name="coffee4_price">$60 MXN</string>
-
-    <!-- Café 5 -->
-    <string name="coffee5_name">Caramel Macchiato</string>
-    <string name="coffee5_description">Espresso con leche y caramelo encima.</string>
-    <string name="coffee5_price">$85 MXN</string>
-
-    <!-- Café 6 -->
-    <string name="coffee6_name">Frappé</string>
-    <string name="coffee6_description">Bebida fría con café, hielo y crema batida.</string>
-    <string name="coffee6_price">$90 MXN</string>
-
     <string name="embroidery_catalog_title">Catálogo de Bordados</string>
 
     <!-- Bordado 1 -->

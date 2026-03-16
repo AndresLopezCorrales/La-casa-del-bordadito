@@ -2,9 +2,9 @@ package com.example.applacasadelbordadito.Perfil
 
 import android.content.Context
 import android.widget.ImageView
-import coil3.ImageLoader
-import coil3.load
-import coil3.svg.SvgDecoder
+import coil.ImageLoader
+import coil.decode.SvgDecoder
+import coil.load
 import io.github.mew22.AvatarData
 import io.github.mew22.MultiAvatar
 
