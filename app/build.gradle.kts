@@ -71,6 +71,8 @@ dependencies {
     implementation(libs.coil.svg)
     implementation(libs.loginGoogle)
     implementation(libs.firebase.firestore.ktx)
+    implementation(libs.zxing.core)
+    implementation(libs.zxing.android.embedded)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

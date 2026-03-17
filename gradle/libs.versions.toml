@@ -17,6 +17,8 @@ multiavatarV = "1.0.1"
 okhttpV = "4.12.0"
 coilV = "2.6.0"
 firebaseFirestoreKtx = "25.1.1"
+zxingV = "3.5.4"
+zxingAndroidEmbeddedV = "4.3.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -35,6 +37,8 @@ okhttp = { group = "com.squareup.okhttp3", name = "okhttp", version.ref = "okhtt
 coil-android = { module = "io.coil-kt:coil", version.ref = "coilV" }
 coil-svg = { module = "io.coil-kt:coil-svg", version.ref = "coilV" }
 firebase-firestore-ktx = { group = "com.google.firebase", name = "firebase-firestore-ktx", version.ref = "firebaseFirestoreKtx" }
+zxing-core = { group = "com.google.zxing", name = "core", version.ref = "zxingV" }
+zxing-android-embedded = { group = "com.journeyapps", name = "zxing-android-embedded", version.ref = "zxingAndroidEmbeddedV" }
 
 
 [plugins]

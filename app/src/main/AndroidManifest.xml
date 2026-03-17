@@ -39,6 +39,9 @@
         </activity>
         <activity android:name=".DetalleCafeActivity"/>
         <activity android:name=".Carrito.CarritoActivity"/>
+        <activity android:name=".Carrito.QRActivity"/>
+        <activity android:name=".Historial.HistorialActivity"/>
+
 
     </application>
 

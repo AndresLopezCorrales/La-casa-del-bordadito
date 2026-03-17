@@ -10,55 +10,108 @@
     <RelativeLayout
         android:id="@+id/ToolbarRL"
         android:layout_width="match_parent"
-        android:layout_height="55dp">
+        android:layout_height="64dp"
+        android:paddingHorizontal="16dp">
 
         <TextView
             android:id="@+id/TituloRL"
-            android:text="@string/TituloRL"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"/>
+            android:layout_centerVertical="true"
+            android:text="Inicio"
+            android:textAppearance="?attr/textAppearanceTitleLarge"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <ImageView
+                android:id="@+id/btnHistorial"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:padding="12dp"
+                android:src="@drawable/ic_history"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:clickable="true"
+                android:focusable="true"
+                app:tint="?attr/colorOnSurface" />
+
+            <FrameLayout
+                android:id="@+id/btnCarrito"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:clickable="true"
+                android:focusable="true">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_cart"
+                    app:tint="?attr/colorOnSurface" />
+
+                <TextView
+                    android:id="@+id/badgeCarrito"
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:layout_gravity="top|end"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginEnd="4dp"
+                    android:background="@drawable/bg_badge"
+                    android:gravity="center"
+                    android:text="0"
+                    android:textColor="@android:color/white"
+                    android:textSize="10sp"
+                    android:textStyle="bold"
+                    android:visibility="gone" />
+
+            </FrameLayout>
+
+        </LinearLayout>
 
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="#ccc"
-            android:layout_alignParentBottom="true"/>
+            android:layout_alignParentBottom="true"
+            android:background="?attr/colorOutlineVariant" />
 
     </RelativeLayout>
 
     <FrameLayout
         android:id="@+id/FragmentL1"
-        android:layout_below="@+id/ToolbarRL"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@id/View1"
-        />
+        android:layout_below="@+id/ToolbarRL" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/BottomNV"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        app:menu="@menu/mi_menu"
         app:labelVisibilityMode="labeled"
-        />
+        app:menu="@menu/mi_menu" />
 
     <View
         android:id="@+id/View1"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="#ccc"
-        android:layout_above="@id/BottomNV"/>
+        android:layout_above="@id/BottomNV"
+        android:background="?attr/colorOutlineVariant" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/FAB"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_taller"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="40dp"
-        />
+        android:src="@drawable/ic_taller" />
 
 </RelativeLayout>

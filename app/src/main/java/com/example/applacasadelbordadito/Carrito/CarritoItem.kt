@@ -1,5 +1,7 @@
 package com.example.applacasadelbordadito.Carrito
 
+import java.io.Serializable
+
 data class CarritoItem(
     var cafeId: String = "",
     var nombre: String = "",
@@ -7,4 +9,4 @@ data class CarritoItem(
     var precio: Double = 0.0,
     var cantidad: Int = 1,
     var imagenUrl: String = ""
-)
+): Serializable

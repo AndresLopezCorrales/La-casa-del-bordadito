@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.applacasadelbordadito.Cafe.Cafe
 import com.example.applacasadelbordadito.Cafe.CafeAdapter
@@ -33,7 +33,8 @@ class FragmentCafe : Fragment() {
             abrirDetalleCafe(cafeSeleccionado)
         }
 
-        recycler.layoutManager = GridLayoutManager(requireContext(),1)
+        // Cambiado de GridLayoutManager a LinearLayoutManager para evitar errores de span count
+        recycler.layoutManager = LinearLayoutManager(requireContext())
         recycler.adapter = adapter
 
         cargarCafes()

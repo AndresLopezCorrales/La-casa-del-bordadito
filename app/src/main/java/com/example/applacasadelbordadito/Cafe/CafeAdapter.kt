@@ -36,7 +36,7 @@ class CafeAdapter(
         holder.nombre.text = cafe.nombre
         holder.descripcion.text = cafe.descripcion
 
-        holder.imagen.load("https://thumbs.dreamstime.com/b/espreso-en-una-taza-blanca-68138823.jpg") //cafe.imagenUrl
+        holder.imagen.load(cafe.imagenUrl)
 
         holder.itemView.setOnClickListener {
             onClick(cafe)

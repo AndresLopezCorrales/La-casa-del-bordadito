@@ -59,6 +59,32 @@
     <string name="embroidery6_description">Bordado con estilo vibrante</string>
     <string name="embroidery6_price">$280 MXN</string>
 
+    <!-- Carrito -->
+    <string name="Titulo_carrito">Mi Carrito</string>
+    <string name="Txt_total_pagar_numero">0.00 MXN</string>
+    <string name="Txt_total_pagar">Total a pagar</string>
+    <string name="Btn_confirmar_compra">Confirmar Compra</string>
+    <string name="Btn_seguir_comprando">Seguir comprando</string>
+
+    <!-- Detalle cafe -->
+    <string name="Txt_tamano">Elige el tamaño</string>
+
+    <!-- Historial -->
+    <string name="Titulo_historial">Historial de Compras</string>
+
+    <!-- QR -->
+    <string name="Titulo_qr">Ticket de Compra</string>
+    <string name="Txt_info">Resumen del pedido</string>
+    <string name="Txt_compra_exitosa">¡Compra Exitosa!</string>
+    <string name="Txt_escanea_qr">Escanea este código en caja</string>
+
+    <!-- Globales -->
+    <string name="Btn_agregar_carrito">Agregar al carrito</string>
+    <string name="Btn_ir_inicio">Volver al Inicio</string>
+
+
+
+
     <!--Perfil de Usuario-->
     <string name="Txt_perfil">Perfil de usuario</string>
     <string name="Txt_informacion">Información: </string>
