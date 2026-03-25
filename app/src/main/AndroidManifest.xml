@@ -2,7 +2,13 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
+
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -13,6 +19,9 @@
         android:roundIcon="@mipmap/ic_casa_bordadito_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppLaCasaDelBordadito">
+        <activity
+            android:name=".Perfil.EditarPerfil"
+            android:exported="false" />
         <activity
             android:name=".Registro_email"
             android:exported="false" />

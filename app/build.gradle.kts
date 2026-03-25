@@ -73,6 +73,8 @@ dependencies {
     implementation(libs.firebase.firestore.ktx)
     implementation(libs.zxing.core)
     implementation(libs.zxing.android.embedded)
+    implementation(libs.glide)
+    implementation(libs.ccp)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

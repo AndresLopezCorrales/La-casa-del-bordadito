@@ -19,6 +19,8 @@ coilV = "2.6.0"
 firebaseFirestoreKtx = "25.1.1"
 zxingV = "3.5.4"
 zxingAndroidEmbeddedV = "4.3.0"
+glideV="5.0.5"
+ccpV="2.7.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -39,6 +41,8 @@ coil-svg = { module = "io.coil-kt:coil-svg", version.ref = "coilV" }
 firebase-firestore-ktx = { group = "com.google.firebase", name = "firebase-firestore-ktx", version.ref = "firebaseFirestoreKtx" }
 zxing-core = { group = "com.google.zxing", name = "core", version.ref = "zxingV" }
 zxing-android-embedded = { group = "com.journeyapps", name = "zxing-android-embedded", version.ref = "zxingAndroidEmbeddedV" }
+glide = {group = "com.github.bumptech.glide", name = "glide", version.ref = "glideV"}
+ccp = {group = "com.hbb20", name = "ccp", version.ref = "ccpV"}
 
 
 [plugins]
