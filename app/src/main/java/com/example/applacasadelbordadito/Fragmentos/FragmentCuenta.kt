@@ -89,7 +89,7 @@ class FragmentCuenta : Fragment() {
                     binding.TvMiembro.text = for_tiempo
 
                     //Generar Imagen Avatar Random como base
-                    AvatarGenerator.generateAvatarByUid(mContext, binding.TvPerfil, firebaseAuth.uid.toString())
+                    //AvatarGenerator.generateAvatarByUid(mContext, binding.TvPerfil, firebaseAuth.uid.toString())
 
                     try{
                         if(imagen.isNotEmpty() && imagen != "null"){

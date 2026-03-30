@@ -20,6 +20,7 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.google.firebase.storage.FirebaseStorage
 
 class EditarPerfil : AppCompatActivity() {
 
@@ -63,13 +64,15 @@ class EditarPerfil : AppCompatActivity() {
                     binding.EtTelefono.setText(telefono)
 
                     // 1. Generar el avatar primero (esto borra el icono gris por defecto)
-                    AvatarGenerator.generateAvatarByUid(this@EditarPerfil, binding.imgPerfil, firebaseAuth.uid.toString())
+                    //AvatarGenerator.generateAvatarByUid(this@EditarPerfil, binding.imgPerfil, firebaseAuth.uid.toString())
 
                     try{
                         if(imagen.isNotEmpty() && imagen != "null"){
                             Glide.with(applicationContext)
                                 .load(imagen)
                                 .into(binding.imgPerfil)
+                        }else{
+                            AvatarGenerator.generateAvatarByUid(this@EditarPerfil, binding.imgPerfil, firebaseAuth.uid.toString())
                         }
 
                     }catch (e: Exception){
@@ -80,7 +83,7 @@ class EditarPerfil : AppCompatActivity() {
                         val codigo = codTelefono.replace("+", "").toInt()
                         binding.selectorCod.setCountryForPhoneCode(codigo)
                     }catch(e: Exception){
-                        Toast.makeText(this@EditarPerfil, "${e.message}", Toast.LENGTH_SHORT).show()
+                        //Toast.makeText(this@EditarPerfil, "${e.message}", Toast.LENGTH_SHORT).show()
                     }
                 }
 
@@ -90,6 +93,51 @@ class EditarPerfil : AppCompatActivity() {
 
             })
     }
+
+    private fun subirImagenStorage(){
+        progressDialog.setMessage("Subiendo Imagen de Perfil")
+        progressDialog.show()
+
+        val rutaImagen = "imagenesPerfil/" + firebaseAuth.uid
+        val storageReference = FirebaseStorage.getInstance().getReference(rutaImagen)
+        storageReference.putFile(imageUri!!)
+            .addOnSuccessListener { taskSnapshot ->
+                val uriTask = taskSnapshot.storage.downloadUrl
+                while(!uriTask.isSuccessful);
+                val urlImagenCargada = "${uriTask.result}"
+                if(uriTask.isSuccessful){
+                    actualizarImagenBD(urlImagenCargada)
+                }
+            }
+            .addOnFailureListener { e ->
+                progressDialog.dismiss()
+                Toast.makeText(this, "${e.message}", Toast.LENGTH_SHORT).show()
+            }
+    }
+
+    private fun actualizarImagenBD(urlImagenCargada: String){
+        progressDialog.setMessage("Actualizando Imagen de Perfil")
+        progressDialog.show()
+
+        val hashMap: HashMap<String, Any> = HashMap()
+        if (imageUri != null) {
+            hashMap["urlImagenPerfil"] = urlImagenCargada
+        }
+
+        val ref = FirebaseDatabase.getInstance().getReference("Usuarios")
+        ref.child(firebaseAuth.uid!!)
+            .updateChildren(hashMap)
+            .addOnSuccessListener {
+                progressDialog.dismiss()
+                Toast.makeText(this, "Imagen de perfil actualizada", Toast.LENGTH_SHORT).show()
+            }
+            .addOnFailureListener { e ->
+                progressDialog.dismiss()
+                Toast.makeText(this, "${e.message}", Toast.LENGTH_SHORT).show()
+            }
+    }
+
+
 
     private fun select_imagen_de(){
         val popupMenu = PopupMenu(this, binding.FABCambiarImg)
@@ -176,14 +224,15 @@ class EditarPerfil : AppCompatActivity() {
         registerForActivityResult(
             ActivityResultContracts.StartActivityForResult()){resultado ->
             if(resultado.resultCode == RESULT_OK){
-                try{
+                subirImagenStorage()
+                /*try{
                     Glide.with(this)
                         .load(imageUri)
                         .placeholder(R.drawable.img_perfil)
                         .into(binding.imgPerfil)
                 }catch(e: Exception){
 
-                }
+                }*/
             }else{
                 Toast.makeText(this, "La captura de imagen se canceló", Toast.LENGTH_SHORT).show()
             }
@@ -195,14 +244,15 @@ class EditarPerfil : AppCompatActivity() {
             if(resultado.resultCode == RESULT_OK){
                 val data = resultado.data
                 imageUri = data!!.data
-                try{
+                subirImagenStorage()
+                /*try{
                     Glide.with(this)
                         .load(imageUri)
                         .placeholder(R.drawable.img_perfil) //Imagen de perfil por defecto (en esta arquitectura, ya esta el avatar imagen). Se puede quitar
                         .into(binding.imgPerfil)
                 }catch(e: Exception){
 
-                }
+                }*/
             }else{
                 Toast.makeText(this, "La selección de imagen se canceló", Toast.LENGTH_SHORT).show()
             }

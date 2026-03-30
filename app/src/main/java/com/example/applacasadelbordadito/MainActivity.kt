@@ -16,11 +16,13 @@ import com.example.applacasadelbordadito.Fragmentos.FragmentInicio
 import com.example.applacasadelbordadito.databinding.ActivityMainBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.storage.FirebaseStorage
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var firebaseAuth: FirebaseAuth
+    private lateinit var firebaseStorage: FirebaseStorage
     private lateinit var btnCarrito: FrameLayout
     private lateinit var btnHistorial: ImageView
     private lateinit var badgeCarrito: TextView
