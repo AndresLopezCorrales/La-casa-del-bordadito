@@ -3,6 +3,8 @@
 
     <string name="default_web_client_id">80990464608-k5oo9unoqrtee4sjnorqdokc950jfm8l.apps.googleusercontent.com</string>
 
+    <string name="Titulo_app">La Casa del Bordadito</string>
+
     <string name="Item_Inicio">Inicio</string>
     <string name="Item_Cafe">Cafe</string>
     <string name="Item_Taller">Taller</string>
@@ -11,8 +13,8 @@
 
     <string name="TituloRL">Titulo</string>
 
-    <string name="Ingresar_email">Ingresar con email</string>
-    <string name="Ingresar_google">Ingresar con google</string>
+    <string name="Ingresar_email">Ingresar con Email</string>
+    <string name="Ingresar_google">Ingresar con Google</string>
 
     <string name="Txt_login">Login de usuario</string>
     <string name="Et_email">Email</string>

@@ -1,48 +1,92 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="?attr/colorSurface"
+    android:padding="24dp"
     tools:context=".OpcionesLogin">
 
-    <androidx.appcompat.widget.LinearLayoutCompat
+    <TextView
+        android:id="@+id/tvAppTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="80dp"
+        android:text="@string/Titulo_app"
+        android:textAlignment="center"
+        android:textAppearance="?attr/textAppearanceHeadlineLarge"
+        android:textColor="?attr/colorOnSurface"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
         android:orientation="vertical"
-        android:padding="30dp"
-        android:gravity="center">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvAppTitle"
+        app:layout_constraintVertical_bias="0.45">
 
-        <ImageView
-            android:src="@drawable/ic_email"
-            android:layout_width="60dp"
-            android:layout_height="80dp"/>
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/Ingresar_email"
-            android:text="@string/Ingresar_email"
-            android:textAllCaps="true"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/m_button_height"
-            app:cornerRadius="8dp"
-            app:backgroundTint="@color/brown"/>
-
-        <ImageView
-            android:src="@drawable/ic_google"
-            android:layout_width="5200dp"
-            android:layout_height="80dp"/>
+        <!-- Opción Google -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="28dp"
+            app:cardElevation="0dp"
+            style="?attr/materialCardViewFilledStyle">
+            <ImageView
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:padding="5dp"
+                android:src="@drawable/ic_google" />
+        </com.google.android.material.card.MaterialCardView>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/Ingresar_google"
-            android:text="@string/Ingresar_google"
-            android:textAllCaps="true"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/m_button_height"
-            app:cornerRadius="8dp"
-            app:backgroundTint="@color/brown"/>
+            android:layout_height="64dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="20dp"
+            android:text="@string/Ingresar_google"
+            android:textAppearance="?attr/textAppearanceTitleMedium"
+            app:cornerRadius="16dp"
+            style="@style/Widget.Material3.Button" />
 
-    </androidx.appcompat.widget.LinearLayoutCompat>
+        <!-- Opción Email -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="28dp"
+            app:cardElevation="0dp"
+            style="?attr/materialCardViewFilledStyle">
+            <ImageView
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:padding="20dp"
+                android:src="@drawable/ic_email" />
+        </com.google.android.material.card.MaterialCardView>
 
-</RelativeLayout>
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/Ingresar_email"
+            android:layout_width="match_parent"
+            android:layout_height="64dp"
+            android:layout_marginTop="16dp"
+            android:text="@string/Ingresar_email"
+            android:textAppearance="?attr/textAppearanceTitleMedium"
+            app:cornerRadius="16dp"
+            style="@style/Widget.Material3.Button.TonalButton" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="40dp" />
+
+
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

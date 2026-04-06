@@ -13,6 +13,7 @@ import com.example.applacasadelbordadito.Fragmentos.FragmentBordado
 import com.example.applacasadelbordadito.Fragmentos.FragmentCafe
 import com.example.applacasadelbordadito.Fragmentos.FragmentCuenta
 import com.example.applacasadelbordadito.Fragmentos.FragmentInicio
+import com.example.applacasadelbordadito.Taller.TallerActivity
 import com.example.applacasadelbordadito.databinding.ActivityMainBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -48,6 +49,11 @@ class MainActivity : AppCompatActivity() {
             startActivity(Intent(this, HistorialActivity::class.java))
         }
 
+        // Configurar el click en el botón flotante del Taller
+        binding.FAB.setOnClickListener {
+            startActivity(Intent(this, TallerActivity::class.java))
+        }
+
         escucharCarrito()
 
         verFragmentInicio()
@@ -70,6 +76,11 @@ class MainActivity : AppCompatActivity() {
                 R.id.Item_Cafe->{
                     verFragmentCafe()
                     true
+                }
+                R.id.Item_Taller->{
+                    // También abrimos TallerActivity si se presiona el item del menú
+                    startActivity(Intent(this, TallerActivity::class.java))
+                    false // false para que no se quede seleccionado el item vacío
                 }
                 R.id.Item_Bordado->{
                     verFragmentBordado()

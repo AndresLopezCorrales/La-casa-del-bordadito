@@ -50,6 +50,7 @@
         <activity android:name=".Carrito.CarritoActivity"/>
         <activity android:name=".Carrito.QRActivity"/>
         <activity android:name=".Historial.HistorialActivity"/>
+        <activity android:name=".Taller.TallerActivity"/>
 
 
     </application>
