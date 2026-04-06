@@ -22,6 +22,7 @@ zxingAndroidEmbeddedV = "4.3.0"
 glideV="5.0.5"
 ccpV="2.7.0"
 firebaseStorageV = "22.0.1"
+gsonV = "2.10.1"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -45,6 +46,7 @@ zxing-android-embedded = { group = "com.journeyapps", name = "zxing-android-embe
 glide = {group = "com.github.bumptech.glide", name = "glide", version.ref = "glideV"}
 ccp = {group = "com.hbb20", name = "ccp", version.ref = "ccpV"}
 firebaseStorage = {group = "com.google.firebase", name = "firebase-storage", version.ref = "firebaseStorageV" }
+googleGson = { group = "com.google.code.gson", name = "gson", version.ref = "gsonV" }
 
 
 [plugins]

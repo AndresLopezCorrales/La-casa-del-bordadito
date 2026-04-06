@@ -83,7 +83,7 @@ class CarritoAdapter(private val lista: MutableList<CarritoItem>) :
             .collection("carritos")
             .document(user.uid)
             .collection("items")
-            .document("${item.cafeId}_${item.tamano}")
+            .document("${item.carritoItemId}_${item.tamano}")
             .update("cantidad", cantidad)
     }
 
@@ -95,7 +95,7 @@ class CarritoAdapter(private val lista: MutableList<CarritoItem>) :
             .collection("carritos")
             .document(user.uid)
             .collection("items")
-            .document("${item.cafeId}_${item.tamano}")
+            .document("${item.carritoItemId}_${item.tamano}")
             .delete()
     }
 

@@ -27,37 +27,13 @@
 
     <string name="cafe_catalog_title">Catálogo de Cafés</string>
 
-    <string name="embroidery_catalog_title">Catálogo de Bordados</string>
+    <!-- Bordado -->
+    <string name="Titulo_catalogo_bordado">Catálogo de Bordados</string>
+    <string name="Btn_anadir_bordado">Añadir</string>
+    <string name="Titulo_bordando_patron">Bordando Patrón</string>
+    <string name="Btn_titulo_info_punto_cruz">Información de bordados</string>
+    <string name="Btn_reiniciar_patron">Reiniciar</string>
 
-    <!-- Bordado 1 -->
-    <string name="embroidery1_name">Bordado Flores</string>
-    <string name="embroidery1_description">Diseño elegante con flores detalladas y colores vibrantes.</string>
-    <string name="embroidery1_price">$250 MXN</string>
-
-    <!-- Bordado 2 -->
-    <string name="embroidery2_name">Bordado Superhéroe</string>
-    <string name="embroidery2_description">Bordado de superhéroe</string>
-    <string name="embroidery2_price">$300 MXN</string>
-
-    <!-- Bordado 3 -->
-    <string name="embroidery3_name">Bordado Punto Francés</string>
-    <string name="embroidery3_description">Bordado al estilo de punto francés</string>
-    <string name="embroidery3_price">$220 MXN</string>
-
-    <!-- Bordado 4 -->
-    <string name="embroidery4_name">Bordado en Tote Bag</string>
-    <string name="embroidery4_description">Bordado realizado en una Tote Bag</string>
-    <string name="embroidery4_price">$350 MXN</string>
-
-    <!-- Bordado 5 -->
-    <string name="embroidery5_name">Bordado Anime</string>
-    <string name="embroidery5_description">Bordado con personajes de Anime/Manga</string>
-    <string name="embroidery5_price">$400 MXN</string>
-
-    <!-- Bordado 6 -->
-    <string name="embroidery6_name">Bordado Vibrante</string>
-    <string name="embroidery6_description">Bordado con estilo vibrante</string>
-    <string name="embroidery6_price">$280 MXN</string>
 
     <!-- Carrito -->
     <string name="Titulo_carrito">Mi Carrito</string>
@@ -81,9 +57,6 @@
     <!-- Globales -->
     <string name="Btn_agregar_carrito">Agregar al carrito</string>
     <string name="Btn_ir_inicio">Volver al Inicio</string>
-
-
-
 
     <!--Perfil de Usuario-->
     <string name="Txt_perfil">Perfil de usuario</string>

@@ -66,7 +66,7 @@ class DetalleCafeActivity : AppCompatActivity() {
             }
 
             val item = CarritoItem(
-                cafeId = cafeActual!!.id,
+                carritoItemId = cafeActual!!.id,
                 nombre = cafeActual!!.nombre,
                 tamano = tamano,
                 precio = precio,
@@ -75,7 +75,7 @@ class DetalleCafeActivity : AppCompatActivity() {
 
             val db = FirebaseFirestore.getInstance()
             val carritoRef = db.collection("carritos").document(user.uid).collection("items")
-            val itemId = "${item.cafeId}_${item.tamano}"
+            val itemId = "${item.carritoItemId}_${item.tamano}"
             val docRef = carritoRef.document(itemId)
 
             docRef.get().addOnSuccessListener { document ->
