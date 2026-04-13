@@ -45,7 +45,6 @@ class FragmentBordado : Fragment() {
     private val db = FirebaseDatabase.getInstance().reference
     private val auth = FirebaseAuth.getInstance()
     private var patronActual: PatronBordado? = null
-
     private val MY_ADMIN_UID = "P3bMLh6zQcd60w0QX5nHN1hOiHe2"
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -71,7 +70,7 @@ class FragmentBordado : Fragment() {
             }
         })
     }
-    
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_bordado, container, false)
 
