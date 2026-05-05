@@ -3,4 +3,9 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="brown">#513B29</color>
+    <color name="silver">#BFB5AF</color>
+    <color name="bone">#ECE2D0</color>
+    <color name="almond_silk">#D5B9B2</color>
+    <color name="stone_brown">#5B5750</color>
+    <color name="dark_coffee">#33261D</color>
 </resources>

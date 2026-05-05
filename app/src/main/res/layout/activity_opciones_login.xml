@@ -5,87 +5,103 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?attr/colorSurface"
-    android:padding="24dp"
+    android:background="@drawable/fondo_final_login"
+    android:padding="48dp"
     tools:context=".OpcionesLogin">
 
+    <!-- Título en la parte superior -->
     <TextView
         android:id="@+id/tvAppTitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="48dp"
         android:text="@string/Titulo_app"
         android:textAlignment="center"
         android:textAppearance="?attr/textAppearanceHeadlineLarge"
-        android:textColor="?attr/colorOnSurface"
+        android:textColor="@color/dark_coffee"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <!-- Logo de la empresa (La casa del bordadito) -->
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/logoContainer"
+        android:layout_width="140dp"
+        android:layout_height="140dp"
+        android:layout_marginTop="24dp"
+        app:cardBackgroundColor="@color/silver"
+        app:cardCornerRadius="70dp"
+        app:cardElevation="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvAppTitle"
+        style="?attr/materialCardViewFilledStyle">
+
+        <ImageView
+            android:id="@+id/ivLogo"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="20dp"
+            android:src="@drawable/ic_launcher_foreground"
+            android:contentDescription="Logo de la empresa" />
+    </com.google.android.material.card.MaterialCardView>
+
+    <!-- Contenedor de opciones de Login -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
         android:orientation="vertical"
+        android:layout_marginBottom="40dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvAppTitle"
-        app:layout_constraintVertical_bias="0.45">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
 
-        <!-- Opción Google -->
-        <com.google.android.material.card.MaterialCardView
-            android:layout_width="wrap_content"
+        <TextView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:cardCornerRadius="28dp"
-            app:cardElevation="0dp"
-            style="?attr/materialCardViewFilledStyle">
-            <ImageView
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:padding="5dp"
-                android:src="@drawable/ic_google" />
-        </com.google.android.material.card.MaterialCardView>
+            android:text="Ingresa para continuar"
+            android:textAlignment="center"
+            android:textColor="@color/stone_brown"
+            android:layout_marginBottom="24dp"
+            android:textAppearance="?attr/textAppearanceBodyLarge" />
 
+        <!-- Botón Google con Icono Integrado -->
         <com.google.android.material.button.MaterialButton
             android:id="@+id/Ingresar_google"
             android:layout_width="match_parent"
             android:layout_height="64dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="20dp"
             android:text="@string/Ingresar_google"
-            android:textAppearance="?attr/textAppearanceTitleMedium"
+            android:textAllCaps="false"
+            android:textColor="@color/bone"
+            app:backgroundTint="@color/dark_coffee"
+            app:icon="@drawable/ic_google"
+            app:iconGravity="textStart"
+            app:iconPadding="12dp"
+            app:iconSize="24dp"
+            app:iconTint="@null"
             app:cornerRadius="16dp"
             style="@style/Widget.Material3.Button" />
 
-        <!-- Opción Email -->
-        <com.google.android.material.card.MaterialCardView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:cardCornerRadius="28dp"
-            app:cardElevation="0dp"
-            style="?attr/materialCardViewFilledStyle">
-            <ImageView
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:padding="20dp"
-                android:src="@drawable/ic_email" />
-        </com.google.android.material.card.MaterialCardView>
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="16dp" />
 
+        <!-- Botón Email con Icono Integrado -->
         <com.google.android.material.button.MaterialButton
             android:id="@+id/Ingresar_email"
             android:layout_width="match_parent"
             android:layout_height="64dp"
-            android:layout_marginTop="16dp"
             android:text="@string/Ingresar_email"
-            android:textAppearance="?attr/textAppearanceTitleMedium"
+            android:textAllCaps="false"
+            android:textColor="@color/dark_coffee"
+            app:backgroundTint="@color/almond_silk"
+            app:icon="@drawable/ic_email"
+            app:iconGravity="textStart"
+            app:iconPadding="12dp"
+            app:iconSize="32dp"
             app:cornerRadius="16dp"
             style="@style/Widget.Material3.Button.TonalButton" />
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="40dp" />
-
-
 
     </LinearLayout>
 
