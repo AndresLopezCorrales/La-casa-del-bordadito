@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Paleta Base -->
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="brown">#513B29</color>
@@ -8,4 +9,23 @@
     <color name="almond_silk">#D5B9B2</color>
     <color name="stone_brown">#5B5750</color>
     <color name="dark_coffee">#33261D</color>
+
+    <!-- Nuevos Colores Complementarios (Estética Natural/Artesanal) -->
+    <color name="terracotta">#A66D52</color>
+    <color name="sage_green">#828D71</color>
+    <color name="warm_gold">#C6A664</color>
+    <color name="light_sand">#F5F0E1</color>
+
+    <!-- Variantes Café -->
+    <color name="espresso">#1C0F0A</color>
+    <color name="dark_roast">#2E1A0E</color>
+    <color name="mocha">#4A2C1A</color>
+    <color name="chestnut">#6B3A2A</color>
+    <color name="cinnamon">#8B4C2A</color>
+    <color name="caramel">#B5652A</color>
+    <color name="latte">#C8956C</color>
+    <color name="cappuccino">#D4A882</color>
+    <color name="oat_milk">#E8D5B7</color>
+    <color name="cream_foam">#F2E8D9</color>
+    <color name="vanilla">#FAF3E8</color>
 </resources>

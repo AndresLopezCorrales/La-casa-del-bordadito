@@ -5,13 +5,17 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/light_sand"
     tools:context=".MainActivity">
 
+    <!-- TOOLBAR -->
     <RelativeLayout
         android:id="@+id/ToolbarRL"
         android:layout_width="match_parent"
         android:layout_height="64dp"
-        android:paddingHorizontal="16dp">
+        android:paddingHorizontal="16dp"
+        android:background="@color/dark_coffee"
+        android:elevation="4dp">
 
         <TextView
             android:id="@+id/TituloRL"
@@ -19,8 +23,10 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:text="Inicio"
-            android:textAppearance="?attr/textAppearanceTitleLarge"
-            android:textStyle="bold" />
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="@color/bone"
+            android:letterSpacing="0.02" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -36,16 +42,16 @@
                 android:layout_height="48dp"
                 android:padding="12dp"
                 android:src="@drawable/ic_history"
-                android:background="?attr/selectableItemBackgroundBorderless"
+                android:background="@drawable/bg_ripple_dark"
                 android:clickable="true"
                 android:focusable="true"
-                app:tint="?attr/colorOnSurface" />
+                app:tint="@color/almond_silk" />
 
             <FrameLayout
                 android:id="@+id/btnCarrito"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
-                android:background="?attr/selectableItemBackgroundBorderless"
+                android:background="@drawable/bg_ripple_dark"
                 android:clickable="true"
                 android:focusable="true">
 
@@ -54,7 +60,7 @@
                     android:layout_height="24dp"
                     android:layout_gravity="center"
                     android:src="@drawable/ic_cart"
-                    app:tint="?attr/colorOnSurface" />
+                    app:tint="@color/almond_silk" />
 
                 <TextView
                     android:id="@+id/badgeCarrito"
@@ -66,7 +72,7 @@
                     android:background="@drawable/bg_badge"
                     android:gravity="center"
                     android:text="0"
-                    android:textColor="@android:color/white"
+                    android:textColor="@color/bone"
                     android:textSize="10sp"
                     android:textStyle="bold"
                     android:visibility="gone" />
@@ -79,32 +85,40 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_alignParentBottom="true"
-            android:background="?attr/colorOutlineVariant" />
+            android:background="@color/brown" />
 
     </RelativeLayout>
 
+    <!-- CONTENIDO PRINCIPAL -->
     <FrameLayout
         android:id="@+id/FragmentL1"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@id/View1"
-        android:layout_below="@+id/ToolbarRL" />
+        android:layout_below="@+id/ToolbarRL"
+        android:background="@color/light_sand" />
 
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/BottomNV"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        app:labelVisibilityMode="labeled"
-        app:menu="@menu/mi_menu" />
-
+    <!-- DIVISOR SUPERIOR DEL NAV -->
     <View
         android:id="@+id/View1"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_above="@id/BottomNV"
-        android:background="?attr/colorOutlineVariant" />
+        android:background="@color/silver" />
 
+    <!-- BOTTOM NAVIGATION -->
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/BottomNV"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/dark_coffee"
+        app:labelVisibilityMode="labeled"
+        app:itemTextColor="@color/silver"
+        app:itemIconTint="@drawable/bottom_nav_selector"
+        app:menu="@menu/mi_menu" />
+
+    <!-- FAB -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/FAB"
         android:layout_width="wrap_content"
@@ -112,6 +126,10 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="40dp"
-        android:src="@drawable/ic_taller" />
+        android:src="@drawable/ic_taller"
+        app:backgroundTint="@color/terracotta"
+        app:tint="@color/light_sand"
+        app:borderWidth="0dp"
+        app:elevation="6dp" />
 
 </RelativeLayout>

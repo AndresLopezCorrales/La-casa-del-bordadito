@@ -5,26 +5,30 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="8dp"
-    app:cardCornerRadius="16dp"
-    app:cardElevation="2dp"
-    style="?attr/materialCardViewFilledStyle">
+    android:layout_margin="10dp"
+    app:cardCornerRadius="24dp"
+    app:cardElevation="4dp"
+    app:cardBackgroundColor="@color/white"
+    app:strokeColor="@color/silver"
+    app:strokeWidth="1dp"
+    style="?attr/materialCardViewOutlinedStyle">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:background="@color/bone">
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="160dp">
+            android:layout_height="180dp">
 
             <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/imgPatron"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop"
-                android:background="?attr/colorSurfaceContainerHigh"
+                android:background="@color/white"
                 app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.LargeComponent" />
 
             <!-- Badge de porcentaje -->
@@ -34,12 +38,12 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentEnd="true"
-                android:layout_margin="8dp"
+                android:layout_margin="12dp"
                 android:background="@drawable/bg_badge"
-                android:paddingHorizontal="8dp"
-                android:paddingVertical="4dp"
+                android:paddingHorizontal="12dp"
+                android:paddingVertical="6dp"
                 android:text="0%"
-                android:textColor="@android:color/white"
+                android:textColor="@color/white"
                 android:textSize="12sp"
                 android:textStyle="bold"
                 tools:visibility="visible" />
@@ -50,39 +54,57 @@
             android:id="@+id/txtNombrePatron"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingHorizontal="12dp"
-            android:paddingTop="12dp"
+            android:paddingHorizontal="16dp"
+            android:paddingTop="16dp"
             android:paddingBottom="4dp"
             android:text="Nombre del Bordado"
             android:textAppearance="?attr/textAppearanceTitleMedium"
-            android:textColor="?attr/colorOnSurface"
+            android:textColor="@color/dark_coffee"
+            android:textStyle="bold"
             android:gravity="center" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/Txt_progreso"
+            android:textSize="11sp"
+            android:textColor="@color/stone_brown"
+            android:textAllCaps="true"
+            android:letterSpacing="0.1"
+            android:layout_marginBottom="4dp"/>
 
         <!-- Barra de progreso miniatura -->
         <com.google.android.material.progressindicator.LinearProgressIndicator
             android:id="@+id/progressItem"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginHorizontal="12dp"
-            app:trackThickness="4dp"
-            app:trackCornerRadius="2dp"
-            app:indicatorColor="?attr/colorPrimary"
+            android:layout_marginBottom="16dp"
+            android:layout_marginHorizontal="32dp"
+            app:trackThickness="8dp"
+            app:trackCornerRadius="4dp"
+            app:indicatorColor="@color/brown"
+            app:trackColor="@color/silver"
             android:max="100"
-            android:progress="0" />
+            android:progress="30"
+            tools:progress="30" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnAnadirCarritoItem"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="12dp"
-            android:layout_marginBottom="12dp"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginBottom="20dp"
             android:text="@string/Btn_anadir_bordado"
-            android:textSize="12sp"
+            android:textSize="14sp"
+            android:textColor="@color/white"
             app:icon="@drawable/ic_cart"
-            app:iconSize="16dp"
-            app:cornerRadius="8dp"
-            style="@style/Widget.Material3.Button.TonalButton" />
+            app:iconSize="20dp"
+            app:iconTint="@color/white"
+            app:backgroundTint="@color/brown"
+            app:cornerRadius="16dp"
+            app:rippleColor="@color/almond_silk"
+            style="@style/Widget.Material3.Button" />
 
     </LinearLayout>
 </com.google.android.material.card.MaterialCardView>

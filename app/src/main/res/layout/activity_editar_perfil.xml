@@ -1,145 +1,240 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="10dp"
+    android:background="@color/light_sand"
+    android:fillViewport="true"
     tools:context=".Perfil.EditarPerfil">
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:paddingBottom="32dp">
 
-        <TextView
-            android:id="@+id/Txt_editar_p"
-            android:text="@string/Txt_editar_perfil"
-            android:gravity="center"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:layout_marginTop="15dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-
-        <!-- Imagen de perfil -->
+        <!-- ── ENCABEZADO ── -->
         <RelativeLayout
-            android:id="@+id/perfilRL"
-            android:layout_below="@id/Txt_editar_p"
-            android:layout_marginTop="15dp"
-            android:layout_centerHorizontal="true"
-            android:layout_width="120dp"
-            android:layout_height="120dp">
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="20dp">
 
-            <ImageView
+            <ImageButton
+                android:id="@+id/BtnRegresar"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="@string/Btn_regresar"
+                android:src="@drawable/ic_back"
+                app:tint="@color/dark_coffee" />
+
+            <TextView
+                android:id="@+id/Txt_editar_p"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:letterSpacing="0.02"
+                android:text="@string/Txt_editar_perfil"
+                android:textColor="@color/dark_coffee"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+        </RelativeLayout>
+
+        <!-- ── FOTO DE PERFIL ── -->
+        <FrameLayout
+            android:id="@+id/perfilRL"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="24dp">
+
+            <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/img_perfil"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
                 android:src="@drawable/img_perfil"
                 android:scaleType="centerCrop"
-                android:layout_width="120dp"
-                android:layout_height="120dp" />
+                app:strokeColor="@color/bone"
+                app:strokeWidth="3dp"
+                app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Full" />
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/FABCambiarImg"
-                android:layout_alignParentEnd="true"
-                app:fabSize="mini"
-                android:src="@drawable/ic_selec_imagen"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|end"
+                app:backgroundTint="@color/terracotta"
+                app:tint="@color/light_sand"
+                app:fabCustomSize="34dp"
+                app:maxImageSize="16dp"
+                app:borderWidth="0dp"
+                app:elevation="4dp"
+                app:srcCompat="@drawable/ic_selec_imagen" />
 
+        </FrameLayout>
 
-        </RelativeLayout>
+        <!-- ── SECTION LABEL ── -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:text="DATOS PERSONALES"
+            android:textColor="@color/terracotta"
+            android:textSize="11sp"
+            android:textStyle="bold"
+            android:letterSpacing="0.12" />
 
-        <!-- Nombres -->
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/TILNombres"
+        <!-- ── CARD FORMULARIO ── -->
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/perfilRL"
-            android:layout_marginTop="10dp"
-            app:boxCornerRadiusTopStart="8dp"
-            app:boxCornerRadiusBottomEnd="8dp"
-            app:boxCornerRadiusTopEnd="8dp"
-            app:boxCornerRadiusBottomStart="8dp" >
+            android:orientation="vertical"
+            android:background="@drawable/bg_card_bone"
+            android:clipToOutline="true"
+            android:padding="14dp">
 
-            <EditText
-                android:id="@+id/Et_nombres"
-                android:hint="@string/Et_nombres"
-                android:inputType="textPersonName"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <!-- Fecha de nac-->
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/TIL_Nac"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/TILNombres"
-            android:layout_marginTop="10dp"
-            app:boxCornerRadiusTopStart="8dp"
-            app:boxCornerRadiusBottomEnd="8dp"
-            app:boxCornerRadiusTopEnd="8dp"
-            app:boxCornerRadiusBottomStart="8dp" >
-
-            <EditText
-                android:id="@+id/Et_f_nac"
-                android:hint="@string/Et_f_nac"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <!-- Código de país + Número telefónico-->
-        <RelativeLayout
-            android:id="@+id/RL_Cod_Tel"
-            android:layout_below="@id/TIL_Nac"
-            android:layout_marginTop="10dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <com.hbb20.CountryCodePicker
-                android:id="@+id/selectorCod"
-                android:gravity="center"
-                app:ccp_rememberLastSelection="true"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-
-            <!-- Número telefonico-->
+            <!-- Nombres -->
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/TILNombres"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/selectorCod"
-                android:layout_marginTop="10dp"
-                app:boxCornerRadiusTopStart="8dp"
-                app:boxCornerRadiusBottomEnd="8dp"
-                app:boxCornerRadiusTopEnd="8dp"
-                app:boxCornerRadiusBottomStart="8dp" >
+                android:layout_marginBottom="12dp"
+                android:hint="@string/Et_nombres"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                app:boxStrokeWidthFocused="1.5dp"
+                app:boxStrokeColor="@color/dark_coffee"
+                app:hintTextColor="@color/brown"
+                android:textColorHint="@color/brown"
+                app:boxCornerRadiusTopStart="10dp"
+                app:boxCornerRadiusTopEnd="10dp"
+                app:boxCornerRadiusBottomStart="10dp"
+                app:boxCornerRadiusBottomEnd="10dp"
+                app:boxBackgroundColor="@color/bone">
 
-                <EditText
-                    android:id="@+id/Et_telefono"
-                    android:hint="@string/Et_telefono"
-                    android:inputType="number"
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/Et_nombres"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:inputType="textPersonName"
+                    android:textColor="@color/dark_coffee"
+                    android:textSize="14sp" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
+            <!-- Fecha de nacimiento -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/TIL_Nac"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                android:hint="@string/Et_f_nac"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                app:boxStrokeWidthFocused="1.5dp"
+                app:boxStrokeColor="@color/dark_coffee"
+                app:hintTextColor="@color/brown"
+                android:textColorHint="@color/brown"
+                app:boxCornerRadiusTopStart="10dp"
+                app:boxCornerRadiusTopEnd="10dp"
+                app:boxCornerRadiusBottomStart="10dp"
+                app:boxCornerRadiusBottomEnd="10dp"
+                app:boxBackgroundColor="@color/bone"
+                app:endIconMode="custom"
+                app:endIconTint="@color/stone_brown">
 
-        </RelativeLayout>
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/Et_f_nac"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/dark_coffee"
+                    android:textSize="14sp" />
 
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Separador label teléfono -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:text="TELÉFONO"
+                android:textColor="@color/terracotta"
+                android:textSize="10sp"
+                android:textStyle="bold"
+                android:letterSpacing="0.12" />
+
+            <!-- Código de país + Número -->
+            <LinearLayout
+                android:id="@+id/RL_Cod_Tel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:background="@drawable/bg_input_outline"
+                android:clipToOutline="true">
+
+                <com.hbb20.CountryCodePicker
+                    android:id="@+id/selectorCod"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="8dp"
+                    app:ccp_rememberLastSelection="true"
+                     />
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="28dp"
+                    android:background="@color/silver"
+                    android:layout_marginHorizontal="4dp" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:hint="@string/Et_telefono"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    app:boxStrokeColor="@android:color/transparent"
+                    app:boxStrokeWidth="0dp"
+                    app:boxStrokeWidthFocused="0dp"
+                    app:hintTextColor="@color/brown"
+                    android:textColorHint="@color/brown"
+                    app:boxBackgroundColor="@android:color/transparent">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/Et_telefono"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="phone"
+                        android:textColor="@color/dark_coffee"
+                        android:textSize="14sp" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <!-- ── BOTÓN ACTUALIZAR ── -->
         <com.google.android.material.button.MaterialButton
             android:id="@+id/Btn_actualizar"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:layout_marginTop="24dp"
             android:text="@string/Btn_actualizar"
-            android:textAllCaps="true"
-            android:layout_centerInParent="true"
-            android:layout_below="@id/RL_Cod_Tel"
-            android:layout_marginTop="15dp"
+            android:textColor="@color/bone"
+            android:textStyle="bold"
+            android:letterSpacing="0.08"
+            app:backgroundTint="@color/dark_coffee"
+            app:cornerRadius="14dp"
             app:icon="@drawable/ic_editar"
-            android:layout_width="200dp"
-            android:layout_height="@dimen/m_button_height" />
+            app:iconTint="@color/almond_silk"
+            app:iconGravity="textStart" />
 
-    </RelativeLayout>
+    </LinearLayout>
 
-</RelativeLayout>
+</ScrollView>

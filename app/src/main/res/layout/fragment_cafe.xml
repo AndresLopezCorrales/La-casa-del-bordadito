@@ -1,60 +1,127 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?attr/colorSurface"
     tools:context=".Fragmentos.FragmentCafe">
 
+    <!-- ── APPBAR ── -->
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@android:color/transparent"
-        app:elevation="0dp">
+        app:elevation="0dp"
+        app:liftOnScroll="false">
 
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingHorizontal="16dp"
-            android:paddingTop="24dp"
-            android:paddingBottom="8dp">
+            android:paddingTop="32dp"
+            android:paddingBottom="16dp">
 
             <TextView
                 android:id="@+id/txtTitulo"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/cafe_catalog_title"
-                android:textAppearance="?attr/textAppearanceHeadlineLarge"
-                android:layout_gravity="center"
+                android:textAppearance="?attr/textAppearanceHeadlineMedium"
+                android:textColor="@color/dark_coffee"
                 android:textStyle="bold"
-                android:textColor="?attr/colorOnSurface" />
+                android:gravity="center"
+                android:letterSpacing="0.05" />
 
         </com.google.android.material.appbar.MaterialToolbar>
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/silver" />
+
     </com.google.android.material.appbar.AppBarLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerCafes"
+    <!-- ── CONTENIDO ── -->
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:clipToPadding="false"
-        android:paddingHorizontal="8dp"
-        android:paddingBottom="80dp"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        tools:listitem="@layout/item_cafe" />
+        android:orientation="vertical"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
+        <!-- Toggle view type -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="end"
+            android:paddingHorizontal="16dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="6dp">
+
+            <com.google.android.material.button.MaterialButtonToggleGroup
+                android:id="@+id/toggleViewType"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:checkedButton="@id/btnGrid"
+                app:selectionRequired="true"
+                app:singleSelection="true">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnGrid"
+                    style="@style/Widget.Material3.Button.OutlinedButton"
+                    android:layout_width="44dp"
+                    android:layout_height="36dp"
+                    android:padding="0dp"
+                    app:icon="@drawable/ic_grid_view"
+                    app:iconGravity="textStart"
+                    app:iconPadding="0dp"
+                    app:iconTint="@color/stone_brown"
+                    app:strokeColor="@color/silver"
+                    app:iconSize="18dp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnList"
+                    style="@style/Widget.Material3.Button.OutlinedButton"
+                    android:layout_width="44dp"
+                    android:layout_height="36dp"
+                    android:padding="0dp"
+                    app:icon="@drawable/ic_list_view"
+                    app:iconGravity="textStart"
+                    app:iconPadding="0dp"
+                    app:iconTint="@color/stone_brown"
+                    app:strokeColor="@color/silver"
+                    app:iconSize="18dp" />
+
+            </com.google.android.material.button.MaterialButtonToggleGroup>
+
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerCafes"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:clipToPadding="false"
+            android:paddingHorizontal="8dp"
+            android:paddingBottom="80dp"
+            tools:listitem="@layout/item_cafe" />
+
+    </LinearLayout>
+
+    <!-- ── FAB ── -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabAddCafe"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
-        android:layout_margin="16dp"
+        android:layout_margin="24dp"
         android:src="@drawable/ic_add"
         android:visibility="gone"
-        app:tint="@android:color/white"
-        app:backgroundTint="?attr/colorPrimary"
-        android:contentDescription="Agregar Café" />
+        android:contentDescription="Agregar Café"
+        app:tint="@color/light_sand"
+        app:backgroundTint="@color/terracotta"
+        app:borderWidth="0dp"
+        app:elevation="6dp" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

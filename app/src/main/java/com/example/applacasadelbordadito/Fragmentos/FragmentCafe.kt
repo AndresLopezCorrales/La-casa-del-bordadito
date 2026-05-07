@@ -5,14 +5,19 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.applacasadelbordadito.Cafe.AgregarCafeActivity
 import com.example.applacasadelbordadito.Cafe.Cafe
 import com.example.applacasadelbordadito.Cafe.CafeAdapter
+import com.example.applacasadelbordadito.Cafe.CafeInicioAdapter
+import com.example.applacasadelbordadito.Carrito.CarritoItem
 import com.example.applacasadelbordadito.DetalleCafeActivity
 import com.example.applacasadelbordadito.R
+import com.google.android.material.button.MaterialButtonToggleGroup
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -21,8 +26,10 @@ class FragmentCafe : Fragment() {
 
     private lateinit var recycler: RecyclerView
     private lateinit var fabAddCafe: FloatingActionButton
+    private lateinit var toggleViewType: MaterialButtonToggleGroup
     private val listaCafes = mutableListOf<Cafe>()
-    private lateinit var adapter: CafeAdapter
+    private lateinit var adapterGrid: CafeInicioAdapter
+    private lateinit var adapterList: CafeAdapter
     private val auth = FirebaseAuth.getInstance()
 
     private val MY_ADMIN_UID = "P3bMLh6zQcd60w0QX5nHN1hOiHe2"
@@ -36,6 +43,7 @@ class FragmentCafe : Fragment() {
 
         recycler = view.findViewById(R.id.recyclerCafes)
         fabAddCafe = view.findViewById(R.id.fabAddCafe)
+        toggleViewType = view.findViewById(R.id.toggleViewType)
 
         // Lógica de administrador para mostrar el botón
         if (auth.currentUser?.uid == MY_ADMIN_UID) {
@@ -46,16 +54,81 @@ class FragmentCafe : Fragment() {
             startActivity(Intent(requireContext(), AgregarCafeActivity::class.java))
         }
 
-        adapter = CafeAdapter(listaCafes) { cafeSeleccionado ->
-            abrirDetalleCafe(cafeSeleccionado)
-        }
-
-        recycler.layoutManager = LinearLayoutManager(requireContext())
-        recycler.adapter = adapter
+        setupAdapters()
+        setupViewTypeToggle()
 
         cargarCafes()
 
         return view
+    }
+
+    private fun setupAdapters() {
+        adapterGrid = CafeInicioAdapter(listaCafes, { cafe ->
+            anadirAlCarrito(cafe)
+        }, { cafe ->
+            abrirDetalleCafe(cafe)
+        })
+
+        adapterList = CafeAdapter(listaCafes) { cafe ->
+            abrirDetalleCafe(cafe)
+        }
+
+        // Default: Grid
+        recycler.layoutManager = GridLayoutManager(requireContext(), 2)
+        recycler.adapter = adapterGrid
+    }
+
+    private fun setupViewTypeToggle() {
+        toggleViewType.addOnButtonCheckedListener { _, checkedId, isChecked ->
+            if (isChecked) {
+                when (checkedId) {
+                    R.id.btnGrid -> {
+                        recycler.layoutManager = GridLayoutManager(requireContext(), 2)
+                        recycler.adapter = adapterGrid
+                    }
+                    R.id.btnList -> {
+                        recycler.layoutManager = LinearLayoutManager(requireContext())
+                        recycler.adapter = adapterList
+                    }
+                }
+            }
+        }
+    }
+
+    private fun anadirAlCarrito(cafe: Cafe) {
+        val user = auth.currentUser ?: return
+        val dbFirestore = FirebaseFirestore.getInstance()
+
+        val primerTamano = cafe.tamano.keys.firstOrNull() ?: "Mediano"
+        val precio = cafe.tamano[primerTamano] ?: 0.0
+
+        val item = CarritoItem(
+            carritoItemId = cafe.id,
+            nombre = cafe.nombre,
+            tamano = primerTamano,
+            precio = precio,
+            cantidad = 1,
+            imagenUrl = cafe.imagenUrl
+        )
+
+        val carritoRef = dbFirestore.collection("carritos").document(user.uid).collection("items")
+        val itemId = "${item.carritoItemId}_${item.tamano}"
+        val docRef = carritoRef.document(itemId)
+
+        docRef.get().addOnSuccessListener { document ->
+            if (document.exists()) {
+                val cantidadActual = document.getLong("cantidad") ?: 1
+                docRef.update("cantidad", cantidadActual + 1)
+                    .addOnSuccessListener {
+                        Toast.makeText(context, "Añadido al carrito", Toast.LENGTH_SHORT).show()
+                    }
+            } else {
+                docRef.set(item)
+                    .addOnSuccessListener {
+                        Toast.makeText(context, "Añadido al carrito", Toast.LENGTH_SHORT).show()
+                    }
+            }
+        }
     }
 
     private fun cargarCafes() {
@@ -72,7 +145,8 @@ class FragmentCafe : Fragment() {
                             listaCafes.add(cafe)
                         }
                     }
-                    adapter.notifyDataSetChanged()
+                    adapterGrid.notifyDataSetChanged()
+                    adapterList.notifyDataSetChanged()
                 }
             }
     }

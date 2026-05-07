@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?attr/colorSurface"
+    android:background="@color/light_sand"
     tools:context=".Taller.TallerActivity">
 
+    <!-- ── APPBAR ── -->
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@android:color/transparent"
+        android:background="@color/dark_coffee"
         app:elevation="0dp">
 
         <com.google.android.material.appbar.MaterialToolbar
@@ -18,12 +20,19 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             app:navigationIcon="@drawable/ic_back"
-            app:navigationIconTint="?attr/colorOnSurface"
+            app:navigationIconTint="@color/almond_silk"
             app:title="Taller Presencial"
+            app:titleTextColor="@color/bone"
             app:titleTextAppearance="?attr/textAppearanceTitleLarge" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/brown" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
+    <!-- ── CONTENIDO ── -->
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -34,16 +43,30 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:gravity="center">
+            android:gravity="center"
+            android:padding="16dp">
 
+            <!-- Section label -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:text="PRÓXIMO EVENTO"
+                android:textColor="@color/terracotta"
+                android:textSize="11sp"
+                android:textStyle="bold"
+                android:letterSpacing="0.12" />
+
+            <!-- Card flyer -->
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="16dp"
-                app:cardCornerRadius="24dp"
-                app:cardElevation="4dp"
-                app:strokeWidth="0dp"
-                style="?attr/materialCardViewFilledStyle">
+                android:layout_margin="0dp"
+                app:cardCornerRadius="14dp"
+                app:cardElevation="0dp"
+                app:strokeWidth="1dp"
+                app:strokeColor="@color/silver"
+                app:cardBackgroundColor="@color/bone">
 
                 <ImageView
                     android:id="@+id/ivFlyerTaller"
@@ -59,6 +82,7 @@
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 
+    <!-- ── FAB EDITAR ── -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/FABCambiarFlyer"
         android:layout_width="wrap_content"
@@ -66,9 +90,13 @@
         android:layout_gravity="bottom|end"
         android:layout_margin="24dp"
         android:visibility="gone"
+        android:contentDescription="Cambiar Poster"
+        app:backgroundTint="@color/terracotta"
+        app:tint="@color/light_sand"
         app:srcCompat="@drawable/ic_editar"
         app:fabCustomSize="56dp"
         app:maxImageSize="28dp"
-        android:contentDescription="Cambiar Poster" />
+        app:borderWidth="0dp"
+        app:elevation="6dp" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

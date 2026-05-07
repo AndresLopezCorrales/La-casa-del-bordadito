@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?attr/colorSurface"
     tools:context=".Fragmentos.FragmentInicio">
 
     <androidx.core.widget.NestedScrollView
@@ -73,16 +72,72 @@
                 layout="@layout/item_bordado_inicio"
                 android:visibility="gone" />
 
+            <!-- Header Cafés con Selector de Vista -->
+            <LinearLayout
+                android:id="@+id/layoutHeaderCafe"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:paddingHorizontal="16dp"
+                android:layout_marginTop="24dp"
+                android:visibility="visible">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Nuestros Cafés"
+                    android:textAppearance="?attr/textAppearanceTitleMedium"
+                    android:textColor="@color/dark_coffee"
+                    android:textStyle="bold" />
+
+                <com.google.android.material.button.MaterialButtonToggleGroup
+                    android:id="@+id/toggleViewType"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:checkedButton="@id/btnGrid"
+                    app:selectionRequired="true"
+                    app:singleSelection="true">
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnGrid"
+                        style="@style/Widget.Material3.Button.OutlinedButton"
+                        android:layout_width="48dp"
+                        android:layout_height="40dp"
+                        android:padding="0dp"
+                        app:icon="@drawable/ic_grid_view"
+                        app:iconGravity="textStart"
+                        app:iconPadding="0dp"
+                        app:iconTint="@color/stone_brown" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnList"
+                        style="@style/Widget.Material3.Button.OutlinedButton"
+                        android:layout_width="48dp"
+                        android:layout_height="40dp"
+                        android:padding="0dp"
+                        app:icon="@drawable/ic_list_view"
+                        app:iconGravity="textStart"
+                        app:iconPadding="0dp"
+                        app:iconTint="@color/stone_brown" />
+
+                </com.google.android.material.button.MaterialButtonToggleGroup>
+
+            </LinearLayout>
+
             <!-- Lista de Contenido -->
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerInicio"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="8dp"
                 android:clipToPadding="false"
                 android:nestedScrollingEnabled="false"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                tools:listitem="@layout/item_cafe" />
+                android:paddingHorizontal="8dp"
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                app:spanCount="2"
+                tools:listitem="@layout/item_cafe_no_desc" />
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>

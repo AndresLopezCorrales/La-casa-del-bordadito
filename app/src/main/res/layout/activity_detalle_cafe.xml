@@ -1,23 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?attr/colorSurface">
+    android:background="@color/light_sand">
 
+    <!-- ── APPBAR ── -->
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@android:color/transparent"
-        app:elevation="0dp">
+        android:background="@color/dark_coffee"
+        app:elevation="0dp"
+        app:liftOnScroll="false">
 
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             app:navigationIcon="@drawable/ic_back"
-            app:navigationIconTint="?attr/colorOnSurface" />
+            app:navigationIconTint="@color/almond_silk" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/brown" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -30,74 +38,112 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="20dp">
+            android:padding="16dp"
+            android:paddingBottom="32dp">
 
-            <!-- Imagen del Café con estilo M3 Expressive -->
-            <com.google.android.material.imageview.ShapeableImageView
-                android:id="@+id/imgCafe"
+            <!-- ── IMAGEN ── -->
+            <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
-                android:layout_height="300dp"
-                android:scaleType="centerCrop"
-                android:background="?attr/colorSurfaceContainerHigh"
-                app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Full" />
+                android:layout_height="280dp"
+                app:cardCornerRadius="14dp"
+                app:cardElevation="0dp"
+                app:strokeWidth="1dp"
+                app:strokeColor="@color/silver"
+                app:cardBackgroundColor="@color/bone">
 
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/imgCafe"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
+                    android:background="@color/bone" />
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- ── NOMBRE Y CATEGORÍA ── -->
             <TextView
                 android:id="@+id/txtNombre"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:textAppearance="?attr/textAppearanceHeadlineLarge"
-                android:textColor="?attr/colorOnSurface"
+                android:layout_marginTop="20dp"
+                android:textSize="26sp"
                 android:textStyle="bold"
+                android:textColor="@color/dark_coffee"
+                android:letterSpacing="0.02"
                 tools:text="Café Latte" />
 
             <TextView
                 android:id="@+id/txtCategoria"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:textAppearance="?attr/textAppearanceLabelLarge"
-                android:textColor="?attr/colorPrimary"
-                tools:text="Categoría: Bebidas Calientes" />
+                android:layout_marginTop="6dp"
+                android:background="@drawable/bg_badge_outline"
+                android:paddingHorizontal="10dp"
+                android:paddingVertical="3dp"
+                android:textSize="11sp"
+                android:textColor="@color/stone_brown"
+                tools:text="Bebidas Calientes" />
 
+            <!-- ── DESCRIPCIÓN ── -->
             <TextView
                 android:id="@+id/txtDescripcion"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:textAppearance="?attr/textAppearanceBodyLarge"
-                android:textColor="?attr/colorOnSurfaceVariant"
+                android:layout_marginTop="14dp"
+                android:textSize="14sp"
+                android:lineSpacingMultiplier="1.5"
+                android:textColor="@color/stone_brown"
                 tools:text="Una descripción deliciosa de este café especial preparado con granos seleccionados." />
 
-            <com.google.android.material.divider.MaterialDivider
+            <View
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginVertical="24dp" />
+                android:layout_height="1dp"
+                android:background="@color/silver"
+                android:layout_marginVertical="20dp" />
 
+            <!-- ── SECTION LABEL TAMAÑO ── -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
                 android:text="@string/Txt_tamano"
-                android:textAppearance="?attr/textAppearanceTitleMedium"
-                android:textColor="?attr/colorOnSurface"
-                android:textStyle="bold" />
+                android:textColor="@color/terracotta"
+                android:textSize="11sp"
+                android:textStyle="bold"
+                android:letterSpacing="0.12" />
 
-            <RadioGroup
-                android:id="@+id/radioPrecios"
+            <!-- ── CARD RADIO PRECIOS ── -->
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:orientation="vertical" />
+                android:orientation="vertical"
+                android:background="@drawable/bg_card_bone"
+                android:clipToOutline="true"
+                android:padding="14dp">
 
+                <RadioGroup
+                    android:id="@+id/radioPrecios"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical" />
+
+            </LinearLayout>
+
+            <!-- ── BOTÓN AGREGAR ── -->
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnAgregar"
                 android:layout_width="match_parent"
-                android:layout_height="64dp"
-                android:layout_marginTop="32dp"
-                android:layout_marginBottom="16dp"
+                android:layout_height="52dp"
+                android:layout_marginTop="24dp"
                 android:text="@string/Btn_agregar_carrito"
-                app:cornerRadius="16dp"
-                style="@style/Widget.Material3.Button.TonalButton" />
+                android:textColor="@color/bone"
+                android:textStyle="bold"
+                android:letterSpacing="0.08"
+                app:backgroundTint="@color/dark_coffee"
+                app:cornerRadius="14dp"
+                app:icon="@drawable/ic_cart"
+                app:iconTint="@color/almond_silk"
+                app:iconGravity="textStart" />
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>

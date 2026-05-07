@@ -1,25 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?attr/colorSurface">
+    android:background="@color/light_sand">
 
+    <!-- ── APPBAR ── -->
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@android:color/transparent"
-        app:elevation="0dp">
+        android:background="@color/dark_coffee"
+        app:elevation="0dp"
+        app:liftOnScroll="false">
 
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             app:title="@string/Titulo_carrito"
+            app:titleTextColor="@color/bone"
             app:titleTextAppearance="?attr/textAppearanceTitleLarge"
             app:navigationIcon="@drawable/ic_back"
-            app:navigationIconTint="?attr/colorOnSurface" />
+            app:navigationIconTint="@color/almond_silk" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/brown" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -29,71 +38,94 @@
         android:orientation="vertical"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
+        <!-- ── LISTA ── -->
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerCarrito"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
             android:clipToPadding="false"
-            android:padding="8dp"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
             tools:listitem="@layout/item_carrito" />
 
+        <!-- ── CARD TOTAL ── -->
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:cardCornerRadius="28dp"
-            app:cardElevation="8dp"
             android:layout_margin="16dp"
-            style="?attr/materialCardViewElevatedStyle">
+            app:cardCornerRadius="14dp"
+            app:cardElevation="0dp"
+            app:strokeWidth="1dp"
+            app:strokeColor="@color/silver"
+            app:cardBackgroundColor="@color/bone">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="20dp">
+                android:padding="16dp">
 
+                <!-- Fila total -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:gravity="center_vertical">
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="16dp">
 
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="@string/Txt_total_pagar"
-                        android:textAppearance="?attr/textAppearanceBodyLarge"
-                        android:textColor="?attr/colorOnSurfaceVariant" />
+                        android:textSize="14sp"
+                        android:textColor="@color/stone_brown" />
 
                     <TextView
                         android:id="@+id/txtTotal"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/Txt_total_pagar_numero"
-                        android:textAppearance="?attr/textAppearanceTitleLarge"
-                        android:textColor="?attr/colorOnSurface"
-                        android:textStyle="bold" />
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/dark_coffee" />
+
                 </LinearLayout>
 
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/silver"
+                    android:layout_marginBottom="16dp" />
+
+                <!-- Botón confirmar -->
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnComprar"
                     android:layout_width="match_parent"
-                    android:layout_height="64dp"
-                    android:layout_marginTop="20dp"
+                    android:layout_height="52dp"
                     android:text="@string/Btn_confirmar_compra"
-                    app:cornerRadius="16dp"
-                    style="@style/Widget.Material3.Button" />
+                    android:textColor="@color/bone"
+                    android:textStyle="bold"
+                    android:letterSpacing="0.08"
+                    app:backgroundTint="@color/dark_coffee"
+                    app:cornerRadius="14dp"
+                    app:icon="@drawable/ic_cart"
+                    app:iconTint="@color/almond_silk"
+                    app:iconGravity="textStart" />
 
+                <!-- Botón seguir comprando -->
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnSeguir"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="6dp"
                     android:text="@string/Btn_seguir_comprando"
+                    android:textColor="@color/stone_brown"
                     style="@style/Widget.Material3.Button.TextButton" />
 
             </LinearLayout>
+
         </com.google.android.material.card.MaterialCardView>
 
     </LinearLayout>

@@ -6,22 +6,34 @@
     android:layout_height="wrap_content"
     android:layout_marginHorizontal="16dp"
     android:layout_marginVertical="8dp"
-    app:cardCornerRadius="16dp"
-    app:cardElevation="0dp"
-    style="?attr/materialCardViewFilledStyle">
+    app:cardCornerRadius="24dp"
+    app:cardElevation="2dp"
+    app:cardBackgroundColor="@color/white"
+    app:strokeColor="@color/silver"
+    app:strokeWidth="1dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:padding="16dp"
+        android:padding="20dp"
         android:gravity="center_vertical">
 
-        <ImageView
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:src="@drawable/ic_history"
-            app:tint="?attr/colorPrimary" />
+        <!-- Contenedor del icono -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            app:cardCornerRadius="24dp"
+            app:cardElevation="0dp"
+            app:cardBackgroundColor="@color/bone">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_history"
+                app:tint="@color/brown" />
+        </com.google.android.material.card.MaterialCardView>
 
         <LinearLayout
             android:layout_width="0dp"
@@ -35,8 +47,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?attr/textAppearanceTitleMedium"
-                android:textColor="?attr/colorOnSurface"
-                tools:text="15/10/2023 14:30" />
+                android:textColor="@color/dark_coffee"
+                android:textStyle="bold"
+                tools:text="15 Oct, 2023 • 14:30" />
 
             <TextView
                 android:id="@+id/txtTotal"
@@ -44,17 +57,17 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:textAppearance="?attr/textAppearanceBodyMedium"
-                android:textColor="?attr/colorOnSurfaceVariant"
+                android:textColor="@color/stone_brown"
                 tools:text="Total: $150.00 MXN" />
 
         </LinearLayout>
 
         <ImageView
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             android:src="@drawable/ic_back"
             android:rotation="180"
-            app:tint="?attr/colorOutline" />
+            app:tint="@color/silver" />
 
     </LinearLayout>
 

@@ -7,20 +7,25 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.example.applacasadelbordadito.Cafe.Cafe
 import com.example.applacasadelbordadito.Cafe.CafeAdapter
+import com.example.applacasadelbordadito.Cafe.CafeInicioAdapter
 import com.example.applacasadelbordadito.DetalleCafeActivity
 import com.example.applacasadelbordadito.Bordado.PatronBordado
 import com.example.applacasadelbordadito.Bordado.PatronesAdapter
+import com.example.applacasadelbordadito.Carrito.CarritoItem
 import com.example.applacasadelbordadito.MainActivity
 import com.example.applacasadelbordadito.R
 import com.example.applacasadelbordadito.Taller.TallerActivity
 import com.example.applacasadelbordadito.databinding.FragmentInicioBinding
 import com.google.android.material.tabs.TabLayoutMediator
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.DataSnapshot
@@ -35,7 +40,8 @@ class FragmentInicio : Fragment() {
     private val listaCafes = mutableListOf<Cafe>()
     private val listaBordados = mutableListOf<PatronBordado>()
     
-    private lateinit var adapterCafe: CafeAdapter
+    private lateinit var adapterCafeGrid: CafeInicioAdapter
+    private lateinit var adapterCafeList: CafeAdapter
     private lateinit var adapterBordado: PatronesAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -49,6 +55,7 @@ class FragmentInicio : Fragment() {
         setupSlider()
         setupToggles()
         setupAdapters()
+        setupViewTypeToggle()
         
         cargarCafes()
         cargarBordados()
@@ -77,10 +84,17 @@ class FragmentInicio : Fragment() {
                     R.id.btnToggleCafe -> {
                         binding.recyclerInicio.visibility = View.VISIBLE
                         binding.layoutPosterBordado.root.visibility = View.GONE
-                        binding.recyclerInicio.adapter = adapterCafe
+                        binding.layoutHeaderCafe.visibility = View.VISIBLE
+                        
+                        if (binding.toggleViewType.checkedButtonId == R.id.btnGrid) {
+                            binding.recyclerInicio.adapter = adapterCafeGrid
+                        } else {
+                            binding.recyclerInicio.adapter = adapterCafeList
+                        }
                     }
                     R.id.btnToggleBordado -> {
                         binding.recyclerInicio.visibility = View.GONE
+                        binding.layoutHeaderCafe.visibility = View.GONE
                         binding.layoutPosterBordado.root.visibility = View.VISIBLE
                     }
                 }
@@ -89,18 +103,82 @@ class FragmentInicio : Fragment() {
     }
 
     private fun setupAdapters() {
-        adapterCafe = CafeAdapter(listaCafes) { cafe ->
-            val intent = Intent(requireContext(), DetalleCafeActivity::class.java)
-            intent.putExtra("cafeId", cafe.id)
-            startActivity(intent)
+        adapterCafeGrid = CafeInicioAdapter(listaCafes, { cafe ->
+            anadirAlCarrito(cafe)
+        }, { cafe ->
+            irADetalle(cafe)
+        })
+
+        adapterCafeList = CafeAdapter(listaCafes) { cafe ->
+            irADetalle(cafe)
         }
 
         adapterBordado = PatronesAdapter(listaBordados) { patron ->
             (activity as? MainActivity)?.verFragmentBordado(patron.id)
         }
 
-        binding.recyclerInicio.layoutManager = LinearLayoutManager(requireContext())
-        binding.recyclerInicio.adapter = adapterCafe
+        binding.recyclerInicio.layoutManager = GridLayoutManager(requireContext(), 2)
+        binding.recyclerInicio.adapter = adapterCafeGrid
+    }
+
+    private fun irADetalle(cafe: Cafe) {
+        val intent = Intent(requireContext(), DetalleCafeActivity::class.java)
+        intent.putExtra("cafeId", cafe.id)
+        startActivity(intent)
+    }
+
+    private fun setupViewTypeToggle() {
+        binding.toggleViewType.addOnButtonCheckedListener { _, checkedId, isChecked ->
+            if (isChecked) {
+                when (checkedId) {
+                    R.id.btnGrid -> {
+                        binding.recyclerInicio.layoutManager = GridLayoutManager(requireContext(), 2)
+                        binding.recyclerInicio.adapter = adapterCafeGrid
+                    }
+                    R.id.btnList -> {
+                        binding.recyclerInicio.layoutManager = LinearLayoutManager(requireContext())
+                        binding.recyclerInicio.adapter = adapterCafeList
+                    }
+                }
+            }
+        }
+    }
+
+    private fun anadirAlCarrito(cafe: Cafe) {
+        val user = FirebaseAuth.getInstance().currentUser ?: return
+        val dbFirestore = FirebaseFirestore.getInstance()
+
+        // Tomar el primer tamaño disponible como predeterminado
+        val primerTamano = cafe.tamano.keys.firstOrNull() ?: "Mediano"
+        val precio = cafe.tamano[primerTamano] ?: 0.0
+
+        val item = CarritoItem(
+            carritoItemId = cafe.id,
+            nombre = cafe.nombre,
+            tamano = primerTamano,
+            precio = precio,
+            cantidad = 1,
+            imagenUrl = cafe.imagenUrl
+        )
+
+        val carritoRef = dbFirestore.collection("carritos").document(user.uid).collection("items")
+        val itemId = "${item.carritoItemId}_${item.tamano}"
+        val docRef = carritoRef.document(itemId)
+
+        docRef.get().addOnSuccessListener { document ->
+            if (document.exists()) {
+                val cantidadActual = document.getLong("cantidad") ?: 1
+                docRef.update("cantidad", cantidadActual + 1)
+                    .addOnSuccessListener {
+                        Toast.makeText(context, "Añadido al carrito", Toast.LENGTH_SHORT).show()
+                    }
+            } else {
+                docRef.set(item)
+                    .addOnSuccessListener {
+                        Toast.makeText(context, "Añadido al carrito", Toast.LENGTH_SHORT).show()
+                    }
+            }
+        }
     }
 
     private fun cargarCafes() {
@@ -111,7 +189,8 @@ class FragmentInicio : Fragment() {
                 cafe.id = doc.id // CORRECCIÓN: Asignamos el ID del documento
                 listaCafes.add(cafe)
             }
-            adapterCafe.notifyDataSetChanged()
+            adapterCafeGrid.notifyDataSetChanged()
+            adapterCafeList.notifyDataSetChanged()
         }
     }
 

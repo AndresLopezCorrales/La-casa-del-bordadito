@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="horizontal"
-    android:padding="12dp"
+    android:padding="14dp"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginHorizontal="16dp"
+    android:layout_marginVertical="6dp"
+    android:background="@drawable/bg_card_bone"
+    android:clipToOutline="true"
     android:gravity="center_vertical">
 
     <!-- INFO DEL PRODUCTO -->
@@ -19,21 +23,26 @@
             android:id="@+id/txtNombreCarrito"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="18sp"
-            android:textStyle="bold" />
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:textColor="@color/dark_coffee" />
 
         <TextView
             android:id="@+id/txtDetallesCarrito"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="16sp" />
+            android:layout_marginTop="2dp"
+            android:textSize="12sp"
+            android:textColor="@color/stone_brown" />
 
         <TextView
             android:id="@+id/txtPrecioCarrito"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="16sp"
-            android:textStyle="bold" />
+            android:layout_marginTop="4dp"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:textColor="@color/terracotta" />
 
     </LinearLayout>
 
@@ -47,31 +56,43 @@
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnMenos"
             style="@style/Widget.Material3.Button.OutlinedButton"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
             android:text=""
             app:icon="@drawable/ic_remove"
             app:iconGravity="textStart"
             app:iconPadding="0dp"
+            app:iconTint="@color/dark_coffee"
+            app:strokeColor="@color/silver"
+            app:cornerRadius="10dp"
+            android:backgroundTint="@color/bone"
             android:layout_gravity="center" />
 
         <TextView
             android:id="@+id/txtCantidad"
             android:text="1"
-            android:textSize="18sp"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="@color/dark_coffee"
             android:padding="8dp"
+            android:minWidth="32dp"
+            android:gravity="center"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnMas"
             style="@style/Widget.Material3.Button.OutlinedButton"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
             android:text=""
             app:icon="@drawable/ic_add"
             app:iconGravity="textStart"
             app:iconPadding="0dp"
+            app:iconTint="@color/light_sand"
+            app:strokeWidth="0dp"
+            app:cornerRadius="10dp"
+            android:backgroundTint="@color/terracotta"
             android:layout_gravity="center" />
 
     </LinearLayout>

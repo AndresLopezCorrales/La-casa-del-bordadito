@@ -12,6 +12,7 @@ import android.widget.PopupMenu
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
 import com.example.applacasadelbordadito.R
 import com.example.applacasadelbordadito.databinding.ActivityEditarPerfilBinding
@@ -21,6 +22,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.storage.FirebaseStorage
+import com.hbb20.CountryCodePicker
 import kotlin.toString
 
 class EditarPerfil : AppCompatActivity() {
@@ -34,6 +36,9 @@ class EditarPerfil : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityEditarPerfilBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        val ccp = findViewById<CountryCodePicker>(R.id.selectorCod)
+        ccp.setContentColor(ContextCompat.getColor(this, R.color.dark_coffee))
+        ccp.setArrowColor(ContextCompat.getColor(this, R.color.stone_brown))
 
         firebaseAuth = FirebaseAuth.getInstance()
         progressDialog = ProgressDialog(this)
@@ -41,6 +46,10 @@ class EditarPerfil : AppCompatActivity() {
         progressDialog.setCanceledOnTouchOutside(false)
 
         cargarInfo()
+
+        binding.BtnRegresar.setOnClickListener {
+            onBackPressedDispatcher.onBackPressed()
+        }
 
         binding.BtnActualizar.setOnClickListener {
             validarInfo()

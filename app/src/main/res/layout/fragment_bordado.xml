@@ -4,11 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?attr/colorSurface"
     tools:context=".Fragmentos.FragmentBordado">
 
     <!-- Botón Admin -->
-
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabAdminSubir"
         android:layout_width="wrap_content"
@@ -17,8 +15,8 @@
         android:layout_margin="16dp"
         android:src="@drawable/ic_add"
         android:visibility="gone"
-        app:tint="@android:color/white"
-        app:backgroundTint="?attr/colorPrimary"
+        app:tint="@color/white"
+        app:backgroundTint="@color/brown"
         android:contentDescription="Subir Patrón" />
 
     <!-- SECCIÓN 1: Catálogo de Selección -->
@@ -39,30 +37,24 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingHorizontal="16dp"
-                android:paddingTop="24dp"
-                android:paddingBottom="8dp">
+                android:paddingTop="32dp"
+                android:paddingBottom="16dp">
 
-                <LinearLayout
+                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical">
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="@string/Titulo_catalogo_bordado"
-                        android:textAppearance="?attr/textAppearanceHeadlineLarge"
-                        android:textColor="?attr/colorOnSurface"
-                        android:textStyle="bold"
-                        android:gravity="center"/>
-
-
-
-                </LinearLayout>
+                    android:text="@string/Titulo_catalogo_bordado"
+                    android:textAppearance="?attr/textAppearanceHeadlineMedium"
+                    android:textColor="@color/dark_coffee"
+                    android:textStyle="bold"
+                    android:gravity="center"
+                    android:letterSpacing="0.05"/>
 
             </com.google.android.material.appbar.MaterialToolbar>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/silver" />
         </com.google.android.material.appbar.AppBarLayout>
 
         <androidx.recyclerview.widget.RecyclerView
@@ -70,84 +62,85 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:clipToPadding="false"
-            android:paddingHorizontal="12dp"
-            android:paddingBottom="80dp"
+            android:paddingHorizontal="8dp"
+            android:paddingBottom="100dp"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
             app:spanCount="2"
             tools:listitem="@layout/item_patron" />
     </LinearLayout>
 
     <!-- SECCIÓN 2: Interfaz de Juego -->
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/layoutJuego"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
         android:visibility="gone">
 
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/toolbarJuego"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="?attr/actionBarSize"
             app:navigationIcon="@drawable/ic_back"
-            app:navigationIconTint="?attr/colorOnSurface">
+            app:navigationIconTint="@color/dark_coffee"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
 
-            <LinearLayout
-                android:layout_width="match_parent"
+            <TextView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center_vertical"
-                android:paddingEnd="16dp">
+                android:text="@string/Titulo_bordando_patron"
+                android:textAppearance="?attr/textAppearanceTitleLarge"
+                android:textColor="@color/dark_coffee"
+                android:textStyle="bold" />
 
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/Titulo_bordando_patron"
-                    android:textAppearance="?attr/textAppearanceTitleLarge"
-                    android:textColor="?attr/colorOnSurface"
-                    android:textStyle="bold" />
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btnInfoBordados"
-                    style="@style/Widget.Material3.Button.IconButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:icon="@drawable/ic_info"
-                    app:iconTint="?attr/colorOnSurfaceVariant"
-                    android:contentDescription="@string/Btn_titulo_info_punto_cruz" />
-
-            </LinearLayout>
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnInfoBordados"
+                style="@style/Widget.Material3.Button.IconButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_marginEnd="8dp"
+                app:icon="@drawable/ic_info"
+                app:iconTint="@color/stone_brown"
+                android:contentDescription="@string/Btn_titulo_info_punto_cruz" />
 
         </com.google.android.material.appbar.MaterialToolbar>
 
         <!-- Canvas del dibujo -->
         <com.google.android.material.card.MaterialCardView
-            android:layout_width="match_parent"
+            android:id="@+id/cardCanvas"
+            android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginHorizontal="16dp"
+            android:layout_marginHorizontal="20dp"
             android:layout_marginTop="8dp"
-            android:layout_weight="1"
-            app:cardCornerRadius="2dp"
-            app:cardElevation="0dp"
-            app:strokeWidth="0dp"
-            style="?attr/materialCardViewFilledStyle">
+            app:cardCornerRadius="0dp"
+            app:strokeColor="@color/white"
+            app:layout_constraintTop_toBottomOf="@id/toolbarJuego"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintDimensionRatio="1:1">
 
             <com.example.applacasadelbordadito.Bordado.BordadoCanvasView
                 android:id="@+id/bordadoCanvas"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_margin="4dp" />
+                android:background="@color/white" />
         </com.google.android.material.card.MaterialCardView>
 
         <!-- Barra de progreso y botones -->
         <com.google.android.material.card.MaterialCardView
-            android:layout_width="match_parent"
+            android:id="@+id/cardProgreso"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_margin="16dp"
+            android:layout_marginHorizontal="24dp"
+            android:layout_marginTop="16dp"
             app:cardCornerRadius="24dp"
             app:cardElevation="2dp"
-            style="?attr/materialCardViewElevatedStyle">
+            app:cardBackgroundColor="@color/white"
+            app:layout_constraintTop_toBottomOf="@id/cardCanvas"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -168,7 +161,8 @@
                         android:layout_weight="1"
                         android:text="Progreso: 0%"
                         android:textAppearance="?attr/textAppearanceLabelLarge"
-                        android:textColor="?attr/colorOnSurfaceVariant" />
+                        android:textColor="@color/stone_brown"
+                        android:textStyle="bold" />
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/btnReiniciar"
@@ -176,8 +170,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/Btn_reiniciar_patron"
-                        android:textColor="?attr/colorError"
-                        app:iconTint="?attr/colorError" />
+                        android:textColor="@color/stone_brown"
+                        app:iconTint="@color/stone_brown" />
                 </LinearLayout>
 
                 <com.google.android.material.progressindicator.LinearProgressIndicator
@@ -185,8 +179,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    app:indicatorColor="?attr/colorPrimary"
-                    app:trackColor="?attr/colorSurfaceVariant"
+                    app:indicatorColor="@color/brown"
+                    app:trackColor="@color/silver"
                     app:trackCornerRadius="8dp"
                     app:trackThickness="12dp" />
 
@@ -194,27 +188,41 @@
         </com.google.android.material.card.MaterialCardView>
 
         <!-- Paleta de colores -->
-        <HorizontalScrollView
-            android:layout_width="match_parent"
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:background="?attr/colorSurfaceContainerLow"
-            android:clipToPadding="false"
-            android:paddingVertical="12dp">
+            app:cardElevation="8dp"
+            app:cardBackgroundColor="@color/bone"
+            android:layout_marginBottom="20dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
 
-            <LinearLayout
-                android:id="@+id/contenedorPaleta"
-                android:layout_width="wrap_content"
+            <HorizontalScrollView
+                android:id="@+id/scrollPaleta"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingHorizontal="16dp" />
-        </HorizontalScrollView>
+                android:clipToPadding="false"
+                android:paddingVertical="12dp"
+                android:paddingBottom="32dp">
+
+                <LinearLayout
+                    android:id="@+id/contenedorPaleta"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="16dp" />
+            </HorizontalScrollView>
+        </com.google.android.material.card.MaterialCardView>
 
         <Button
             android:id="@+id/btnVolver"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:visibility="gone" />
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

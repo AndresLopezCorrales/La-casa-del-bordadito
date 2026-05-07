@@ -36,6 +36,8 @@
     <string name="Btn_titulo_info_punto_cruz">Información de bordados</string>
     <string name="Btn_reiniciar_patron">Reiniciar</string>
 
+    <string name="Txt_progreso">Progreso</string>
+
 
     <!-- Carrito -->
     <string name="Titulo_carrito">Mi Carrito</string>
@@ -86,7 +88,9 @@
     <string name="Et_f_nac">Fecha de nac.</string>
     <string name="Cod_tef">+00</string>
     <string name="Et_telefono">Teléfono</string>
+    <string name="Btn_regresar">Regresar</string>
     <string name="Btn_actualizar">Actualizar</string>
+    <string name="Btn_explorar_disenos">Explorar Diseños</string>
 
     <!-- icono del usuario en chats -->
     <string name="item_uid">Uid</string>

@@ -4,8 +4,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_margin="4dp"
-    app:cardCornerRadius="28dp"
+    app:cardCornerRadius="32dp"
     app:cardElevation="0dp"
+    app:strokeWidth="0dp"
     style="?attr/materialCardViewFilledStyle">
 
     <RelativeLayout
@@ -29,25 +30,31 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:orientation="vertical"
-            android:padding="24dp">
+            android:padding="32dp">
 
             <TextView
                 android:id="@+id/tvSlideTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Título del Slide"
-                android:textAppearance="?attr/textAppearanceHeadlineSmall"
-                android:textColor="@android:color/white"
-                android:textStyle="bold" />
+                android:textAppearance="?attr/textAppearanceHeadlineMedium"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:letterSpacing="0.02" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnSlideAction"
                 style="@style/Widget.Material3.Button.TonalButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
+                android:layout_marginTop="16dp"
                 android:text="Explorar"
-                app:cornerRadius="12dp" />
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                app:backgroundTint="@color/brown"
+                app:cornerRadius="16dp" />
+
+
 
         </LinearLayout>
     </RelativeLayout>

@@ -1,9 +1,11 @@
 package com.example.applacasadelbordadito
 
 import android.content.Intent
+import android.content.res.ColorStateList
 import android.os.Bundle
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import coil.load
 import com.example.applacasadelbordadito.Cafe.Cafe
 import com.example.applacasadelbordadito.Carrito.CarritoActivity
@@ -111,7 +113,7 @@ class DetalleCafeActivity : AppCompatActivity() {
                 if (cafe != null) {
                     txtNombre.text = cafe.nombre
                     txtDescripcion.text = cafe.descripcion
-                    txtCategoria.text = "Categoría: ${cafe.categoria}"
+                    txtCategoria.text = "${cafe.categoria}"
 
                     imgCafe.load(cafe.imagenUrl)
                     radioPrecios.removeAllViews()
@@ -120,6 +122,8 @@ class DetalleCafeActivity : AppCompatActivity() {
                         val radio = RadioButton(this)
                         radio.text = "$tamano - $precio MXN"
                         radio.tag = Pair(tamano, precio)
+                        radio.setTextColor(ContextCompat.getColor(this, R.color.dark_coffee))
+                        radio.buttonTintList = ColorStateList.valueOf(ContextCompat.getColor(this, R.color.terracotta))
                         radioPrecios.addView(radio)
                     }
                 }
