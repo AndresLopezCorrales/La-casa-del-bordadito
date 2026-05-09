@@ -9,8 +9,10 @@ import com.example.applacasadelbordadito.R
 import java.text.SimpleDateFormat
 import java.util.*
 
-class HistorialAdapter(private val lista: List<Orden>) :
-    RecyclerView.Adapter<HistorialAdapter.ViewHolder>() {
+class HistorialAdapter(
+    private val lista: List<Orden>,
+    private val onItemClick: (Orden) -> Unit
+) : RecyclerView.Adapter<HistorialAdapter.ViewHolder>() {
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val txtFecha: TextView = view.findViewById(R.id.txtFecha)
@@ -31,6 +33,10 @@ class HistorialAdapter(private val lista: List<Orden>) :
         
         holder.txtFecha.text = fechaFormateada
         holder.txtTotal.text = "Total: ${orden.total}"
+
+        holder.itemView.setOnClickListener {
+            onItemClick(orden)
+        }
     }
 
     override fun getItemCount(): Int = lista.size

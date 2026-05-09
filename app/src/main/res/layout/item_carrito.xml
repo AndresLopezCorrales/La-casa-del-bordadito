@@ -12,6 +12,16 @@
     android:clipToOutline="true"
     android:gravity="center_vertical">
 
+    <!-- IMAGEN DEL PRODUCTO -->
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/imgProductoCarrito"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginEnd="14dp"
+        android:scaleType="centerCrop"
+        android:background="@color/white"
+        app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Medium" />
+
     <!-- INFO DEL PRODUCTO -->
     <LinearLayout
         android:layout_width="0dp"

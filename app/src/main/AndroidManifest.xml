@@ -50,6 +50,8 @@
         <activity android:name=".Carrito.CarritoActivity"/>
         <activity android:name=".Carrito.QRActivity"/>
         <activity android:name=".Historial.HistorialActivity"/>
+        <activity android:name=".Historial.HistorialDetalleActivity"
+            android:exported="false" />
         <activity android:name=".Taller.TallerActivity"/>
         <activity android:name=".Cafe.AgregarCafeActivity"/>
         <activity android:name=".Perfil.TarjetaAgregarActivity"

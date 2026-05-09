@@ -1,5 +1,6 @@
 package com.example.applacasadelbordadito.Historial
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -28,8 +29,11 @@ class HistorialActivity : AppCompatActivity() {
             onBackPressedDispatcher.onBackPressed()
         }
 
-        // uso de LinearLayoutManager
-        adapter = HistorialAdapter(listaOrdenes)
+        adapter = HistorialAdapter(listaOrdenes) { orden ->
+            val intent = Intent(this, HistorialDetalleActivity::class.java)
+            intent.putExtra("orden", orden)
+            startActivity(intent)
+        }
         recycler.layoutManager = LinearLayoutManager(this)
         recycler.adapter = adapter
 
@@ -40,7 +44,6 @@ class HistorialActivity : AppCompatActivity() {
         val user = FirebaseAuth.getInstance().currentUser ?: return
         val db = FirebaseFirestore.getInstance()
 
-        // Consulta de ordenes por usuario
         db.collection("ordenes")
             .whereEqualTo("usuario", user.email)
             .get()
@@ -52,9 +55,7 @@ class HistorialActivity : AppCompatActivity() {
                     listaOrdenes.add(orden)
                 }
 
-                // Ordenamos por fecha de forma descendente localmente
                 listaOrdenes.sortByDescending { it.fecha }
-
                 adapter.notifyDataSetChanged()
 
                 if (listaOrdenes.isEmpty()) {

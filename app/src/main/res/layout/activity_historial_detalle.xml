@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/light_sand">
+
+    <!-- ── APPBAR ── -->
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/dark_coffee"
+        app:elevation="0dp"
+        app:liftOnScroll="false">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:navigationIcon="@drawable/ic_back"
+            app:navigationIconTint="@color/almond_silk"
+            app:title="@string/Titulo_detalle_compra"
+            app:titleTextColor="@color/bone"
+            app:titleTextAppearance="?attr/textAppearanceTitleLarge" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/brown" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp"
+            android:paddingBottom="32dp">
+
+            <!-- ── SECTION LABEL: RESUMEN ── -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="10dp"
+                android:text="@string/Label_resumen_orden"
+                android:textColor="@color/terracotta"
+                android:textSize="11sp"
+                android:textStyle="bold"
+                android:letterSpacing="0.12" />
+
+            <!-- ── CARD INFORMACIÓN ── -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@drawable/bg_card_bone"
+                android:clipToOutline="true"
+                android:padding="14dp">
+
+                <TextView
+                    android:id="@+id/tvFolio"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/dark_coffee"
+                    android:textStyle="bold"
+                    android:textSize="14sp"
+                    tools:text="Folio: #ABC12345" />
+
+                <TextView
+                    android:id="@+id/tvFecha"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:textColor="@color/stone_brown"
+                    android:textSize="13sp"
+                    tools:text="Fecha: 15 Oct, 2023 - 14:30" />
+
+                <TextView
+                    android:id="@+id/tvMetodoPago"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:textColor="@color/stone_brown"
+                    android:textSize="13sp"
+                    tools:text="Pago: Efectivo" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/silver"
+                    android:layout_marginVertical="12dp" />
+
+                <TextView
+                    android:id="@+id/tvTotal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/dark_coffee"
+                    android:textStyle="bold"
+                    android:textSize="18sp"
+                    tools:text="Total: $150.00 MXN" />
+
+            </LinearLayout>
+
+            <!-- ── SECTION LABEL: PRODUCTOS ── -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:layout_marginBottom="10dp"
+                android:text="@string/Label_productos_comprados"
+                android:textColor="@color/terracotta"
+                android:textSize="11sp"
+                android:textStyle="bold"
+                android:letterSpacing="0.12" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvProductos"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:nestedScrollingEnabled="false"
+                tools:listitem="@layout/item_carrito" />
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

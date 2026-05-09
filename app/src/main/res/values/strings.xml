@@ -51,6 +51,13 @@
 
     <!-- Historial -->
     <string name="Titulo_historial">Historial de Compras</string>
+    <string name="Titulo_detalle_compra">Detalle de Compra</string>
+    <string name="Label_resumen_orden">RESUMEN DE LA ORDEN</string>
+    <string name="Label_productos_comprados">PRODUCTOS COMPRADOS</string>
+    <string name="Txt_folio">Folio: %1$s</string>
+    <string name="Txt_fecha">Fecha: %1$s</string>
+    <string name="Txt_pago">Pago: %1$s</string>
+    <string name="Txt_total_historial">Total: %1$s</string>
 
     <!-- QR -->
     <string name="Titulo_qr">Ticket de Compra</string>
