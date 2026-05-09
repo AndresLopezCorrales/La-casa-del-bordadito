@@ -54,7 +54,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Cafés"
-                    app:icon="@drawable/ic_cafe" />
+                    app:icon="@drawable/ic_cafe"
+                    app:backgroundTint="@color/toggle_bg_selector"
+                    android:textColor="@color/toggle_text_icon_selector"
+                    app:iconTint="@color/toggle_text_icon_selector"
+                    app:strokeColor="@color/silver" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnToggleBordado"
@@ -62,7 +66,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Bordados"
-                    app:icon="@drawable/ic_bordado" />
+                    app:icon="@drawable/ic_bordado"
+                    app:backgroundTint="@color/toggle_bg_selector"
+                    android:textColor="@color/toggle_text_icon_selector"
+                    app:iconTint="@color/toggle_text_icon_selector"
+                    app:strokeColor="@color/silver" />
 
             </com.google.android.material.button.MaterialButtonToggleGroup>
 
@@ -109,7 +117,9 @@
                         app:icon="@drawable/ic_grid_view"
                         app:iconGravity="textStart"
                         app:iconPadding="0dp"
-                        app:iconTint="@color/stone_brown" />
+                        app:backgroundTint="@color/toggle_bg_selector"
+                        app:iconTint="@color/toggle_text_icon_selector"
+                        app:strokeColor="@color/silver" />
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/btnList"
@@ -120,7 +130,9 @@
                         app:icon="@drawable/ic_list_view"
                         app:iconGravity="textStart"
                         app:iconPadding="0dp"
-                        app:iconTint="@color/stone_brown" />
+                        app:backgroundTint="@color/toggle_bg_selector"
+                        app:iconTint="@color/toggle_text_icon_selector"
+                        app:strokeColor="@color/silver" />
 
                 </com.google.android.material.button.MaterialButtonToggleGroup>
 

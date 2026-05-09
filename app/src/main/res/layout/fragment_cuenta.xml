@@ -15,263 +15,66 @@
         android:padding="16dp"
         android:paddingBottom="32dp">
 
-        <!-- ── HEADER PERFIL ── -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:gravity="center"
-            android:paddingTop="16dp"
-            android:paddingBottom="20dp">
-
-            <FrameLayout
-                android:id="@+id/layout_foto_perfil"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-
-                <com.google.android.material.imageview.ShapeableImageView
-                    android:id="@+id/Tv_perfil"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:src="@drawable/img_perfil"
-                    android:scaleType="centerCrop"
-                    app:strokeColor="@color/bone"
-                    app:strokeWidth="3dp"
-                    app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Full" />
-
-                <com.google.android.material.floatingactionbutton.FloatingActionButton
-                    android:id="@+id/Btn_editar_perfil"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="bottom|end"
-                    android:contentDescription="@string/Btn_editar_perfil"
-                    app:backgroundTint="@color/terracotta"
-                    app:tint="@color/light_sand"
-                    app:fabCustomSize="34dp"
-                    app:maxImageSize="16dp"
-                    app:borderWidth="0dp"
-                    app:elevation="4dp"
-                    app:srcCompat="@drawable/ic_editar" />
-
-            </FrameLayout>
-
-            <TextView
-                android:id="@+id/Txt_perfil"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:text="@string/Txt_perfil"
-                android:textColor="@color/dark_coffee"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:letterSpacing="0.02" />
-
-            <!-- Badge "Miembro desde" -->
-            <TextView
-                android:id="@+id/Tv_miembro"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="6dp"
-                android:background="@drawable/bg_badge_outline"
-                android:paddingHorizontal="12dp"
-                android:paddingVertical="4dp"
-                android:text="@string/Tv_miembro"
-                android:textColor="@color/stone_brown"
-                android:textSize="11sp" />
-
-        </LinearLayout>
-
-        <!-- ── SECTION LABEL: INFORMACIÓN ── -->
-        <TextView
-            android:id="@+id/Txt_informacion"
+        <!-- ── TOGGLE NAV ── -->
+        <com.google.android.material.button.MaterialButtonToggleGroup
+            android:id="@+id/toggleCuenta"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:text="@string/Txt_informacion"
-            android:textColor="@color/terracotta"
-            android:textSize="11sp"
-            android:textStyle="bold"
-            android:letterSpacing="0.12" />
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="24dp"
+            app:checkedButton="@id/btnNavPerfil"
+            app:selectionRequired="true"
+            app:singleSelection="true">
 
-        <!-- ── CARD INFORMACIÓN ── -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:background="@drawable/bg_card_bone"
-            android:clipToOutline="true">
-
-            <!-- Nombres -->
-            <RelativeLayout
-                android:layout_width="match_parent"
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnNavPerfil"
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingHorizontal="14dp"
-                android:paddingVertical="13dp">
-                <TextView
-                    android:id="@+id/Txt_nombres"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:text="@string/Txt_nombres"
-                    android:textColor="@color/stone_brown"
-                    android:textSize="13sp" />
-                <TextView
-                    android:id="@+id/Tv_nombres"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    android:text="@string/Tv_nombres"
-                    android:textColor="@color/dark_coffee"
-                    android:textSize="13sp"
-                    android:textStyle="bold" />
-            </RelativeLayout>
+                android:text="@string/Nav_perfil"
+                app:backgroundTint="@color/toggle_bg_selector"
+                android:textColor="@color/toggle_text_icon_selector"
+                app:strokeColor="@color/silver" />
 
-            <View android:layout_width="match_parent" android:layout_height="1dp" android:background="@color/silver" />
-
-            <!-- Email -->
-            <RelativeLayout
-                android:layout_width="match_parent"
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnNavConfig"
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingHorizontal="14dp"
-                android:paddingVertical="13dp">
-                <TextView
-                    android:id="@+id/Txt_email"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:text="@string/Txt_email"
-                    android:textColor="@color/stone_brown"
-                    android:textSize="13sp" />
-                <TextView
-                    android:id="@+id/Tv_email"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    android:text="@string/Tv_email"
-                    android:textColor="@color/dark_coffee"
-                    android:textSize="13sp"
-                    android:textStyle="bold" />
-            </RelativeLayout>
+                android:text="@string/Nav_config"
+                app:backgroundTint="@color/toggle_bg_selector"
+                android:textColor="@color/toggle_text_icon_selector"
+                app:strokeColor="@color/silver" />
 
-            <View android:layout_width="match_parent" android:layout_height="1dp" android:background="@color/silver" />
-
-            <!-- Nacimiento -->
-            <RelativeLayout
-                android:layout_width="match_parent"
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnNavAdmin"
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingHorizontal="14dp"
-                android:paddingVertical="13dp">
-                <TextView
-                    android:id="@+id/Txt_nacimiento"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:text="@string/Txt_nacimiento"
-                    android:textColor="@color/stone_brown"
-                    android:textSize="13sp" />
-                <TextView
-                    android:id="@+id/Tv_nacimiento"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    android:text="@string/Tv_nacimiento"
-                    android:textColor="@color/dark_coffee"
-                    android:textSize="13sp"
-                    android:textStyle="bold" />
-            </RelativeLayout>
+                android:text="@string/Nav_admin"
+                android:visibility="gone"
+                app:backgroundTint="@color/toggle_bg_selector"
+                android:textColor="@color/toggle_text_icon_selector"
+                app:strokeColor="@color/silver" />
 
-            <View android:layout_width="match_parent" android:layout_height="1dp" android:background="@color/silver" />
+        </com.google.android.material.button.MaterialButtonToggleGroup>
 
-            <!-- Teléfono -->
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingHorizontal="14dp"
-                android:paddingVertical="13dp">
-                <TextView
-                    android:id="@+id/Txt_telefono"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:text="@string/Txt_telefono"
-                    android:textColor="@color/stone_brown"
-                    android:textSize="13sp" />
-                <TextView
-                    android:id="@+id/Tv_telefono"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    android:text="@string/Tv_telefono"
-                    android:textColor="@color/dark_coffee"
-                    android:textSize="13sp"
-                    android:textStyle="bold" />
-            </RelativeLayout>
+        <!-- ── SECCIONES MODULARIZADAS ── -->
 
-            <View android:layout_width="match_parent" android:layout_height="1dp" android:background="@color/silver" />
+        <include
+            android:id="@+id/layoutPerfil"
+            layout="@layout/layout_cuenta_perfil"
+            android:visibility="visible" />
 
-            <!-- Estado de cuenta -->
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingHorizontal="14dp"
-                android:paddingVertical="13dp">
-                <TextView
-                    android:id="@+id/Txt_estado_cuenta"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:text="@string/Txt_estado_cuenta"
-                    android:textColor="@color/stone_brown"
-                    android:textSize="13sp" />
-                <TextView
-                    android:id="@+id/Tv_estado_cuenta"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    android:background="@drawable/bg_status_pill"
-                    android:paddingHorizontal="10dp"
-                    android:paddingVertical="3dp"
-                    android:text="@string/Tv_estado_cuenta"
-                    android:textColor="@color/light_sand"
-                    android:textSize="11sp"
-                    android:textStyle="bold" />
-            </RelativeLayout>
+        <include
+            android:id="@+id/layoutConfig"
+            layout="@layout/layout_cuenta_config"
+            android:visibility="gone" />
 
-        </LinearLayout>
-
-        <!-- ── SECTION LABEL: OPCIONES ── -->
-        <TextView
-            android:id="@+id/TxtOpciones"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:layout_marginBottom="10dp"
-            android:text="@string/TxtOpciones"
-            android:textColor="@color/terracotta"
-            android:textSize="11sp"
-            android:textStyle="bold"
-            android:letterSpacing="0.12" />
-
-        <!-- ── BOTÓN CERRAR SESIÓN ── -->
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/Btn_cerrar_sesion"
-            android:layout_width="match_parent"
-            android:layout_height="52dp"
-            android:layout_marginTop="8dp"
-            android:text="@string/Btn_cerrar_sesion"
-            android:textColor="@color/bone"
-            android:textStyle="bold"
-            android:letterSpacing="0.08"
-            app:backgroundTint="@color/dark_coffee"
-            app:cornerRadius="14dp"
-            app:icon="@drawable/ic_salir"
-            app:iconTint="@color/almond_silk"
-            app:iconGravity="textStart" />
+        <include
+            android:id="@+id/layoutAdmin"
+            layout="@layout/layout_cuenta_admin"
+            android:visibility="gone" />
 
     </LinearLayout>
 

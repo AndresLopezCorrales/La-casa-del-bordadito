@@ -21,10 +21,17 @@ class AgregarCafeActivity : AppCompatActivity() {
     private lateinit var progressDialog: ProgressDialog
     private var imageUri: Uri? = null
 
+    private var isEditing = false
+    private var cafeId = ""
+    private var currentImageUrl = ""
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAgregarCafeBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        isEditing = intent.getBooleanExtra("isEditing", false)
+        cafeId = intent.getStringExtra("cafeId") ?: ""
 
         progressDialog = ProgressDialog(this)
         progressDialog.setTitle("Por favor espere")
@@ -32,6 +39,12 @@ class AgregarCafeActivity : AppCompatActivity() {
 
         binding.toolbar.setNavigationOnClickListener {
             onBackPressedDispatcher.onBackPressed()
+        }
+
+        if (isEditing) {
+            binding.toolbar.title = "Editar Café"
+            binding.btnGuardar.text = "Actualizar"
+            cargarDatosCafe()
         }
 
         // Configurar Dropdown de Categorías
@@ -48,6 +61,39 @@ class AgregarCafeActivity : AppCompatActivity() {
         binding.btnGuardar.setOnClickListener {
             validarDatos()
         }
+    }
+
+    private fun cargarDatosCafe() {
+        progressDialog.setMessage("Cargando datos...")
+        progressDialog.show()
+
+        FirebaseFirestore.getInstance().collection("cafes").document(cafeId)
+            .get()
+            .addOnSuccessListener { document ->
+                progressDialog.dismiss()
+                if (document.exists()) {
+                    val cafe = document.toObject(Cafe::class.java)
+                    if (cafe != null) {
+                        binding.etNombre.setText(cafe.nombre)
+                        binding.etDescripcion.setText(cafe.descripcion)
+                        binding.etCategoria.setText(cafe.categoria, false)
+                        
+                        binding.etPrecioChico.setText(cafe.tamano["Chico"]?.toString() ?: "")
+                        binding.etPrecioMediano.setText(cafe.tamano["Mediano"]?.toString() ?: "")
+                        binding.etPrecioGrande.setText(cafe.tamano["Grande"]?.toString() ?: "")
+                        
+                        currentImageUrl = cafe.imagenUrl
+                        com.bumptech.glide.Glide.with(this).load(currentImageUrl).into(binding.ivFotoCafe)
+                        binding.ivFotoCafe.imageTintList = null
+                        binding.ivFotoCafe.setPadding(0, 0, 0, 0)
+                        binding.btnEliminarImagen.visibility = View.VISIBLE
+                    }
+                }
+            }
+            .addOnFailureListener { e ->
+                progressDialog.dismiss()
+                Toast.makeText(this, "Error al cargar: ${e.message}", Toast.LENGTH_SHORT).show()
+            }
     }
 
     private fun setupCategoriasDropdown() {
@@ -77,6 +123,7 @@ class AgregarCafeActivity : AppCompatActivity() {
     
     private fun quitarImagenSeleccionada() {
         imageUri = null
+        currentImageUrl = ""
         binding.ivFotoCafe.setImageResource(R.drawable.ic_cafe)
 
         // Restauramos el padding original (64dp)
@@ -100,12 +147,16 @@ class AgregarCafeActivity : AppCompatActivity() {
             binding.etDescripcion.error = "Ingrese descripción"
         } else if (categoria.isEmpty()) {
             binding.etCategoria.error = "Seleccione categoría"
-        } else if (imageUri == null) {
+        } else if (imageUri == null && currentImageUrl.isEmpty()) {
             Toast.makeText(this, "Seleccione una imagen", Toast.LENGTH_SHORT).show()
         } else if (pChico <= 0 && pMediano <= 0 && pGrande <= 0) {
             Toast.makeText(this, "Ingrese al menos un precio", Toast.LENGTH_SHORT).show()
         } else {
-            subirImagen(nombre, descripcion, categoria, pChico, pMediano, pGrande)
+            if (imageUri != null) {
+                subirImagen(nombre, desc = descripcion, cat = categoria, pChico = pChico, pMediano = pMediano, pGrande = pGrande)
+            } else {
+                guardarEnFirestore(nombre, desc = descripcion, cat = categoria, pChico = pChico, pMediano = pMediano, pGrande = pGrande, url = currentImageUrl)
+            }
         }
     }
 
@@ -132,14 +183,15 @@ class AgregarCafeActivity : AppCompatActivity() {
     }
 
     private fun guardarEnFirestore(nombre: String, desc: String, cat: String, pChico: Double, pMediano: Double, pGrande: Double, url: String) {
-        progressDialog.setMessage("Guardando café...")
+        progressDialog.setMessage(if (isEditing) "Actualizando café..." else "Guardando café...")
+        progressDialog.show()
 
         val precios = mutableMapOf<String, Double>()
         if (pChico > 0) precios["Chico"] = pChico
         if (pMediano > 0) precios["Mediano"] = pMediano
         if (pGrande > 0) precios["Grande"] = pGrande
 
-        val cafe = hashMapOf(
+        val data = hashMapOf(
             "nombre" to nombre,
             "descripcion" to desc,
             "categoria" to cat,
@@ -147,16 +199,25 @@ class AgregarCafeActivity : AppCompatActivity() {
             "tamano" to precios
         )
 
-        FirebaseFirestore.getInstance().collection("cafes")
-            .add(cafe)
-            .addOnSuccessListener {
-                progressDialog.dismiss()
-                Toast.makeText(this, "Café agregado con éxito", Toast.LENGTH_SHORT).show()
-                finish()
-            }
-            .addOnFailureListener { e ->
-                progressDialog.dismiss()
-                Toast.makeText(this, "Error al guardar: ${e.message}", Toast.LENGTH_SHORT).show()
-            }
+        if (!isEditing) {
+            data["isActive"] = false
+        }
+
+        val db = FirebaseFirestore.getInstance().collection("cafes")
+        val task = if (isEditing) {
+            db.document(cafeId).update(data as Map<String, Any>)
+        } else {
+            db.add(data).continueWith { }
+        }
+
+        task.addOnSuccessListener {
+            progressDialog.dismiss()
+            val msg = if (isEditing) "Café actualizado con éxito" else "Café agregado con éxito"
+            Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
+            finish()
+        }.addOnFailureListener { e ->
+            progressDialog.dismiss()
+            Toast.makeText(this, "Error: ${e.message}", Toast.LENGTH_SHORT).show()
+        }
     }
 }

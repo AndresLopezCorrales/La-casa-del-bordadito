@@ -182,7 +182,9 @@ class FragmentInicio : Fragment() {
     }
 
     private fun cargarCafes() {
-        FirebaseFirestore.getInstance().collection("cafes").get().addOnSuccessListener { result ->
+        FirebaseFirestore.getInstance().collection("cafes")
+            .whereEqualTo("isActive", true)
+            .get().addOnSuccessListener { result ->
             listaCafes.clear()
             for (doc in result) {
                 val cafe = doc.toObject(Cafe::class.java)
@@ -200,7 +202,7 @@ class FragmentInicio : Fragment() {
                 listaBordados.clear()
                 for (postSnapshot in snapshot.children) {
                     val patron = postSnapshot.getValue(PatronBordado::class.java)
-                    if (patron != null) {
+                    if (patron != null && patron.activo) {
                         patron.id = postSnapshot.key ?: "" // CORRECCIÓN: Asignamos la clave de Realtime DB
                         listaBordados.add(patron)
                     }

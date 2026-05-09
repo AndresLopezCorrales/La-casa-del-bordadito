@@ -92,6 +92,20 @@
     <string name="Btn_actualizar">Actualizar</string>
     <string name="Btn_explorar_disenos">Explorar Diseños</string>
 
+    <!-- Cuenta Toggle -->
+    <string name="Nav_perfil">Perfil</string>
+    <string name="Nav_config">Config</string>
+    <string name="Nav_admin">Admin</string>
+    <string name="Label_contacto_redes">CONTACTO Y REDES</string>
+    <string name="Label_panel_admin">PANEL DE ADMINISTRACIÓN</string>
+    <string name="Txt_admin_proximamente">Funciones de administrador próximamente...</string>
+    <string name="Info_instagram">Instagram: @lacasadelbordadito</string>
+    <string name="Info_whatsapp">WhatsApp: +52 123 456 7890</string>
+    <string name="Info_email_contacto">Correo: contacto@bordadito.com</string>
+    <string name="status_activo">Activo</string>
+    <string name="status_deshabilitado">Deshabilitado</string>
+    <string name="Btn_eliminar">Eliminar</string>
+
     <!-- icono del usuario en chats -->
     <string name="item_uid">Uid</string>
     <string name="item_nombre">Nombre</string>

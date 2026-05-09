@@ -1,5 +1,7 @@
 package com.example.applacasadelbordadito.Bordado
 
+import com.google.firebase.firestore.PropertyName
+
 // Modelo del Dibujo
 data class PatronBordado(
     var id: String = "",
@@ -9,7 +11,8 @@ data class PatronBordado(
     var urlImagen: String = "",
     var paleta: List<ColorPatron> = emptyList(),
     var matriz: List<List<Int>> = emptyList(),
-    var porcentaje: Int = 0
+    var porcentaje: Int = 0,
+    var activo: Boolean = false
 )
 
 data class ColorPatron(

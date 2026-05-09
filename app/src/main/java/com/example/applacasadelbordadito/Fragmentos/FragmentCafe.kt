@@ -134,6 +134,7 @@ class FragmentCafe : Fragment() {
     private fun cargarCafes() {
         val db = FirebaseFirestore.getInstance()
         db.collection("cafes")
+            .whereEqualTo("isActive", true)
             .addSnapshotListener { snapshot, error ->
                 if (error != null) return@addSnapshotListener
                 if (snapshot != null) {

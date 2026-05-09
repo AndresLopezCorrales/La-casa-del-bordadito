@@ -119,7 +119,12 @@ class FragmentBordado : Fragment() {
                 val lista = mutableListOf<PatronBordado>()
                 for (postSnapshot in snapshot.children) {
                     val patron = postSnapshot.getValue(PatronBordado::class.java)
-                    patron?.let { lista.add(it) }
+                    if (patron != null) {
+                        patron.id = postSnapshot.key ?: ""
+                        if (patron.activo) {
+                            lista.add(patron)
+                        }
+                    }
                 }
                 adaptador.updateData(lista)
             }
@@ -309,6 +314,7 @@ class FragmentBordado : Fragment() {
     private fun subirPatronAFirebase(json: String) {
         try {
             val patron = Gson().fromJson(json, PatronBordado::class.java)
+            patron.activo = false // Forzar inactivo por defecto
             db.child("patrones").child(patron.id).setValue(patron)
                 .addOnSuccessListener {
                     Toast.makeText(context, "¡Patrón ${patron.nombre} subido!", Toast.LENGTH_SHORT).show()
