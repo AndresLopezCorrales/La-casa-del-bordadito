@@ -24,46 +24,169 @@
         android:padding="8dp">
 
         <!-- Instagram -->
-        <com.google.android.material.button.MaterialButton
+        <LinearLayout
             android:id="@+id/btnInstagram"
-            style="@style/Widget.Material3.Button.TextButton"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/Info_instagram"
-            android:textColor="@color/dark_coffee"
-            android:gravity="start|center_vertical"
-            android:textAlignment="viewStart"
-            app:icon="@drawable/ic_inicio"
-            app:iconTint="@color/terracotta" />
+            android:layout_height="48dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:paddingHorizontal="12dp"
+            android:background="?attr/selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true">
 
-        <View android:layout_width="match_parent" android:layout_height="1dp" android:background="@color/silver" android:layout_marginHorizontal="12dp" />
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/ic_instagram"
+                app:tint="@color/terracotta" />
 
-        <!-- WhatsApp / Celular -->
-        <com.google.android.material.button.MaterialButton
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginStart="8dp"
+                android:text="@string/Info_instagram"
+                android:textColor="@color/dark_coffee"
+                android:textSize="14sp" />
+
+            <ImageView
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:src="@drawable/ic_next"
+                app:tint="@color/silver" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/silver"
+            android:layout_marginHorizontal="12dp" />
+
+        <!-- WhatsApp -->
+        <LinearLayout
             android:id="@+id/btnWhatsApp"
-            style="@style/Widget.Material3.Button.TextButton"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/Info_whatsapp"
-            android:textColor="@color/dark_coffee"
-            android:gravity="start|center_vertical"
-            android:textAlignment="viewStart"
-            app:icon="@drawable/ic_inicio"
-            app:iconTint="@color/sage_green" />
+            android:layout_height="48dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:paddingHorizontal="12dp"
+            android:background="?attr/selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true">
 
-        <View android:layout_width="match_parent" android:layout_height="1dp" android:background="@color/silver" android:layout_marginHorizontal="12dp" />
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/ic_whatsapp"
+                app:tint="@color/sage_green" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginStart="8dp"
+                android:text="@string/Info_whatsapp"
+                android:textColor="@color/dark_coffee"
+                android:textSize="14sp" />
+
+            <ImageView
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:src="@drawable/ic_next"
+                app:tint="@color/silver" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/silver"
+            android:layout_marginHorizontal="12dp" />
 
         <!-- Email -->
-        <com.google.android.material.button.MaterialButton
+        <LinearLayout
             android:id="@+id/btnEmailContacto"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:paddingHorizontal="12dp"
+            android:background="?attr/selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true">
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/ic_email"
+                app:tint="@color/brown" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginStart="8dp"
+                android:text="@string/Info_email_contacto"
+                android:textColor="@color/dark_coffee"
+                android:textSize="14sp" />
+
+            <ImageView
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:src="@drawable/ic_next"
+                app:tint="@color/silver" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="MÉTODOS DE PAGO"
+        android:textColor="@color/terracotta"
+        android:textSize="11sp"
+        android:textStyle="bold"
+        android:letterSpacing="0.12"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="10dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@drawable/bg_card_bone"
+        android:clipToOutline="true"
+        android:padding="8dp">
+
+        <TextView
+            android:id="@+id/tvNoCards"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="No tienes tarjetas agregadas"
+            android:textColor="@color/stone_brown"
+            android:gravity="center"
+            android:padding="16dp"
+            android:textSize="13sp"
+            android:visibility="gone"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvPaymentMethods"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:nestedScrollingEnabled="false"
+            android:visibility="visible"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnAddCard"
             style="@style/Widget.Material3.Button.TextButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/Info_email_contacto"
-            android:textColor="@color/dark_coffee"
-            android:gravity="start|center_vertical"
-            android:textAlignment="viewStart"
-            app:icon="@drawable/ic_email"
+            android:text="Agrega tu primera tarjeta"
+            android:textColor="@color/brown"
+            app:icon="@drawable/ic_add"
             app:iconTint="@color/brown" />
 
     </LinearLayout>

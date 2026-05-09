@@ -77,6 +77,7 @@ dependencies {
     implementation(libs.ccp)
     implementation(libs.firebaseStorage)
     implementation(libs.googleGson)
+    implementation("com.github.Mostafa-MA-Saleh:EditCredit:3.0.3")
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

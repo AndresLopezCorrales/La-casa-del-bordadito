@@ -66,6 +66,7 @@ class QRActivity : AppCompatActivity() {
         val usuario = intent.getStringExtra("usuario") ?: "N/A"
         val total = intent.getStringExtra("total") ?: "0.00"
         val ordenId = intent.getStringExtra("ordenId") ?: "N/A"
+        val metodoPago = intent.getStringExtra("metodoPago") ?: "Efectivo"
         val items = intent.getSerializableExtra("items") as? ArrayList<CarritoItem> ?: arrayListOf()
 
         val sdf = SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault())
@@ -76,6 +77,7 @@ class QRActivity : AppCompatActivity() {
         detallePantalla.append("Folio: ${ordenId.takeLast(8).uppercase()}\n")
         detallePantalla.append("Cliente: $usuario\n")
         detallePantalla.append("Fecha: $fechaFormateada\n")
+        detallePantalla.append("Pago: $metodoPago\n\n")
 
         items.forEach { item ->
             val sub = item.precio * item.cantidad
@@ -93,6 +95,7 @@ class QRActivity : AppCompatActivity() {
             json.put("user", usuario)
             json.put("total", total)
             json.put("date", fechaFormateada)
+            json.put("payment", metodoPago)
 
             val itemsArray = JSONArray()
             items.forEach { item ->

@@ -1,5 +1,11 @@
 package com.example.applacasadelbordadito.Fragmentos
 
+import com.example.applacasadelbordadito.Perfil.PaymentMethod
+import com.example.applacasadelbordadito.Perfil.PaymentMethodAdapter
+import android.text.Editable
+import android.text.TextWatcher
+import com.google.android.material.textfield.TextInputEditText
+import mostafa.ma.saleh.gmail.com.editcredit.EditCredit
 import android.app.ProgressDialog
 import android.content.ContentValues
 import android.content.Context
@@ -30,6 +36,7 @@ import com.example.applacasadelbordadito.Constantes
 import com.example.applacasadelbordadito.OpcionesLogin
 import com.example.applacasadelbordadito.Perfil.AvatarGenerator
 import com.example.applacasadelbordadito.Perfil.EditarPerfil
+import com.example.applacasadelbordadito.Perfil.TarjetaAgregarActivity
 import com.example.applacasadelbordadito.R
 import com.example.applacasadelbordadito.databinding.FragmentCuentaBinding
 import com.google.firebase.auth.FirebaseAuth
@@ -57,6 +64,10 @@ class FragmentCuenta : Fragment() {
     private lateinit var patronesAdminAdapter: PatronesAdminAdapter
     private val listaPatronesAdminFull = mutableListOf<PatronBordado>()
     private var paginaActualBordado = 0
+
+    // Metodos de Pago
+    private lateinit var paymentMethodAdapter: PaymentMethodAdapter
+    private val listaMetodosPago = mutableListOf<PaymentMethod>()
 
     private val itemsPorPagina = 5
     private lateinit var progressDialog: ProgressDialog
@@ -107,6 +118,7 @@ class FragmentCuenta : Fragment() {
         setupProfileSection()
         setupConfigSection()
         setupAdminSection()
+        setupPaymentMethods()
         
         leerInfoUsuario()
     }
@@ -185,7 +197,90 @@ class FragmentCuenta : Fragment() {
     // ── SECCIÓN CONFIGURACIÓN ──
 
     private fun setupConfigSection() {
-        // Por ahora no hay listeners específicos requeridos, pero está modularizado.
+        binding.layoutConfig.btnInstagram.setOnClickListener {
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://www.instagram.com/la_casa_del_bordadito/"))
+            startActivity(intent)
+        }
+
+        binding.layoutConfig.btnWhatsApp.setOnClickListener {
+            val url = "https://api.whatsapp.com/send?phone=526621398836&text=Hola, vengo de la casa del bordadito"
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+            startActivity(intent)
+        }
+
+        binding.layoutConfig.btnEmailContacto.setOnClickListener {
+            val intent = Intent(Intent.ACTION_SENDTO).apply {
+                data = Uri.parse("mailto:andresbordados326@gmail.com")
+                putExtra(Intent.EXTRA_SUBJECT, "Contacto desde la App")
+            }
+            startActivity(Intent.createChooser(intent, "Enviar correo"))
+        }
+    }
+
+    private fun setupPaymentMethods() {
+        paymentMethodAdapter = PaymentMethodAdapter(listaMetodosPago) { method ->
+            eliminarMetodoPago(method)
+        }
+
+        binding.layoutConfig.rvPaymentMethods.layoutManager = LinearLayoutManager(mContext)
+        binding.layoutConfig.rvPaymentMethods.adapter = paymentMethodAdapter
+
+        binding.layoutConfig.btnAddCard.setOnClickListener {
+            if (listaMetodosPago.size >= 5) {
+                Toast.makeText(mContext, "Máximo 5 tarjetas permitidas", Toast.LENGTH_SHORT).show()
+            } else {
+                startActivity(Intent(mContext, TarjetaAgregarActivity::class.java))
+            }
+        }
+
+        cargarMetodosPago()
+    }
+
+    private fun cargarMetodosPago() {
+        val ref = FirebaseDatabase.getInstance().getReference("Usuarios")
+            .child(firebaseAuth.uid!!).child("metodosPago")
+
+        ref.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                listaMetodosPago.clear()
+                for (postSnapshot in snapshot.children) {
+                    val method = postSnapshot.getValue(PaymentMethod::class.java)
+                    method?.let { 
+                        it.id = postSnapshot.key ?: ""
+                        listaMetodosPago.add(it)
+                    }
+                }
+                paymentMethodAdapter.updateList(listaMetodosPago)
+                actualizarUIConfig()
+            }
+            override fun onCancelled(error: DatabaseError) {}
+        })
+    }
+
+    private fun actualizarUIConfig() {
+        if (listaMetodosPago.isEmpty()) {
+            binding.layoutConfig.tvNoCards.visibility = View.VISIBLE
+            binding.layoutConfig.rvPaymentMethods.visibility = View.GONE
+            binding.layoutConfig.btnAddCard.text = "Agrega tu primera tarjeta"
+        } else {
+            binding.layoutConfig.tvNoCards.visibility = View.GONE
+            binding.layoutConfig.rvPaymentMethods.visibility = View.VISIBLE
+            binding.layoutConfig.btnAddCard.text = "Agregar otra tarjeta"
+        }
+    }
+
+    private fun eliminarMetodoPago(method: PaymentMethod) {
+        AlertDialog.Builder(mContext)
+            .setTitle("Eliminar Tarjeta")
+            .setMessage("¿Deseas eliminar la tarjeta terminada en ${method.last4}?")
+            .setPositiveButton("Eliminar") { _, _ ->
+                FirebaseDatabase.getInstance().getReference("Usuarios")
+                    .child(firebaseAuth.uid!!).child("metodosPago")
+                    .child(method.id).removeValue()
+                    .addOnSuccessListener { Toast.makeText(mContext, "Tarjeta eliminada", Toast.LENGTH_SHORT).show() }
+            }
+            .setNegativeButton("Cancelar", null)
+            .show()
     }
 
     // ── SECCIÓN ADMINISTRACIÓN ──

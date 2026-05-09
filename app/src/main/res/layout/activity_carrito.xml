@@ -93,6 +93,58 @@
 
                 </LinearLayout>
 
+                <!-- Fila Pago -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="16dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Método de pago"
+                        android:textSize="14sp"
+                        android:textColor="@color/stone_brown" />
+
+                    <com.google.android.material.button.MaterialButtonToggleGroup
+                        android:id="@+id/togglePayment"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:checkedButton="@id/btnCash"
+                        app:selectionRequired="true"
+                        app:singleSelection="true">
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btnCash"
+                            style="@style/Widget.Material3.Button.OutlinedButton"
+                            android:layout_width="wrap_content"
+                            android:layout_height="36dp"
+                            android:text="Efectivo"
+                            android:textSize="12sp"
+                            android:paddingHorizontal="8dp"
+                            app:backgroundTint="@color/toggle_bg_selector"
+                            android:textColor="@color/toggle_text_icon_selector"
+                            app:strokeColor="@color/silver" />
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btnCard"
+                            style="@style/Widget.Material3.Button.OutlinedButton"
+                            android:layout_width="wrap_content"
+                            android:layout_height="36dp"
+                            android:text="Tarjeta"
+                            android:textSize="12sp"
+                            android:paddingHorizontal="8dp"
+                            app:backgroundTint="@color/toggle_bg_selector"
+                            android:textColor="@color/toggle_text_icon_selector"
+                            app:strokeColor="@color/silver" />
+
+                    </com.google.android.material.button.MaterialButtonToggleGroup>
+
+                </LinearLayout>
+
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
