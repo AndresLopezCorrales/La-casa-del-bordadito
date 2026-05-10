@@ -2,10 +2,6 @@ package com.example.applacasadelbordadito.Fragmentos
 
 import com.example.applacasadelbordadito.Perfil.PaymentMethod
 import com.example.applacasadelbordadito.Perfil.PaymentMethodAdapter
-import android.text.Editable
-import android.text.TextWatcher
-import com.google.android.material.textfield.TextInputEditText
-import mostafa.ma.saleh.gmail.com.editcredit.EditCredit
 import android.app.ProgressDialog
 import android.content.ContentValues
 import android.content.Context
@@ -201,7 +197,7 @@ class FragmentCuenta : Fragment() {
                     } else {
                         binding.btnNavAdmin.visibility = View.GONE
                     }
-                    
+
                     if (tiempo == "null") tiempo = "0"
                     val for_tiempo = Constantes.obtenerFecha(tiempo.toLong())
 
