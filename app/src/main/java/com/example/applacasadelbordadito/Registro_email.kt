@@ -3,6 +3,7 @@ package com.example.applacasadelbordadito
 import android.app.ProgressDialog
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.util.Patterns
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -24,6 +25,7 @@ class Registro_email : AppCompatActivity() {
     private val EMAILJS_SERVICE_ID = BuildConfig.EMAILJS_SERVICE_ID
     private val EMAILJS_TEMPLATE_ID = BuildConfig.EMAILJS_TEMPLATE_ID
     private val EMAILJS_PUBLIC_KEY = BuildConfig.EMAILJS_PUBLIC_KEY
+    private val EMAILJS_PRIVATE_KEY = BuildConfig.EMAILJS_PRIVATE_KEY
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -107,6 +109,7 @@ class Registro_email : AppCompatActivity() {
         hashMap["email"] = "${emailUsuario}"
         hashMap["uid"] = "${uidUsuario}"
         hashMap["fecha_nac"] = ""
+        hashMap["esAdmin"] = false
 
         val ref = FirebaseDatabase.getInstance().getReference("Usuarios")
         ref.child(uidUsuario!!)
@@ -129,10 +132,12 @@ class Registro_email : AppCompatActivity() {
 
     private fun enviarCorreoBienvenida(emailUsuario: String) {
 
-        if (emailUsuario.isEmpty()) return
+        if (emailUsuario.isEmpty()) {
+            Log.e("EmailJS", "❌ Email vacío, saliendo")
+            return
+        }
 
         val nombreMostrar = emailUsuario.substringBefore("@")
-
         val client = OkHttpClient()
 
         val templateParams = JSONObject().apply {
@@ -143,7 +148,8 @@ class Registro_email : AppCompatActivity() {
         val jsonBody = JSONObject().apply {
             put("service_id", EMAILJS_SERVICE_ID)
             put("template_id", EMAILJS_TEMPLATE_ID)
-            put("user_id", EMAILJS_PUBLIC_KEY)
+            put("user_id", EMAILJS_PUBLIC_KEY) // Tu Public Key
+            put("accessToken", EMAILJS_PRIVATE_KEY) // Obligatorio al activar 'Use Private Key'
             put("template_params", templateParams)
         }
 
@@ -154,20 +160,21 @@ class Registro_email : AppCompatActivity() {
             .url("https://api.emailjs.com/api/v1.0/email/send")
             .post(requestBody)
             .addHeader("Content-Type", "application/json")
-            .addHeader("origin", "http://localhost")
+            // Eliminamos el origin: localhost ya que 'Allow for non-browser applications' lo hace innecesario
             .build()
 
         client.newCall(request).enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
-                println("Error de conexión: ${e.message}")
+                Log.e("EmailJS", "Error conexión: ${e.message}")
             }
 
             override fun onResponse(call: Call, response: Response) {
+                val responseCode = response.code
                 val body = response.body?.string()
                 if (response.isSuccessful) {
-                    println("Correo enviado a: $emailUsuario")
+                    Log.d("EmailJS", "Correo enviado con éxito a: $emailUsuario")
                 } else {
-                    println("Error ${response.code}: $body")
+                    Log.e("EmailJS", "Error de la API ($responseCode): $body")
                 }
             }
         })

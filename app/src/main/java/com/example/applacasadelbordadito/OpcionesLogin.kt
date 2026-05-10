@@ -3,6 +3,7 @@ package com.example.applacasadelbordadito
 import android.app.ProgressDialog
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
@@ -15,15 +16,23 @@ import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.database.FirebaseDatabase
+import okhttp3.*
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.RequestBody.Companion.toRequestBody
+import org.json.JSONObject
+import java.io.IOException
 
 class OpcionesLogin : AppCompatActivity() {
 
     private lateinit var binding: ActivityOpcionesLoginBinding
-
     private lateinit var firebaseAuth: FirebaseAuth
-
     private lateinit var mGoogleSignInClient: GoogleSignInClient
     private lateinit var progressDialog: ProgressDialog
+
+    private val EMAILJS_SERVICE_ID = BuildConfig.EMAILJS_SERVICE_ID
+    private val EMAILJS_TEMPLATE_ID = BuildConfig.EMAILJS_TEMPLATE_ID
+    private val EMAILJS_PUBLIC_KEY = BuildConfig.EMAILJS_PUBLIC_KEY
+    private val EMAILJS_PRIVATE_KEY = BuildConfig.EMAILJS_PRIVATE_KEY
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,21 +62,20 @@ class OpcionesLogin : AppCompatActivity() {
         }
     }
 
-    private fun googleLogin(){
+    private fun googleLogin() {
         val googleSignInIntent = mGoogleSignInClient.signInIntent
         googleSignInARL.launch(googleSignInIntent)
     }
 
     private val googleSignInARL = registerForActivityResult(
-        ActivityResultContracts.StartActivityForResult()){
-            resultado ->
-        if (resultado.resultCode == RESULT_OK){
+        ActivityResultContracts.StartActivityForResult()) { resultado ->
+        if (resultado.resultCode == RESULT_OK) {
             val data = resultado.data
             val task = GoogleSignIn.getSignedInAccountFromIntent(data)
-            try{
+            try {
                 val cuenta = task.getResult(ApiException::class.java)
                 autenticacionGoogle(cuenta.idToken)
-            }catch (e: Exception){
+            } catch (e: Exception) {
                 Toast.makeText(this, "${e.message}", Toast.LENGTH_SHORT).show()
             }
         }
@@ -77,9 +85,9 @@ class OpcionesLogin : AppCompatActivity() {
         val credential = GoogleAuthProvider.getCredential(idToken, null)
         firebaseAuth.signInWithCredential(credential)
             .addOnSuccessListener { resultadoAuth ->
-                if (resultadoAuth.additionalUserInfo!!.isNewUser){
+                if (resultadoAuth.additionalUserInfo!!.isNewUser) {
                     llenarInfoBD()
-                }else{
+                } else {
                     startActivity(Intent(this, MainActivity::class.java))
                     finishAffinity()
                 }
@@ -90,7 +98,7 @@ class OpcionesLogin : AppCompatActivity() {
     }
 
     private fun llenarInfoBD() {
-        progressDialog.setMessage("Guardando infromación")
+        progressDialog.setMessage("Guardando información")
 
         val tiempo = Constantes.obtenerTiempoDis()
         val emailUsuario = firebaseAuth.currentUser!!.email
@@ -109,25 +117,86 @@ class OpcionesLogin : AppCompatActivity() {
         hashMap["email"] = "${emailUsuario}"
         hashMap["uid"] = "${uidUsuario}"
         hashMap["fecha_nac"] = ""
+        hashMap["esAdmin"] = false
 
         val ref = FirebaseDatabase.getInstance().getReference("Usuarios")
         ref.child(uidUsuario!!)
             .setValue(hashMap)
             .addOnSuccessListener {
                 progressDialog.dismiss()
-                startActivity(Intent(this, MainActivity::class.java))
-                finishAffinity()
+                enviarCorreoBienvenida(
+                    emailUsuario = emailUsuario ?: "",
+                    nombreUsuario = nombreUsuario ?: emailUsuario?.substringBefore("@") ?: ""
+                ) {
+                    startActivity(Intent(this, MainActivity::class.java))
+                    finishAffinity()
+                }
             }
             .addOnFailureListener { exception ->
                 progressDialog.dismiss()
-                Toast.makeText(this, "No se registró debido a ${exception.message}",
-                    Toast.LENGTH_SHORT)
-                    .show()
+                Toast.makeText(
+                    this,
+                    "No se registró debido a ${exception.message}",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
     }
 
-    private fun comprobarSesion(){
-        if(firebaseAuth.currentUser != null){
+    private fun enviarCorreoBienvenida(
+        emailUsuario: String,
+        nombreUsuario: String,
+        onDone: () -> Unit = {}
+    ) {
+        if (emailUsuario.isEmpty()) {
+            Log.e("EmailJS", "❌ Email vacío, saliendo")
+            onDone()
+            return
+        }
+
+        val client = OkHttpClient()
+
+        val templateParams = JSONObject().apply {
+            put("to_email", emailUsuario)
+            put("to_name", nombreUsuario)
+        }
+
+        val jsonBody = JSONObject().apply {
+            put("service_id", EMAILJS_SERVICE_ID)
+            put("template_id", EMAILJS_TEMPLATE_ID)
+            put("user_id", EMAILJS_PUBLIC_KEY)
+            put("accessToken", EMAILJS_PRIVATE_KEY)
+            put("template_params", templateParams)
+        }
+
+        val requestBody = jsonBody.toString()
+            .toRequestBody("application/json".toMediaType())
+
+        val request = Request.Builder()
+            .url("https://api.emailjs.com/api/v1.0/email/send")
+            .post(requestBody)
+            .addHeader("Content-Type", "application/json")
+            .build()
+
+        client.newCall(request).enqueue(object : Callback {
+            override fun onFailure(call: Call, e: IOException) {
+                Log.e("EmailJS", "❌ Error conexión: ${e.message}")
+                runOnUiThread { onDone() }
+            }
+
+            override fun onResponse(call: Call, response: Response) {
+                val body = response.body?.string()
+                if (response.isSuccessful) {
+                    Log.d("EmailJS", "✅ Correo enviado a: $emailUsuario")
+                } else {
+                    Log.e("EmailJS", "❌ Error ${response.code}: $body")
+                }
+                runOnUiThread { onDone() }
+            }
+        })
+    }
+
+    private fun comprobarSesion() {
+        if (firebaseAuth.currentUser != null) {
             startActivity(Intent(this, MainActivity::class.java))
             finishAffinity()
         }

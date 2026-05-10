@@ -34,8 +34,6 @@ class TallerActivity : AppCompatActivity() {
     private lateinit var progressDialog: ProgressDialog
     private var imageUri: Uri? = null
 
-    private val MY_ADMIN_UID = "P3bMLh6zQcd60w0QX5nHN1hOiHe2"
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_taller)
@@ -65,11 +63,15 @@ class TallerActivity : AppCompatActivity() {
     }
 
     private fun checkUserRole() {
-        val user = firebaseAuth.currentUser
-        if (user != null && user.uid == MY_ADMIN_UID) {
-            fabCambiarFlyer.visibility = android.view.View.VISIBLE
-        } else {
-            fabCambiarFlyer.visibility = android.view.View.GONE
+        val uid = firebaseAuth.uid ?: return
+        val db = FirebaseDatabase.getInstance().getReference("Usuarios")
+        db.child(uid).child("esAdmin").get().addOnSuccessListener { snapshot ->
+            val esAdmin = snapshot.getValue(Boolean::class.java) ?: false
+            if (esAdmin) {
+                fabCambiarFlyer.visibility = android.view.View.VISIBLE
+            } else {
+                fabCambiarFlyer.visibility = android.view.View.GONE
+            }
         }
     }
 

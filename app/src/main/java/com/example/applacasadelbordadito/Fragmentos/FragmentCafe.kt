@@ -32,8 +32,6 @@ class FragmentCafe : Fragment() {
     private lateinit var adapterList: CafeAdapter
     private val auth = FirebaseAuth.getInstance()
 
-    private val MY_ADMIN_UID = "P3bMLh6zQcd60w0QX5nHN1hOiHe2"
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -45,10 +43,7 @@ class FragmentCafe : Fragment() {
         fabAddCafe = view.findViewById(R.id.fabAddCafe)
         toggleViewType = view.findViewById(R.id.toggleViewType)
 
-        // Lógica de administrador para mostrar el botón
-        if (auth.currentUser?.uid == MY_ADMIN_UID) {
-            fabAddCafe.visibility = View.VISIBLE
-        }
+        checkUserRole()
 
         fabAddCafe.setOnClickListener {
             startActivity(Intent(requireContext(), AgregarCafeActivity::class.java))
@@ -150,6 +145,19 @@ class FragmentCafe : Fragment() {
                     adapterList.notifyDataSetChanged()
                 }
             }
+    }
+
+    private fun checkUserRole() {
+        val uid = auth.uid ?: return
+        val db = com.google.firebase.database.FirebaseDatabase.getInstance().getReference("Usuarios")
+        db.child(uid).child("esAdmin").get().addOnSuccessListener { snapshot ->
+            val esAdmin = snapshot.getValue(Boolean::class.java) ?: false
+            if (esAdmin) {
+                fabAddCafe.visibility = View.VISIBLE
+            } else {
+                fabAddCafe.visibility = View.GONE
+            }
+        }
     }
 
     private fun abrirDetalleCafe(cafe: Cafe) {

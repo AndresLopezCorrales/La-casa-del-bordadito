@@ -15,49 +15,68 @@
         android:padding="16dp"
         android:paddingBottom="32dp">
 
-        <!-- ── TOGGLE NAV ── -->
-        <com.google.android.material.button.MaterialButtonToggleGroup
-            android:id="@+id/toggleCuenta"
+        <!-- ── TOGGLE NAV (UNIFIED SEGMENTED CONTROL) ── -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardNav"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginBottom="24dp"
-            app:checkedButton="@id/btnNavPerfil"
-            app:selectionRequired="true"
-            app:singleSelection="true">
+            app:cardCornerRadius="24dp"
+            app:cardElevation="0dp"
+            app:strokeColor="@color/silver"
+            app:strokeWidth="1dp"
+            app:cardBackgroundColor="@color/white">
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnNavPerfil"
-                style="@style/Widget.Material3.Button.OutlinedButton"
+            <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/Nav_perfil"
-                app:backgroundTint="@color/toggle_bg_selector"
-                android:textColor="@color/toggle_text_icon_selector"
-                app:strokeColor="@color/silver" />
+                android:layout_height="40dp"
+                android:orientation="horizontal"
+                android:divider="@drawable/divider_vertical"
+                android:showDividers="middle">
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnNavConfig"
-                style="@style/Widget.Material3.Button.OutlinedButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/Nav_config"
-                app:backgroundTint="@color/toggle_bg_selector"
-                android:textColor="@color/toggle_text_icon_selector"
-                app:strokeColor="@color/silver" />
+                <TextView
+                    android:id="@+id/btnNavPerfil"
+                    android:layout_width="100dp"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="@string/Nav_perfil"
+                    android:textColor="@color/stone_brown"
+                    android:textSize="13sp"
+                    android:textStyle="bold"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:background="?attr/selectableItemBackground" />
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnNavAdmin"
-                style="@style/Widget.Material3.Button.OutlinedButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/Nav_admin"
-                android:visibility="gone"
-                app:backgroundTint="@color/toggle_bg_selector"
-                android:textColor="@color/toggle_text_icon_selector"
-                app:strokeColor="@color/silver" />
+                <TextView
+                    android:id="@+id/btnNavConfig"
+                    android:layout_width="100dp"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="@string/Nav_config"
+                    android:textColor="@color/stone_brown"
+                    android:textSize="13sp"
+                    android:textStyle="bold"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:background="?attr/selectableItemBackground" />
 
-        </com.google.android.material.button.MaterialButtonToggleGroup>
+                <TextView
+                    android:id="@+id/btnNavAdmin"
+                    android:layout_width="100dp"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="@string/Nav_admin"
+                    android:textColor="@color/stone_brown"
+                    android:textSize="13sp"
+                    android:textStyle="bold"
+                    android:visibility="gone"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:background="?attr/selectableItemBackground" />
+
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
 
         <!-- ── SECCIONES MODULARIZADAS ── -->
 

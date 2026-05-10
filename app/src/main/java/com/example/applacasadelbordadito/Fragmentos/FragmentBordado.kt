@@ -45,15 +45,13 @@ class FragmentBordado : Fragment() {
     private val db = FirebaseDatabase.getInstance().reference
     private val auth = FirebaseAuth.getInstance()
     private var patronActual: PatronBordado? = null
-    private val MY_ADMIN_UID = "P3bMLh6zQcd60w0QX5nHN1hOiHe2"
+    private var isAdmin = false
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val fabAdmin = view.findViewById<FloatingActionButton>(R.id.fabAdminSubir)
 
-        if (auth.currentUser?.uid == MY_ADMIN_UID) {
-            fabAdmin.visibility = View.VISIBLE
-        }
+        checkUserRole(fabAdmin)
 
         fabAdmin.setOnClickListener {
             mostrarDialogoSubirJSON()
@@ -111,6 +109,20 @@ class FragmentBordado : Fragment() {
         }
         rvPatrones.layoutManager = GridLayoutManager(context, 2)
         rvPatrones.adapter = adaptador
+    }
+
+    private fun checkUserRole(fab: FloatingActionButton) {
+        val uid = auth.uid ?: return
+        db.child("Usuarios").child(uid).child("esAdmin").get().addOnSuccessListener { snapshot ->
+            isAdmin = snapshot.getValue(Boolean::class.java) ?: false
+            if (isAdmin) {
+                fab.visibility = View.VISIBLE
+            } else {
+                fab.visibility = View.GONE
+            }
+            // Recargar patrones si el rol cambia (aunque normalmente no cambia durante la sesión)
+            listarPatronesDesdeFirebase()
+        }
     }
 
     private fun listarPatronesDesdeFirebase() {

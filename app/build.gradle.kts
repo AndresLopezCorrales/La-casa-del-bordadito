@@ -36,7 +36,7 @@ android {
         buildConfigField("String", "EMAILJS_SERVICE_ID", "\"${localProperties["EMAILJS_SERVICE_ID"]}\"")
         buildConfigField("String", "EMAILJS_TEMPLATE_ID", "\"${localProperties["EMAILJS_TEMPLATE_ID"]}\"")
         buildConfigField("String", "EMAILJS_PUBLIC_KEY", "\"${localProperties["EMAILJS_PUBLIC_KEY"]}\"")
-
+        buildConfigField("String", "EMAILJS_PRIVATE_KEY", "\"${localProperties["EMAILJS_PRIVATE_KEY"]}\"")
     }
 
     buildTypes {

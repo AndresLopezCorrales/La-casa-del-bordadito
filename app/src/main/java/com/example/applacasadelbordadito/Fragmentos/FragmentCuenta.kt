@@ -52,7 +52,6 @@ class FragmentCuenta : Fragment() {
 
     private lateinit var binding: FragmentCuentaBinding
     private lateinit var firebaseAuth: FirebaseAuth
-    private val MY_ADMIN_UID = "P3bMLh6zQcd60w0QX5nHN1hOiHe2"
     private lateinit var mContext: Context
 
     // Admin Cafes
@@ -107,6 +106,9 @@ class FragmentCuenta : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        binding.btnNavAdmin.visibility = View.GONE
+
         firebaseAuth = FirebaseAuth.getInstance()
         
         progressDialog = ProgressDialog(mContext).apply {
@@ -121,18 +123,46 @@ class FragmentCuenta : Fragment() {
         setupPaymentMethods()
         
         leerInfoUsuario()
+
+        val tab = arguments?.getString("tab")
+        if (tab == "config") {
+            selectTab(R.id.btnNavConfig)
+        }
     }
 
     private fun setupToggleNav() {
-        if (firebaseAuth.uid == MY_ADMIN_UID) {
-            binding.btnNavAdmin.visibility = View.VISIBLE
-        }
+        binding.btnNavPerfil.setOnClickListener { selectTab(R.id.btnNavPerfil) }
+        binding.btnNavConfig.setOnClickListener { selectTab(R.id.btnNavConfig) }
+        binding.btnNavAdmin.setOnClickListener { selectTab(R.id.btnNavAdmin) }
+        
+        // Selección por defecto
+        selectTab(R.id.btnNavPerfil)
+    }
 
-        binding.toggleCuenta.addOnButtonCheckedListener { _, checkedId, isChecked ->
-            if (isChecked) {
-                binding.layoutPerfil.root.visibility = if (checkedId == R.id.btnNavPerfil) View.VISIBLE else View.GONE
-                binding.layoutConfig.root.visibility = if (checkedId == R.id.btnNavConfig) View.VISIBLE else View.GONE
-                binding.layoutAdmin.root.visibility = if (checkedId == R.id.btnNavAdmin) View.VISIBLE else View.GONE
+    private fun selectTab(id: Int) {
+        // Actualizar visibilidad de los layouts
+        binding.layoutPerfil.root.visibility = if (id == R.id.btnNavPerfil) View.VISIBLE else View.GONE
+        binding.layoutConfig.root.visibility = if (id == R.id.btnNavConfig) View.VISIBLE else View.GONE
+        binding.layoutAdmin.root.visibility = if (id == R.id.btnNavAdmin) View.VISIBLE else View.GONE
+
+        // Actualizar estado visual de los botones
+        updateTabVisuals(id)
+    }
+
+    private fun updateTabVisuals(selectedId: Int) {
+        val navItems = listOf(
+            binding.btnNavPerfil to R.id.btnNavPerfil,
+            binding.btnNavConfig to R.id.btnNavConfig,
+            binding.btnNavAdmin to R.id.btnNavAdmin
+        )
+
+        navItems.forEach { (view, id) ->
+            if (id == selectedId) {
+                view.setBackgroundColor(androidx.core.content.ContextCompat.getColor(mContext, R.color.brown))
+                view.setTextColor(androidx.core.content.ContextCompat.getColor(mContext, R.color.bone))
+            } else {
+                view.setBackgroundColor(android.graphics.Color.TRANSPARENT)
+                view.setTextColor(androidx.core.content.ContextCompat.getColor(mContext, R.color.stone_brown))
             }
         }
     }
@@ -164,6 +194,13 @@ class FragmentCuenta : Fragment() {
                     val telefono = "${snapshot.child("telefono").value}"
                     val codTelefono = "${snapshot.child("codigoTelefono").value}"
                     val proveedor = "${snapshot.child("proveedor").value}"
+                    val esAdmin = snapshot.child("esAdmin").getValue(Boolean::class.java) ?: false
+
+                    if (esAdmin) {
+                        binding.btnNavAdmin.visibility = View.VISIBLE
+                    } else {
+                        binding.btnNavAdmin.visibility = View.GONE
+                    }
                     
                     if (tiempo == "null") tiempo = "0"
                     val for_tiempo = Constantes.obtenerFecha(tiempo.toLong())
