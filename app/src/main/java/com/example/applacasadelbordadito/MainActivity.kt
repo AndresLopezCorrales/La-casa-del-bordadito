@@ -154,9 +154,17 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun comprobarSesion(){
-        if(firebaseAuth.currentUser == null){
+        val user = firebaseAuth.currentUser
+        if(user == null){
             startActivity(Intent(this, OpcionesLogin::class.java))
             finishAffinity()
+        } else {
+            // Si el usuario entró con Email y no está verificado, mandarlo a verificar
+            // Los usuarios de Google ya vienen verificados
+            if (user.providerData.any { it.providerId == "password" } && !user.isEmailVerified) {
+                startActivity(Intent(this, VerificarEmailActivity::class.java))
+                finish()
+            }
         }
     }
 }

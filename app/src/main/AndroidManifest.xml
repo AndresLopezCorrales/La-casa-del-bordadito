@@ -54,6 +54,8 @@
             android:exported="false" />
         <activity android:name=".Taller.TallerActivity"/>
         <activity android:name=".Cafe.AgregarCafeActivity"/>
+        <activity android:name=".VerificarEmailActivity"
+            android:exported="false" />
         <activity android:name=".Perfil.TarjetaAgregarActivity"
             android:exported="false" />
 

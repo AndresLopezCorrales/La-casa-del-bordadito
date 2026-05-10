@@ -196,9 +196,14 @@ class OpcionesLogin : AppCompatActivity() {
     }
 
     private fun comprobarSesion() {
-        if (firebaseAuth.currentUser != null) {
-            startActivity(Intent(this, MainActivity::class.java))
-            finishAffinity()
+        val user = firebaseAuth.currentUser
+        if (user != null) {
+            if (user.providerData.any { it.providerId == "password" } && !user.isEmailVerified) {
+                firebaseAuth.signOut()
+            } else {
+                startActivity(Intent(this, MainActivity::class.java))
+                finishAffinity()
+            }
         }
     }
 }

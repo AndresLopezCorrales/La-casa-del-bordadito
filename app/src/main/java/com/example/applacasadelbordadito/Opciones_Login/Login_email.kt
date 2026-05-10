@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.applacasadelbordadito.MainActivity
 import com.example.applacasadelbordadito.Registro_email
+import com.example.applacasadelbordadito.VerificarEmailActivity
 import com.example.applacasadelbordadito.databinding.ActivityLoginEmailBinding
 import com.google.firebase.auth.FirebaseAuth
 
@@ -68,13 +69,18 @@ class Login_email : AppCompatActivity() {
 
         firebaseAuth.signInWithEmailAndPassword(email, password)
             .addOnSuccessListener {
-                progressDialog.dismiss()
-                startActivity(Intent(this, MainActivity::class.java))
-                finishAffinity()
-                Toast.makeText(this,
-                    "Bienvenido",
-                    Toast.LENGTH_SHORT
-                ).show()
+                val user = firebaseAuth.currentUser
+                if (user != null && user.isEmailVerified) {
+                    // Verificamos si existe en la base de datos
+                    comprobarDatosUsuario(user.uid)
+                } else {
+                    progressDialog.dismiss()
+                    Toast.makeText(this, "Debes verificar tu correo antes de iniciar sesión", Toast.LENGTH_LONG).show()
+                    // Opcional: Redirigir a la pantalla de verificación
+                    val intent = Intent(this, VerificarEmailActivity::class.java)
+                    startActivity(intent)
+                    firebaseAuth.signOut()
+                }
             }
             .addOnFailureListener { e ->
                 progressDialog.dismiss()
@@ -85,5 +91,50 @@ class Login_email : AppCompatActivity() {
 
             }
 
+    }
+
+    private fun comprobarDatosUsuario(uid: String) {
+        val ref = com.google.firebase.database.FirebaseDatabase.getInstance().getReference("Usuarios")
+        ref.child(uid).get().addOnSuccessListener { snapshot ->
+            progressDialog.dismiss()
+            if (snapshot.exists()) {
+                startActivity(Intent(this, MainActivity::class.java))
+                finishAffinity()
+                Toast.makeText(this, "Bienvenido", Toast.LENGTH_SHORT).show()
+            } else {
+                // Caso borde: está verificado en Auth pero no tiene datos en DB
+                // Podriamos mandarlo a llenar datos o crear perfil basico
+                llenarInfoBDBasica(uid)
+            }
+        }.addOnFailureListener {
+            progressDialog.dismiss()
+            startActivity(Intent(this, MainActivity::class.java))
+            finishAffinity()
+        }
+    }
+
+    private fun llenarInfoBDBasica(uid: String) {
+        val tiempo = com.example.applacasadelbordadito.Constantes.obtenerTiempoDis()
+        val emailUsuario = firebaseAuth.currentUser?.email
+
+        val hashMap = HashMap<String, Any>()
+        hashMap["nombres"] = ""
+        hashMap["codigoTelefono"] = ""
+        hashMap["telefono"] = ""
+        hashMap["urlImagenPerfil"] = ""
+        hashMap["proveedor"] = "Email"
+        hashMap["escribiendo"] = ""
+        hashMap["tiempo"] = tiempo
+        hashMap["online"] = true
+        hashMap["email"] = "${emailUsuario}"
+        hashMap["uid"] = "${uid}"
+        hashMap["fecha_nac"] = ""
+        hashMap["esAdmin"] = false
+
+        val ref = com.google.firebase.database.FirebaseDatabase.getInstance().getReference("Usuarios")
+        ref.child(uid).setValue(hashMap).addOnSuccessListener {
+            startActivity(Intent(this, MainActivity::class.java))
+            finishAffinity()
+        }
     }
 }

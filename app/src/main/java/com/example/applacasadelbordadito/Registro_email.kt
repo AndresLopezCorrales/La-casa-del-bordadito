@@ -3,29 +3,17 @@ package com.example.applacasadelbordadito
 import android.app.ProgressDialog
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.util.Patterns
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.applacasadelbordadito.databinding.ActivityRegistroEmailBinding
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.FirebaseDatabase
-import okhttp3.*
-import okhttp3.MediaType.Companion.toMediaType
-import okhttp3.RequestBody.Companion.toRequestBody
-import org.json.JSONObject
-import java.io.IOException
 
 class Registro_email : AppCompatActivity() {
 
     private lateinit var binding: ActivityRegistroEmailBinding
     private lateinit var firebaseAuth: FirebaseAuth
     private lateinit var progressDialog: ProgressDialog
-
-    private val EMAILJS_SERVICE_ID = BuildConfig.EMAILJS_SERVICE_ID
-    private val EMAILJS_TEMPLATE_ID = BuildConfig.EMAILJS_TEMPLATE_ID
-    private val EMAILJS_PUBLIC_KEY = BuildConfig.EMAILJS_PUBLIC_KEY
-    private val EMAILJS_PRIVATE_KEY = BuildConfig.EMAILJS_PRIVATE_KEY
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -78,7 +66,7 @@ class Registro_email : AppCompatActivity() {
 
         firebaseAuth.createUserWithEmailAndPassword(email, password)
             .addOnSuccessListener {
-                llenarInfoBD()
+                enviarCorreoVerificacion()
             }
             .addOnFailureListener { exception ->
                 progressDialog.dismiss()
@@ -90,93 +78,18 @@ class Registro_email : AppCompatActivity() {
             }
     }
 
-    private fun llenarInfoBD() {
-        progressDialog.setMessage("Guardando información")
-
-        val tiempo = Constantes.obtenerTiempoDis()
-        val emailUsuario = firebaseAuth.currentUser!!.email
-        val uidUsuario = firebaseAuth.uid
-
-        val hashMap = HashMap<String, Any>()
-        hashMap["nombres"] = ""
-        hashMap["codigoTelefono"] = ""
-        hashMap["telefono"] = ""
-        hashMap["urlImagenPerfil"] = ""
-        hashMap["proveedor"] = "Email"
-        hashMap["escribiendo"] = ""
-        hashMap["tiempo"] = tiempo
-        hashMap["online"] = true
-        hashMap["email"] = "${emailUsuario}"
-        hashMap["uid"] = "${uidUsuario}"
-        hashMap["fecha_nac"] = ""
-        hashMap["esAdmin"] = false
-
-        val ref = FirebaseDatabase.getInstance().getReference("Usuarios")
-        ref.child(uidUsuario!!)
-            .setValue(hashMap)
-            .addOnSuccessListener {
+    private fun enviarCorreoVerificacion() {
+        progressDialog.setMessage("Enviando correo de verificación")
+        
+        firebaseAuth.currentUser?.sendEmailVerification()
+            ?.addOnSuccessListener {
                 progressDialog.dismiss()
-                enviarCorreoBienvenida(emailUsuario ?: "")
-                startActivity(Intent(this, MainActivity::class.java))
-                finishAffinity()
+                val intent = Intent(this, VerificarEmailActivity::class.java)
+                startActivity(intent)
             }
-            .addOnFailureListener { exception ->
+            ?.addOnFailureListener { e ->
                 progressDialog.dismiss()
-                Toast.makeText(
-                    this,
-                    "No se registró debido a ${exception.message}",
-                    Toast.LENGTH_SHORT
-                ).show()
+                Toast.makeText(this, "Error al enviar correo: ${e.message}", Toast.LENGTH_SHORT).show()
             }
-    }
-
-    private fun enviarCorreoBienvenida(emailUsuario: String) {
-
-        if (emailUsuario.isEmpty()) {
-            Log.e("EmailJS", "❌ Email vacío, saliendo")
-            return
-        }
-
-        val nombreMostrar = emailUsuario.substringBefore("@")
-        val client = OkHttpClient()
-
-        val templateParams = JSONObject().apply {
-            put("to_email", emailUsuario)
-            put("to_name", nombreMostrar)
-        }
-
-        val jsonBody = JSONObject().apply {
-            put("service_id", EMAILJS_SERVICE_ID)
-            put("template_id", EMAILJS_TEMPLATE_ID)
-            put("user_id", EMAILJS_PUBLIC_KEY) // Tu Public Key
-            put("accessToken", EMAILJS_PRIVATE_KEY) // Obligatorio al activar 'Use Private Key'
-            put("template_params", templateParams)
-        }
-
-        val requestBody = jsonBody.toString()
-            .toRequestBody("application/json".toMediaType())
-
-        val request = Request.Builder()
-            .url("https://api.emailjs.com/api/v1.0/email/send")
-            .post(requestBody)
-            .addHeader("Content-Type", "application/json")
-            // Eliminamos el origin: localhost ya que 'Allow for non-browser applications' lo hace innecesario
-            .build()
-
-        client.newCall(request).enqueue(object : Callback {
-            override fun onFailure(call: Call, e: IOException) {
-                Log.e("EmailJS", "Error conexión: ${e.message}")
-            }
-
-            override fun onResponse(call: Call, response: Response) {
-                val responseCode = response.code
-                val body = response.body?.string()
-                if (response.isSuccessful) {
-                    Log.d("EmailJS", "Correo enviado con éxito a: $emailUsuario")
-                } else {
-                    Log.e("EmailJS", "Error de la API ($responseCode): $body")
-                }
-            }
-        })
     }
 }
