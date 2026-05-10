@@ -204,6 +204,10 @@ class TallerActivity : AppCompatActivity() {
             .addOnSuccessListener {
                 progressDialog.dismiss()
                 Toast.makeText(this, "Flyer actualizado correctamente", Toast.LENGTH_SHORT).show()
+                com.example.applacasadelbordadito.notificaciones.FcmUtil.enviarNotificacionATodos(
+                    "¡Nuevo Taller Disponible!",
+                    "Se ha abierto un nuevo taller. ¡Entra para ver los detalles!"
+                )
             }
             .addOnFailureListener { e ->
                 progressDialog.dismiss()

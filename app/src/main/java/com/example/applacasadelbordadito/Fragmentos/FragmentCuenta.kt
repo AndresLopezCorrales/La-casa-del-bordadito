@@ -594,6 +594,10 @@ class FragmentCuenta : Fragment() {
             .addOnSuccessListener {
                 progressDialog.dismiss()
                 Toast.makeText(mContext, "Flyer actualizado correctamente", Toast.LENGTH_SHORT).show()
+                com.example.applacasadelbordadito.notificaciones.FcmUtil.enviarNotificacionATodos(
+                    "¡Nuevo Taller Disponible!",
+                    "Se ha abierto un nuevo taller de bordado. ¡Revisa la información!"
+                )
             }
             .addOnFailureListener { e ->
                 progressDialog.dismiss()

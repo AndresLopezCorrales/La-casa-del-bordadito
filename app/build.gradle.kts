@@ -37,6 +37,8 @@ android {
         buildConfigField("String", "EMAILJS_TEMPLATE_ID", "\"${localProperties["EMAILJS_TEMPLATE_ID"]}\"")
         buildConfigField("String", "EMAILJS_PUBLIC_KEY", "\"${localProperties["EMAILJS_PUBLIC_KEY"]}\"")
         buildConfigField("String", "EMAILJS_PRIVATE_KEY", "\"${localProperties["EMAILJS_PRIVATE_KEY"]}\"")
+        buildConfigField("String", "ONESIGNAL_APP_ID", "\"${localProperties["ONESIGNAL_APP_ID"]}\"")
+        buildConfigField("String", "ONESIGNAL_API_KEY", "\"${localProperties["ONESIGNAL_API_KEY"]}\"")
     }
 
     buildTypes {
@@ -77,7 +79,8 @@ dependencies {
     implementation(libs.ccp)
     implementation(libs.firebaseStorage)
     implementation(libs.googleGson)
-    implementation("com.github.Mostafa-MA-Saleh:EditCredit:3.0.3")
+    implementation(libs.edit.credit)
+    implementation(libs.onesignal)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

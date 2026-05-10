@@ -23,6 +23,8 @@ glideV="5.0.5"
 ccpV="2.7.0"
 firebaseStorageV = "22.0.1"
 gsonV = "2.10.1"
+editCreditV = "3.0.3"
+onesignalV = "5.6.1"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -47,6 +49,8 @@ glide = {group = "com.github.bumptech.glide", name = "glide", version.ref = "gli
 ccp = {group = "com.hbb20", name = "ccp", version.ref = "ccpV"}
 firebaseStorage = {group = "com.google.firebase", name = "firebase-storage", version.ref = "firebaseStorageV" }
 googleGson = { group = "com.google.code.gson", name = "gson", version.ref = "gsonV" }
+edit-credit = { group = "com.github.Mostafa-MA-Saleh", name = "EditCredit", version.ref = "editCreditV" }
+onesignal = { group = "com.onesignal", name = "OneSignal", version.ref = "onesignalV" }
 
 
 [plugins]

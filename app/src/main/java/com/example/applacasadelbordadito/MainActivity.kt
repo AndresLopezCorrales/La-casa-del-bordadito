@@ -18,6 +18,11 @@ import com.example.applacasadelbordadito.databinding.ActivityMainBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
+import android.Manifest
+import android.content.pm.PackageManager
+import android.os.Build
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContextCompat
 
 class MainActivity : AppCompatActivity() {
 
@@ -27,6 +32,14 @@ class MainActivity : AppCompatActivity() {
     private lateinit var btnCarrito: FrameLayout
     private lateinit var btnHistorial: ImageView
     private lateinit var badgeCarrito: TextView
+
+    private val requestPermissionLauncher = registerForActivityResult(
+        ActivityResultContracts.RequestPermission()
+    ) { isGranted: Boolean ->
+        if (!isGranted) {
+            // Opcional: explicar al usuario por qué las notificaciones son importantes
+        }
+    }
 
     // Flag para evitar re-entrada al actualizar el BottomNav programáticamente
     private var isProgrammaticSelection = false
@@ -57,6 +70,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         escucharCarrito()
+        solicitarPermisoNotificaciones()
 
         // Carga inicial
         verFragmentInicio()
@@ -151,6 +165,16 @@ class MainActivity : AppCompatActivity() {
                     badgeCarrito.visibility = View.GONE
                 }
             }
+    }
+
+    private fun solicitarPermisoNotificaciones() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) !=
+                PackageManager.PERMISSION_GRANTED
+            ) {
+                requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+            }
+        }
     }
 
     private fun comprobarSesion(){
