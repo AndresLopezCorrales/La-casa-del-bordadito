@@ -137,7 +137,7 @@ class AdaptadorChat : RecyclerView.Adapter<AdaptadorChat.HolderChat> {
         }
     }
 
-    private fun eliminarMensaje(position: Int, holder : com.example.applacasadelbordadito.Adaptadores.AdaptadorChat.HolderChat, modeloChat: Chat){
+    private fun eliminarMensaje(position: Int, holder : HolderChat, modeloChat: Chat){
         chatRuta = Constantes.rutaChat(modeloChat.receptorUid, modeloChat.emisorUid)
 
         val ref = FirebaseDatabase.getInstance().reference.child("Chats")
@@ -158,6 +158,7 @@ class AdaptadorChat : RecyclerView.Adapter<AdaptadorChat.HolderChat> {
         val dialog = Dialog(context)
 
         dialog.setContentView(R.layout.visualizador_img)
+        dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
 
         Pv = dialog.findViewById(R.id.PV_img)
         btnCerrar = dialog.findViewById(R.id.BtnCerrarVisualizador)

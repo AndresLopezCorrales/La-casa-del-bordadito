@@ -88,6 +88,7 @@ class OpcionesLogin : AppCompatActivity() {
                 if (resultadoAuth.additionalUserInfo!!.isNewUser) {
                     llenarInfoBD()
                 } else {
+                    com.onesignal.OneSignal.login(firebaseAuth.uid!!)
                     startActivity(Intent(this, MainActivity::class.java))
                     finishAffinity()
                 }
@@ -118,12 +119,14 @@ class OpcionesLogin : AppCompatActivity() {
         hashMap["uid"] = "${uidUsuario}"
         hashMap["fecha_nac"] = ""
         hashMap["esAdmin"] = false
+        hashMap["esSoporte"] = false
 
         val ref = FirebaseDatabase.getInstance().getReference("Usuarios")
         ref.child(uidUsuario!!)
             .setValue(hashMap)
             .addOnSuccessListener {
                 progressDialog.dismiss()
+                com.onesignal.OneSignal.login(uidUsuario)
                 enviarCorreoBienvenida(
                     emailUsuario = emailUsuario ?: "",
                     nombreUsuario = nombreUsuario ?: emailUsuario?.substringBefore("@") ?: ""

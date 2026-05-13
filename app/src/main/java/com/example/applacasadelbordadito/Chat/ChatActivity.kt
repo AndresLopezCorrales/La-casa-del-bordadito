@@ -28,6 +28,10 @@ import com.google.firebase.storage.FirebaseStorage
 
 class ChatActivity : AppCompatActivity() {
 
+    companion object {
+        var uidChatActivo: String? = null
+    }
+
     private lateinit var binding : ActivityChatBinding
     private var uid = ""
 
@@ -38,6 +42,9 @@ class ChatActivity : AppCompatActivity() {
 
     private var chatRuta = ""
     private var imagenUrl : Uri?= null
+
+    private var bloqueadoPorMi = false
+    private var bloqueadoPorOtro = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -72,7 +79,78 @@ class ChatActivity : AppCompatActivity() {
 
         cargarInfo()
         cargarMensajes()
+        marcarComoLeido()
+        verificarBloqueos()
 
+    }
+
+    private fun verificarBloqueos() {
+        val refBloqueoYo = FirebaseDatabase.getInstance().getReference("Usuarios")
+            .child(miUid).child("usuariosBloqueados").child(uid)
+
+        refBloqueoYo.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                bloqueadoPorMi = snapshot.exists()
+                actualizarUiBloqueo()
+            }
+            override fun onCancelled(error: DatabaseError) {}
+        })
+
+        val refBloqueoOtro = FirebaseDatabase.getInstance().getReference("Usuarios")
+            .child(uid).child("usuariosBloqueados").child(miUid)
+
+        refBloqueoOtro.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                bloqueadoPorOtro = snapshot.exists()
+                actualizarUiBloqueo()
+            }
+            override fun onCancelled(error: DatabaseError) {}
+        })
+    }
+
+    private fun actualizarUiBloqueo() {
+        if (bloqueadoPorMi) {
+            binding.EtMensajeChat.visibility = android.view.View.GONE
+            binding.enviarFAB.visibility = android.view.View.GONE
+            binding.adjuntarFAB.visibility = android.view.View.GONE
+            binding.tvBloqueado.visibility = android.view.View.VISIBLE
+            binding.tvBloqueado.text = "Has bloqueado a este usuario"
+        } else if (bloqueadoPorOtro) {
+            binding.EtMensajeChat.visibility = android.view.View.GONE
+            binding.enviarFAB.visibility = android.view.View.GONE
+            binding.adjuntarFAB.visibility = android.view.View.GONE
+            binding.tvBloqueado.visibility = android.view.View.VISIBLE
+            binding.tvBloqueado.text = "Has sido bloqueado por soporte"
+        } else {
+            binding.EtMensajeChat.visibility = android.view.View.VISIBLE
+            binding.enviarFAB.visibility = android.view.View.VISIBLE
+            binding.adjuntarFAB.visibility = android.view.View.VISIBLE
+            binding.tvBloqueado.visibility = android.view.View.GONE
+        }
+    }
+
+    private fun marcarComoLeido() {
+        val miUid = firebaseAuth.uid ?: return
+        FirebaseDatabase.getInstance().getReference("ChatsUnreadCount")
+            .child(miUid).child(uid).setValue(0)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        uidChatActivo = uid
+        actualizarEstadoChatting(uid)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        uidChatActivo = null
+        actualizarEstadoChatting("")
+    }
+
+    private fun actualizarEstadoChatting(receptorUid: String) {
+        val miUid = firebaseAuth.uid ?: return
+        FirebaseDatabase.getInstance().getReference("Usuarios").child(miUid)
+            .child("chattingWith").setValue(receptorUid)
     }
 
     private fun cargarMensajes(){
@@ -184,6 +262,10 @@ class ChatActivity : AppCompatActivity() {
     }
 
     private fun enviarMensaje (tipoMensaje: String, mensaje:String, tiempo: Long){
+        if (bloqueadoPorMi || bloqueadoPorOtro) {
+            Toast.makeText(this, "No puedes enviar mensajes", Toast.LENGTH_SHORT).show()
+            return
+        }
         progressDialog.setMessage("Enviando mensaje")
         progressDialog.show()
 
@@ -202,6 +284,8 @@ class ChatActivity : AppCompatActivity() {
             .child(keyId)
             .setValue(hashMap)
             .addOnSuccessListener {
+                incrementarContadorReceptor()
+                enviarNotificacionPush(tipoMensaje, mensaje)
                 progressDialog.dismiss()
                 binding.EtMensajeChat.setText("")
             }.addOnFailureListener { e ->
@@ -209,5 +293,52 @@ class ChatActivity : AppCompatActivity() {
                 Toast.makeText(this, "No se pudo enviar el mensaje debido a ${e.message}", Toast.LENGTH_SHORT).show()
             }
 
+    }
+
+    private fun incrementarContadorReceptor() {
+        if (bloqueadoPorMi || bloqueadoPorOtro) return
+
+        // Verificar si el receptor ya está dentro de este chat para no sumarle notificaciones
+        val refReceptor = FirebaseDatabase.getInstance().getReference("Usuarios").child(uid)
+        
+        refReceptor.child("chattingWith").get().addOnSuccessListener { snapshot ->
+            val chattingWith = snapshot.getValue(String::class.java) ?: ""
+            
+            // Solo si el receptor NO está chateando conmigo, sumamos al badge
+            if (chattingWith != miUid) {
+                val refCount = FirebaseDatabase.getInstance().getReference("ChatsUnreadCount")
+                    .child(uid).child(miUid)
+
+                refCount.get().addOnSuccessListener { countSnapshot ->
+                    val count = countSnapshot.getValue(Int::class.java) ?: 0
+                    refCount.setValue(count + 1)
+                }
+            }
+        }
+    }
+
+    private fun enviarNotificacionPush(tipo: String, msg: String) {
+        if (bloqueadoPorMi || bloqueadoPorOtro) return
+
+        // Verificar si el receptor está en el chat o está online para no enviarle push
+        val refReceptor = FirebaseDatabase.getInstance().getReference("Usuarios").child(uid)
+        refReceptor.get().addOnSuccessListener { snapshot ->
+            val chattingWith = snapshot.child("chattingWith").getValue(String::class.java) ?: ""
+            val isOnline = snapshot.child("online").getValue(Boolean::class.java) ?: false
+
+            // Solo enviamos PUSH si el usuario NO está viendo nuestro chat Y NO está online
+            if (chattingWith != miUid && !isOnline) {
+                FirebaseDatabase.getInstance().getReference("Usuarios").child(miUid).get().addOnSuccessListener { miSnapshot ->
+                    val miNombre = "${miSnapshot.child("nombres").value}"
+                    val miImagen = "${miSnapshot.child("urlImagenPerfil").value}"
+
+                    val textoFinal = if (tipo == Constantes.MENSAJE_TIPO_IMAGEN) "📷 Imagen Enviada" else msg
+
+                    com.example.applacasadelbordadito.notificaciones.FcmUtil.enviarNotificacionAUsuario(
+                        uid, miNombre, textoFinal, miImagen
+                    )
+                }
+            }
+        }
     }
 }

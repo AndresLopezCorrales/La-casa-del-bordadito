@@ -21,6 +21,7 @@ class ListaChatActivity : AppCompatActivity() {
 
     private var usuarioAdaptador: AdaptadorUsuario? = null
     private var usuarioLista: ArrayList<Usuario>? = null
+    private var soySoporte: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,13 +31,24 @@ class ListaChatActivity : AppCompatActivity() {
         binding.RVUsuarios.setHasFixedSize(true)
         binding.RVUsuarios.layoutManager = LinearLayoutManager(this)
 
+        binding.toolbar.setNavigationOnClickListener { onBackPressedDispatcher.onBackPressed() }
+
         usuarioLista = ArrayList()
 
         binding.EtBuscarUsuario.doOnTextChanged { usuario, _, _, _ ->
             buscarUsuario(usuario.toString())
         }
 
-        listarUsuarios()
+        verificarMiRol()
+    }
+
+    private fun verificarMiRol() {
+        val uid = FirebaseAuth.getInstance().currentUser?.uid ?: return
+        FirebaseDatabase.getInstance().reference.child("Usuarios").child(uid)
+            .child("esSoporte").get().addOnSuccessListener { snapshot ->
+                soySoporte = snapshot.getValue(Boolean::class.java) ?: false
+                listarUsuarios()
+            }
     }
 
     private fun listarUsuarios() {
@@ -50,11 +62,17 @@ class ListaChatActivity : AppCompatActivity() {
                 for (sn in snapshot.children) {
                     val usuario: Usuario? = sn.getValue(Usuario::class.java)
                     if (usuario != null && usuario.uid != firebaseUser) {
-                        usuarioLista?.add(usuario)
+                        // Lógica de filtrado:
+                        // Si soy soporte, agrego a todos.
+                        // Si NO soy soporte, solo agrego a los que SON soporte.
+                        if (soySoporte) {
+                            usuarioLista?.add(usuario)
+                        } else if (usuario.esSoporte) {
+                            usuarioLista?.add(usuario)
+                        }
                     }
                 }
 
-                // Si la lista está vacía, mostramos el mensaje y ocultamos el recycler
                 if (usuarioLista.isNullOrEmpty()) {
                     binding.tvSinUsuarios.visibility = View.VISIBLE
                     binding.RVUsuarios.visibility = View.GONE
@@ -62,8 +80,7 @@ class ListaChatActivity : AppCompatActivity() {
                     binding.tvSinUsuarios.visibility = View.GONE
                     binding.RVUsuarios.visibility = View.VISIBLE
 
-                    // Actualizamos el adaptador
-                    usuarioAdaptador = AdaptadorUsuario(this@ListaChatActivity, usuarioLista!!)
+                    usuarioAdaptador = AdaptadorUsuario(this@ListaChatActivity, usuarioLista!!, soySoporte)
                     binding.RVUsuarios.adapter = usuarioAdaptador
                 }
             }
@@ -94,12 +111,17 @@ class ListaChatActivity : AppCompatActivity() {
 
                     // Evitamos agregarnos a nosotros mismos
                     if (usuarioObj != null && usuarioObj.uid != firebaseUser) {
-                        usuarioLista?.add(usuarioObj)
+                        // Aplicamos el mismo filtro en la búsqueda
+                        if (soySoporte) {
+                            usuarioLista?.add(usuarioObj)
+                        } else if (usuarioObj.esSoporte) {
+                            usuarioLista?.add(usuarioObj)
+                        }
                     }
                 }
 
                 // Actualizamos el adaptador
-                usuarioAdaptador = AdaptadorUsuario(this@ListaChatActivity, usuarioLista!!)
+                usuarioAdaptador = AdaptadorUsuario(this@ListaChatActivity, usuarioLista!!, soySoporte)
                 binding.RVUsuarios.adapter = usuarioAdaptador
             }
 

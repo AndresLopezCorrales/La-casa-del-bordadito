@@ -21,8 +21,21 @@ import com.google.firebase.storage.FirebaseStorage
 import android.Manifest
 import android.content.pm.PackageManager
 import android.os.Build
+import android.os.Handler
+import android.os.Looper
+import android.view.Gravity
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import android.widget.PopupWindow
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
+import com.bumptech.glide.Glide
+import com.example.applacasadelbordadito.Chat.ChatActivity
+import com.example.applacasadelbordadito.Modelos.Chat
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 
 class MainActivity : AppCompatActivity() {
 
@@ -32,6 +45,9 @@ class MainActivity : AppCompatActivity() {
     private lateinit var btnCarrito: FrameLayout
     private lateinit var btnHistorial: ImageView
     private lateinit var badgeCarrito: TextView
+
+    private var inAppNotificationPopup: PopupWindow? = null
+    private val handler = Handler(Looper.getMainLooper())
 
     private val requestPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
@@ -51,7 +67,9 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         firebaseAuth = FirebaseAuth.getInstance()
+
         comprobarSesion()
+        ApplicationClass.actualizarEstadoOnline(true)
 
         btnCarrito = findViewById(R.id.btnCarrito)
         btnHistorial = findViewById(R.id.btnHistorial)
@@ -71,6 +89,7 @@ class MainActivity : AppCompatActivity() {
 
         escucharCarrito()
         solicitarPermisoNotificaciones()
+        escucharMensajesNuevos()
 
         // Carga inicial
         verFragmentInicio()
@@ -167,6 +186,90 @@ class MainActivity : AppCompatActivity() {
             }
     }
 
+    private fun escucharMensajesNuevos() {
+        val miUid = firebaseAuth.uid ?: return
+        val ref = FirebaseDatabase.getInstance().getReference("ChatsUnreadCount").child(miUid)
+
+        ref.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                for (child in snapshot.children) {
+                    val senderUid = child.key ?: continue
+                    val count = child.getValue(Int::class.java) ?: 0
+
+                    // Solo si hay mensajes nuevos Y no estamos en ese chat
+                    if (count > 0 && senderUid != ChatActivity.uidChatActivo) {
+                        obtenerUltimoMensajeYMostrar(senderUid)
+                    }
+                }
+            }
+            override fun onCancelled(error: DatabaseError) {}
+        })
+    }
+
+    private fun obtenerUltimoMensajeYMostrar(senderUid: String) {
+        val miUid = firebaseAuth.uid ?: return
+        val chatRuta = Constantes.rutaChat(miUid, senderUid)
+        
+        FirebaseDatabase.getInstance().getReference("Chats").child(chatRuta)
+            .orderByChild("tiempo")
+            .limitToLast(1)
+            .get().addOnSuccessListener { snapshot ->
+                val lastChat = snapshot.children.firstOrNull()?.getValue(Chat::class.java)
+                if (lastChat != null && lastChat.emisorUid != miUid) {
+                    mostrarInAppNotification(lastChat)
+                }
+            }
+    }
+
+    private fun mostrarInAppNotification(chat: Chat) {
+        // Obtener datos del emisor
+        FirebaseDatabase.getInstance().getReference("Usuarios").child(chat.emisorUid)
+            .get().addOnSuccessListener { snapshot ->
+                val nombre = "${snapshot.child("nombres").value}"
+                val imagen = "${snapshot.child("urlImagenPerfil").value}"
+                val msg = if (chat.tipoMensaje == Constantes.MENSAJE_TIPO_IMAGEN) "📷 Imagen Enviada" else chat.mensaje
+
+                mostrarPopup(nombre, msg, imagen, chat.emisorUid)
+            }
+    }
+
+    private fun mostrarPopup(nombre: String, mensaje: String, imagenUrl: String, senderUid: String) {
+        val inflater = getSystemService(LAYOUT_INFLATER_SERVICE) as LayoutInflater
+        val view = inflater.inflate(R.layout.item_notificacion_dentro_app, null)
+
+        val img = view.findViewById<ImageView>(R.id.imgNotifPerfil)
+        val txtNombre = view.findViewById<TextView>(R.id.txtNotifNombre)
+        val txtMsg = view.findViewById<TextView>(R.id.txtNotifMensaje)
+
+        txtNombre.text = nombre
+        txtMsg.text = mensaje
+        Glide.with(this).load(imagenUrl).placeholder(R.drawable.ic_imagen_perfil).into(img)
+
+        // Cerrar previo si existe
+        inAppNotificationPopup?.dismiss()
+
+        inAppNotificationPopup = PopupWindow(
+            view,
+            ViewGroup.LayoutParams.WRAP_CONTENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT
+        ).apply {
+            elevation = 20f
+            animationStyle = android.R.style.Animation_Dialog
+            showAtLocation(binding.root, Gravity.TOP or Gravity.END, 20, 100)
+        }
+
+        view.setOnClickListener {
+            val intent = Intent(this, com.example.applacasadelbordadito.Chat.ChatActivity::class.java)
+            intent.putExtra("uid", senderUid)
+            startActivity(intent)
+            inAppNotificationPopup?.dismiss()
+        }
+
+        // Auto ocultar tras 4 segundos
+        handler.removeCallbacksAndMessages(null)
+        handler.postDelayed({ inAppNotificationPopup?.dismiss() }, 4000)
+    }
+
     private fun solicitarPermisoNotificaciones() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) !=
@@ -183,11 +286,11 @@ class MainActivity : AppCompatActivity() {
             startActivity(Intent(this, OpcionesLogin::class.java))
             finishAffinity()
         } else {
-            // Si el usuario entró con Email y no está verificado, mandarlo a verificar
-            // Los usuarios de Google ya vienen verificados
             if (user.providerData.any { it.providerId == "password" } && !user.isEmailVerified) {
                 startActivity(Intent(this, VerificarEmailActivity::class.java))
                 finish()
+            } else {
+                com.onesignal.OneSignal.login(user.uid) // solo si está verificado
             }
         }
     }

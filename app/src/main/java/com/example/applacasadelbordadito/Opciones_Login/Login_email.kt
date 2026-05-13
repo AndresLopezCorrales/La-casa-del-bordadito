@@ -98,6 +98,7 @@ class Login_email : AppCompatActivity() {
         ref.child(uid).get().addOnSuccessListener { snapshot ->
             progressDialog.dismiss()
             if (snapshot.exists()) {
+                com.onesignal.OneSignal.login(uid)
                 startActivity(Intent(this, MainActivity::class.java))
                 finishAffinity()
                 Toast.makeText(this, "Bienvenido", Toast.LENGTH_SHORT).show()
@@ -108,6 +109,7 @@ class Login_email : AppCompatActivity() {
             }
         }.addOnFailureListener {
             progressDialog.dismiss()
+            com.onesignal.OneSignal.login(uid)
             startActivity(Intent(this, MainActivity::class.java))
             finishAffinity()
         }
@@ -115,10 +117,11 @@ class Login_email : AppCompatActivity() {
 
     private fun llenarInfoBDBasica(uid: String) {
         val tiempo = com.example.applacasadelbordadito.Constantes.obtenerTiempoDis()
-        val emailUsuario = firebaseAuth.currentUser?.email
+        val emailUsuario = firebaseAuth.currentUser?.email ?: ""
+        val nombrePorDefecto = emailUsuario.substringBefore("@")
 
         val hashMap = HashMap<String, Any>()
-        hashMap["nombres"] = ""
+        hashMap["nombres"] = nombrePorDefecto
         hashMap["codigoTelefono"] = ""
         hashMap["telefono"] = ""
         hashMap["urlImagenPerfil"] = ""
@@ -126,13 +129,15 @@ class Login_email : AppCompatActivity() {
         hashMap["escribiendo"] = ""
         hashMap["tiempo"] = tiempo
         hashMap["online"] = true
-        hashMap["email"] = "${emailUsuario}"
+        hashMap["email"] = emailUsuario
         hashMap["uid"] = "${uid}"
         hashMap["fecha_nac"] = ""
         hashMap["esAdmin"] = false
+        hashMap["esSoporte"] = false
 
         val ref = com.google.firebase.database.FirebaseDatabase.getInstance().getReference("Usuarios")
         ref.child(uid).setValue(hashMap).addOnSuccessListener {
+            com.onesignal.OneSignal.login(uid)
             startActivity(Intent(this, MainActivity::class.java))
             finishAffinity()
         }

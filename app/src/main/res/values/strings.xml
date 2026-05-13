@@ -128,6 +128,7 @@
     <string name="Txt_nombre_usuario">Nombres</string>
     <string name="Et_mensaje_chat">Escriba algo</string>
     <string name="Tv_tiempo_mensaje">dd/MM/yyyy hh:mm</string>
+    <string name="Btn_ir_a_chat">Ir al chat</string>
 
     <!-- Visualizador -->
     <string name="BtnCerrarVisualizador">Cerrar</string>

@@ -77,11 +77,12 @@ class VerificarEmailActivity : AppCompatActivity() {
     private fun llenarInfoBD() {
         val tiempo = Constantes.obtenerTiempoDis()
         val user = firebaseAuth.currentUser
-        val emailUsuario = user?.email
+        val emailUsuario = user?.email ?: ""
         val uidUsuario = user?.uid
+        val nombrePorDefecto = emailUsuario.substringBefore("@")
 
         val hashMap = HashMap<String, Any>()
-        hashMap["nombres"] = ""
+        hashMap["nombres"] = nombrePorDefecto
         hashMap["codigoTelefono"] = ""
         hashMap["telefono"] = ""
         hashMap["urlImagenPerfil"] = ""
@@ -89,15 +90,17 @@ class VerificarEmailActivity : AppCompatActivity() {
         hashMap["escribiendo"] = ""
         hashMap["tiempo"] = tiempo
         hashMap["online"] = true
-        hashMap["email"] = "${emailUsuario}"
+        hashMap["email"] = emailUsuario
         hashMap["uid"] = "${uidUsuario}"
         hashMap["fecha_nac"] = ""
         hashMap["esAdmin"] = false
+        hashMap["esSoporte"] = false
 
         val ref = FirebaseDatabase.getInstance().getReference("Usuarios")
         ref.child(uidUsuario!!)
             .setValue(hashMap)
             .addOnSuccessListener {
+                com.onesignal.OneSignal.login(uidUsuario)
                 enviarCorreoBienvenida(emailUsuario ?: "")
                 startActivity(Intent(this, MainActivity::class.java))
                 finishAffinity()

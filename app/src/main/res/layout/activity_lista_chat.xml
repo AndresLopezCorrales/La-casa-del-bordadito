@@ -1,44 +1,96 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/light_sand"
     tools:context=".Chat.ListaChatActivity">
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/TILBuscarUsuario"
+    <!-- APPBAR  -->
+    <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="@color/dark_coffee"
+        app:elevation="0dp">
 
-        <EditText
-            android:id="@+id/Et_buscar_usuario"
-            android:hint="@string/Et_buscar_usuario"
-            android:layout_marginHorizontal="5dp"
-            android:inputType="textCapWords"
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="?attr/actionBarSize"
+            app:navigationIcon="@drawable/ic_back"
+            app:navigationIconTint="@color/almond_silk"
+            app:title="Mensajería"
+            app:titleTextColor="@color/bone"
+            app:titleTextAppearance="?attr/textAppearanceTitleLarge" />
 
-    </com.google.android.material.textfield.TextInputLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/brown" />
 
+    </com.google.android.material.appbar.AppBarLayout>
 
-
-    <!-- TODO: Update blank fragment layout -->
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/RV_usuarios"
-        android:layout_below="@+id/TILBuscarUsuario"
-        android:layout_marginTop="5dp"
-        android:padding="5dp"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
+        <!--  BÚSQUEDA -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/TILBuscarUsuario"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="8dp"
+            android:hint="@string/Et_buscar_usuario"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            app:startIconDrawable="@android:drawable/ic_menu_search"
+            app:startIconTint="@color/stone_brown"
+            app:boxStrokeWidthFocused="1.5dp"
+            app:boxStrokeColor="@color/dark_coffee"
+            app:hintTextColor="@color/brown"
+            android:textColorHint="@color/brown"
+            app:boxCornerRadiusTopStart="12dp"
+            app:boxCornerRadiusTopEnd="12dp"
+            app:boxCornerRadiusBottomStart="12dp"
+            app:boxCornerRadiusBottomEnd="12dp"
+            app:boxBackgroundColor="@color/bone">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/Et_buscar_usuario"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textCapWords"
+                android:textColor="@color/dark_coffee"
+                android:textSize="14sp" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!--LISTA -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/RV_usuarios"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:paddingBottom="16dp"
+            tools:listitem="@layout/item_usuario" />
+
+    </LinearLayout>
+
+    <!-- EMPTY STAT -->
     <TextView
         android:id="@+id/tvSinUsuarios"
-        android:text="@string/tvSinUsuarios"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:visibility="gone"
-        android:layout_centerInParent="true"
+        android:layout_gravity="center"
+        android:text="@string/tvSinUsuarios"
+        android:textColor="@color/stone_brown"
+        android:textSize="16sp"
         android:textAlignment="center"
-        android:textSize="16sp"/>
+        android:visibility="gone"
+        tools:visibility="visible" />
 
-</RelativeLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

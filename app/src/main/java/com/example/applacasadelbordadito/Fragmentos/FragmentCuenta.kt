@@ -172,6 +172,7 @@ class FragmentCuenta : Fragment() {
         }
 
         binding.layoutPerfil.BtnCerrarSesion.setOnClickListener {
+            com.example.applacasadelbordadito.ApplicationClass.actualizarEstadoOnline(false)
             firebaseAuth.signOut()
             startActivity(Intent(requireContext(), OpcionesLogin::class.java))
             activity?.finishAffinity()

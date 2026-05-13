@@ -5,89 +5,99 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/light_sand"
     tools:context=".Chat.ChatActivity">
 
-    <!-- Menú Superior -->
+    <!-- Menú Superior (Barra de Usuario) -->
     <RelativeLayout
         android:id="@+id/ToolbarRLChat"
         android:layout_width="match_parent"
-        android:layout_height="55dp">
+        android:layout_height="64dp"
+        android:background="@color/dark_coffee"
+        android:elevation="4dp">
 
         <ImageButton
             android:id="@+id/IbRegresar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
             android:layout_centerVertical="true"
-            android:padding="10dp"
-            android:background="@android:color/transparent"
-            android:src="@drawable/ic_back" />
+            android:layout_marginStart="8dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/Btn_regresar"
+            android:padding="12dp"
+            android:src="@drawable/ic_back"
+            app:tint="@color/almond_silk" />
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/ToolbarIV"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:layout_marginEnd="7dp"
             android:layout_centerVertical="true"
-            android:layout_toStartOf="@id/Txt_nombre_usuario"
+            android:layout_marginStart="8dp"
+            android:layout_toEndOf="@id/IbRegresar"
             android:scaleType="centerCrop"
-            android:src="@drawable/ic_imagen_perfil" />
+            android:src="@drawable/ic_imagen_perfil"
+            app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Full"
+            app:strokeColor="@color/bone"
+            app:strokeWidth="1dp" />
 
         <TextView
             android:id="@+id/Txt_nombre_usuario"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="12dp"
+            android:layout_toEndOf="@id/ToolbarIV"
             android:text="@string/Txt_nombre_usuario"
+            android:textColor="@color/bone"
+            android:textSize="18sp"
             android:textStyle="bold" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_alignParentBottom="true"
-            android:background="#ccc" />
 
     </RelativeLayout>
 
+    <!-- Lista de Mensajes -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/chatsRV"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        android:layout_below="@id/ToolbarRLChat"
-        android:layout_above="@id/View2"
-        android:padding="5dp"
-        tools:listitem="@layout/item_chat_izquierdo"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_above="@id/View2"
+        android:layout_below="@id/ToolbarRLChat"
+        android:clipToPadding="false"
+        android:padding="8dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:listitem="@layout/item_chat_izquierdo" />
 
-    </androidx.recyclerview.widget.RecyclerView>
+    <!-- Divisor sutil -->
+    <View
+        android:id="@+id/View2"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_above="@id/RLMensaje"
+        android:alpha="0.3"
+        android:background="@color/silver" />
 
-    <!-- Menú Inferior -->
+    <!-- Menú Inferior (Entrada de Mensaje) -->
     <RelativeLayout
         android:id="@+id/RLMensaje"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_margin="5dp">
-
-        <EditText
-            android:id="@+id/Et_mensaje_chat"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/Et_mensaje_chat"
-            android:padding="10dp"
-            android:inputType="textMultiLine|textCapSentences"
-            android:layout_centerVertical="true"
-            android:layout_toStartOf="@+id/adjuntarFAB"/>
+        android:background="@color/bone"
+        android:padding="8dp">
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/adjuntarFAB"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_toStartOf="@+id/enviarFAB"
-            android:layout_marginEnd="7dp"
-            android:elevation="0dp"
+            android:layout_marginStart="4dp"
+            android:contentDescription="Adjuntar imagen"
             android:src="@drawable/ic_selec_imagen"
-            app:fabSize="mini" />
+            app:backgroundTint="@color/terracotta"
+            app:borderWidth="0dp"
+            app:elevation="2dp"
+            app:fabSize="mini"
+            app:tint="@color/light_sand" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/enviarFAB"
@@ -95,17 +105,48 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
-            android:elevation="0dp"
+            android:layout_marginEnd="4dp"
+            android:contentDescription="Enviar mensaje"
             android:src="@drawable/ic_enviar_chat"
-            app:fabSize="mini" />
+            app:backgroundTint="@color/brown"
+            app:borderWidth="0dp"
+            app:elevation="2dp"
+            app:fabSize="mini"
+            app:tint="@color/bone" />
+
+        <EditText
+            android:id="@+id/Et_mensaje_chat"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginHorizontal="8dp"
+            android:layout_toEndOf="@id/adjuntarFAB"
+            android:layout_toStartOf="@id/enviarFAB"
+            android:background="@drawable/bg_input_outline"
+            android:hint="@string/Et_mensaje_chat"
+            android:inputType="textMultiLine|textCapSentences"
+            android:maxLines="4"
+            android:minHeight="40dp"
+            android:paddingHorizontal="16dp"
+            android:paddingVertical="10dp"
+            android:textColor="@color/dark_coffee"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/tvBloqueado"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@id/adjuntarFAB"
+            android:layout_toStartOf="@id/enviarFAB"
+            android:background="@drawable/bg_input_outline"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="Usuario bloqueado"
+            android:textColor="@color/terracotta"
+            android:textStyle="bold"
+            android:visibility="gone" />
 
     </RelativeLayout>
-
-    <View
-        android:id="@+id/View2"
-        android:background="#ccc"
-        android:layout_above="@id/RLMensaje"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"/>
 
 </RelativeLayout>

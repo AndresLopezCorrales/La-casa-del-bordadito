@@ -1,23 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="400dp"
     android:layout_height="400dp"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="#ccc"
-    android:layout_gravity="center">
-    
-    <com.github.chrisbanes.photoview.PhotoView
-        android:id="@+id/PV_img"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+    android:layout_gravity="center"
+    app:cardCornerRadius="16dp"
+    app:cardElevation="8dp"
+    app:strokeColor="@color/dark_coffee"
+    app:strokeWidth="2dp">
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/BtnCerrarVisualizador"
-        android:text="@string/BtnCerrarVisualizador"
-        android:textAllCaps="true"
-        android:layout_alignParentBottom="true"
-        app:cornerRadius="8dp"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="match_parent"
+        android:background="@color/light_sand">
 
-</RelativeLayout>
+        <com.github.chrisbanes.photoview.PhotoView
+            android:id="@+id/PV_img"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@id/BtnCerrarVisualizador"
+            android:layout_margin="8dp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/BtnCerrarVisualizador"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginBottom="8dp"
+            android:text="@string/BtnCerrarVisualizador"
+            android:textAllCaps="true"
+            android:textColor="@color/bone"
+            android:textStyle="bold"
+            app:backgroundTint="@color/brown"
+            app:cornerRadius="8dp" />
+
+    </RelativeLayout>
+
+</com.google.android.material.card.MaterialCardView>
