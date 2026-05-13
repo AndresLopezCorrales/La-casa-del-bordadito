@@ -22,6 +22,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppLaCasaDelBordadito">
         <activity
+            android:name=".Chat.ListaChatActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Chat.ChatActivity"
+            android:exported="false" />
+        <activity
             android:name=".Perfil.EditarPerfil"
             android:exported="false" />
         <activity
@@ -48,19 +54,21 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".DetalleCafeActivity"/>
-        <activity android:name=".Carrito.CarritoActivity"/>
-        <activity android:name=".Carrito.QRActivity"/>
-        <activity android:name=".Historial.HistorialActivity"/>
-        <activity android:name=".Historial.HistorialDetalleActivity"
+        <activity android:name=".DetalleCafeActivity" />
+        <activity android:name=".Carrito.CarritoActivity" />
+        <activity android:name=".Carrito.QRActivity" />
+        <activity android:name=".Historial.HistorialActivity" />
+        <activity
+            android:name=".Historial.HistorialDetalleActivity"
             android:exported="false" />
-        <activity android:name=".Taller.TallerActivity"/>
-        <activity android:name=".Cafe.AgregarCafeActivity"/>
-        <activity android:name=".VerificarEmailActivity"
+        <activity android:name=".Taller.TallerActivity" />
+        <activity android:name=".Cafe.AgregarCafeActivity" />
+        <activity
+            android:name=".VerificarEmailActivity"
             android:exported="false" />
-        <activity android:name=".Perfil.TarjetaAgregarActivity"
+        <activity
+            android:name=".Perfil.TarjetaAgregarActivity"
             android:exported="false" />
-
     </application>
 
 </manifest>

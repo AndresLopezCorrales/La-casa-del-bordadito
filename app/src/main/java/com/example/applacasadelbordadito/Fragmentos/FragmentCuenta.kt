@@ -28,6 +28,7 @@ import com.example.applacasadelbordadito.Bordado.PatronesAdminAdapter
 import com.example.applacasadelbordadito.Cafe.AgregarCafeActivity
 import com.example.applacasadelbordadito.Cafe.Cafe
 import com.example.applacasadelbordadito.Cafe.CafeAdminAdapter
+import com.example.applacasadelbordadito.Chat.ListaChatActivity
 import com.example.applacasadelbordadito.Constantes
 import com.example.applacasadelbordadito.OpcionesLogin
 import com.example.applacasadelbordadito.Perfil.AvatarGenerator
@@ -247,6 +248,10 @@ class FragmentCuenta : Fragment() {
                 putExtra(Intent.EXTRA_SUBJECT, "Contacto desde la App")
             }
             startActivity(Intent.createChooser(intent, "Enviar correo"))
+        }
+
+        binding.layoutConfig.btnSoporteChat.setOnClickListener {
+            startActivity(Intent(mContext, ListaChatActivity::class.java))
         }
     }
 

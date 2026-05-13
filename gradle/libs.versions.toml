@@ -25,6 +25,8 @@ firebaseStorageV = "22.0.1"
 gsonV = "2.10.1"
 editCreditV = "3.0.3"
 onesignalV = "5.6.1"
+activityKtx = "1.13.0"
+photoViewV="2.3.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -51,7 +53,8 @@ firebaseStorage = {group = "com.google.firebase", name = "firebase-storage", ver
 googleGson = { group = "com.google.code.gson", name = "gson", version.ref = "gsonV" }
 edit-credit = { group = "com.github.Mostafa-MA-Saleh", name = "EditCredit", version.ref = "editCreditV" }
 onesignal = { group = "com.onesignal", name = "OneSignal", version.ref = "onesignalV" }
-
+androidx-activity-ktx = { group = "androidx.activity", name = "activity-ktx", version.ref = "activityKtx" }
+photoView = {module = "com.github.chrisbanes:PhotoView", version.ref = "photoViewV"}
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

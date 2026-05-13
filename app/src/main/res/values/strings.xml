@@ -113,12 +113,24 @@
     <string name="status_deshabilitado">Deshabilitado</string>
     <string name="Btn_eliminar">Eliminar</string>
 
+    <string name="Label_soporte">SOPORTE</string>
+    <string name="Info_soporte_chat">Chat de Soporte</string>
+
     <!-- icono del usuario en chats -->
     <string name="item_uid">Uid</string>
     <string name="item_nombre">Nombre</string>
     <string name="item_email">Email</string>
 
     <string name="tvSinUsuarios">No hay más usuarios</string>
+    <string name="Et_buscar_usuario">Buscar Usuario</string>
+
+    <!-- Chat -->
+    <string name="Txt_nombre_usuario">Nombres</string>
+    <string name="Et_mensaje_chat">Escriba algo</string>
+    <string name="Tv_tiempo_mensaje">dd/MM/yyyy hh:mm</string>
+
+    <!-- Visualizador -->
+    <string name="BtnCerrarVisualizador">Cerrar</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
